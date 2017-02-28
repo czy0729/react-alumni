@@ -1,0 +1,24 @@
+@import '~styles/var';
+
+.pages-admin__auth-list {
+	&__date {
+		padding: @space @wind 0;
+		font-size: .24rem;
+		text-align: right;
+		color: @color-default;
+	}
+
+	&__confirm {
+		display: flex;
+
+		button {
+			font-size: .3rem;
+			border: 0;
+			border-radius: 0;
+
+			&:first-child {
+				border-right: 1PX solid @color-border;
+			}
+		}
+	}
+}

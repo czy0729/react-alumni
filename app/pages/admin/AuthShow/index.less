@@ -1,0 +1,39 @@
+@import '~styles/var';
+@import '~styles/mixin';
+
+.pages-admin__auth-show {
+	.am-list-item.am-list-item-active {
+		background-color: initial;
+	}
+	.am-radio {
+		position: relative;
+
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: .3rem;
+			left: auto;
+			width: 1rem;
+			height: 100%;
+			background: @color-primary-light;
+		}
+	}
+	.am-radio-inner {
+		right: .6rem!important;
+	}
+
+	&__form-header {
+		div {
+			display: flex;
+			float: right;
+			width: 1rem;
+			color: @color-primary-hover;
+		}
+		span {
+			flex: 1;
+			text-align: center;
+		}
+	}
+}

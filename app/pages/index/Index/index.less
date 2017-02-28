@@ -1,0 +1,36 @@
+@import '~styles/var';
+@import '~styles/mixin';
+
+.pages-index__index {
+	&__head {
+		position: relative;
+		.flex-center;
+		flex-direction: column;
+		height: 50vw;
+		padding: 0 @xl;
+		text-align: center;
+		
+		&_name {
+			font-size: .56rem;
+			color: @color-primary;
+		}
+		&_desc {
+			margin-top: @lg;
+			font-size: .32rem;
+			color: @color-default;
+		}
+		&_sub {
+			position: relative;
+			margin-top: @md;
+			font-size: .24rem;
+			color: @color-default;
+		}
+	}
+
+	&__btn-center {
+		position: absolute;
+		top: @space;
+		right: @wind;
+		color: @color-primary;	
+	}
+}

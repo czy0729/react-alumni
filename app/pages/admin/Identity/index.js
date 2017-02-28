@@ -1,0 +1,97 @@
+/**
+ * 身份管理
+ * @version 170212 1.0
+ */
+'use strict';
+
+import React from 'react';
+import { observer } from 'decorators';
+import { $identity } from 'stores';
+import { Button } from 'antd-mobile';
+import { Page, Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
+
+const prefixCls = 'pages-admin__identity';
+
+@observer
+export default class AdminIdentity extends React.Component {
+    constructor() {
+        super();
+
+        Utils.binds(this, ['doAdd', 'doUpdate', 'doDelete']);
+    }
+
+    componentDidMount() {
+    	$identity.fetch({ alumni_id: this.alumni_id });
+    }
+
+    async doAdd(name) {
+        await $identity.add({
+            alumni_id: this.alumni_id,
+            name,
+        });
+
+        Utils.onSuccess();
+    }
+
+    async doUpdate(name, identity_type_id) {
+        await $identity.update({
+            alumni_id: this.alumni_id,
+            identity_type_id,
+            name,
+        });
+
+        Utils.onSuccess();
+    }
+
+    async doDelete(identity_type_id) {
+        await $identity.delete({
+            alumni_id: this.alumni_id,
+            identity_type_id,
+        });
+
+        Utils.onSuccess();
+    }
+
+    get alumni_id() {
+        return this.props.params.alumni_id;
+    }
+
+    render() {
+        const data = $identity.getById(this.alumni_id);
+
+        return (
+            <Page className={prefixCls}>
+                <AppListView
+                    data={data.data}
+                    renderRow={(rowData, sectionID, rowID) => (
+                        <AppSwipeActionItem
+                            key={rowID}
+                            right={[{
+                                text: '重命名',
+                                onPress: () => Utils.onPrompt('重命名身份', (value) => this.doUpdate(value, rowData.identity_type_id), rowData.name),
+                                style: {
+                                    backgroundColor: Const.color_warning,
+                                    color: '#fff'
+                                },
+                            }, {
+                                text: '删除',
+                                onPress: () => Utils.onConfirm('确定删除？', () => this.doDelete(rowData.identity_type_id)),
+                                style: {
+                                    backgroundColor: Const.color_danger,
+                                    color: '#fff'
+                                },
+                            }]}
+                            extra={`${rowData.num}人`}
+                        >
+                            <span>{rowData.name}</span>
+                        </AppSwipeActionItem>
+                    )}
+                />
+
+                <ButtonWrap>
+                    <Button onClick={e => Utils.onPrompt('添加身份', (value) => this.doAdd(value))}>添加身份</Button>
+                </ButtonWrap>
+            </Page>
+        );
+    } 
+};

@@ -1,0 +1,40 @@
+@import './var';
+
+//160202 flex水平垂直居中
+.flex-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+//160208 图片背景
+.img(@size: cover) {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: @size;
+}
+
+//160821 文字行数限制
+.clamp(@num: 1) {
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: @num;
+    -webkit-box-orient: vertical;
+}
+
+.border-top(@position: before) {
+    position: relative;
+
+    &:@{position} {
+        display: block;
+        position: absolute;
+        content: '';
+        left: 0;
+        top: 0;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        border-bottom: 1PX solid #ddd;
+    }
+}

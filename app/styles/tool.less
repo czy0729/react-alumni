@@ -1,0 +1,49 @@
+@import './var';
+@import './mixin';
+
+//170222 专门放字段名称的容器
+.am-input-label-4,
+.am-textarea-label-4 {
+    width: 1.6rem !important;
+}
+.tool-label {
+    display: inline-block;
+    position: relative;
+    width: 1.6rem;
+    margin-right: .3rem;
+    white-space: initial;
+    
+    //170208 必填的label
+    &_required {
+        position: relative;
+
+        &:after {
+            content: '*';
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            margin-left: .08rem;
+            margin-top: -.17rem;
+            font-family: SimSun;
+            font-size: .24rem;
+            line-height: .34rem;
+            color: #f04134;
+        }
+    }
+}
+
+//170208 统一图片样式
+.tool-img {
+    display: inline-block;
+    width: @size-img;
+    height: @size-img;
+    .img;
+    border-radius: .08rem;
+}
+
+//170221 list-view 分割
+.tool-separator {
+    height: @distance;
+    background: @color-bg;
+    border-top: 1PX solid #ECECED;
+}
