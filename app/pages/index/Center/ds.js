@@ -6,37 +6,37 @@ export default {
 	menuDS: [{
 		label  : '基本信息',
 		icon   : 'info-circle-o',
-		href   : 'admin/info/',
+		href   : Const.router.admin_info,
 		filter : caseAdmins,
 	}, {
 		label  : '管理员',
 		icon   : 'user',
-		href   : 'admin/list/',
+		href   : Const.router.admin_list,
 		filter : caseSuper,
 	}, {
 		label  : '认证管理',
 		icon   : 'check',
-		href   : 'admin/auth_manage/',
+		href   : Const.router.admin_auth_manage,
 		filter : caseAdmins,
 	}, {
 		label  : '身份管理',
 		icon   : 'solution',
-		href   : 'admin/identity/',
+		href   : Const.router.admin_identity,
 		filter : caseAdmins,
 	}, {
 		label  : '通知',
 		icon   : 'notification',
-		href   : 'notice_list/',
+		href   : Const.router.notice_list,
 		filter : caseAll,
 	}, {
 		label  : '邀请校友',
 		icon   : 'share-alt',
-		href   : '',
+		href   : Const.router.share,
 		filter : caseAll,
 	}, {
 		label  : '校友相册',
 		icon   : 'picture',
-		href   : '',
+		href   : Const.router.album,
 		filter : caseAll,
 	}],
 };

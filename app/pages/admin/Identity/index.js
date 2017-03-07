@@ -8,7 +8,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $identity } from 'stores';
 import { Button } from 'antd-mobile';
-import { Page, Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
+import { Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
 
 const prefixCls = 'pages-admin__identity';
 
@@ -60,7 +60,7 @@ export default class AdminIdentity extends React.Component {
         const data = $identity.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <AppListView
                     data={data.data}
                     renderRow={(rowData, sectionID, rowID) => (
@@ -70,14 +70,14 @@ export default class AdminIdentity extends React.Component {
                                 text: '重命名',
                                 onPress: () => Utils.onPrompt('重命名身份', (value) => this.doUpdate(value, rowData.identity_type_id), rowData.name),
                                 style: {
-                                    backgroundColor: Const.color_warning,
+                                    backgroundColor: Const.ui.color_warning,
                                     color: '#fff'
                                 },
                             }, {
                                 text: '删除',
                                 onPress: () => Utils.onConfirm('确定删除？', () => this.doDelete(rowData.identity_type_id)),
                                 style: {
-                                    backgroundColor: Const.color_danger,
+                                    backgroundColor: Const.ui.color_danger,
                                     color: '#fff'
                                 },
                             }]}
@@ -91,7 +91,7 @@ export default class AdminIdentity extends React.Component {
                 <ButtonWrap>
                     <Button onClick={e => Utils.onPrompt('添加身份', (value) => this.doAdd(value))}>添加身份</Button>
                 </ButtonWrap>
-            </Page>
+            </div>
         );
     } 
 };

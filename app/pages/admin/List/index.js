@@ -8,7 +8,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $admin } from 'stores';
 import { Button } from 'antd-mobile';
-import { Page, Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
+import { Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
 import { section } from './ds';
 
 const prefixCls = 'pages-admin__list';
@@ -41,7 +41,7 @@ export default class AdminList extends React.Component {
         const data = $admin.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <AppListView
                     data={data.data}
                     section={section}
@@ -53,7 +53,7 @@ export default class AdminList extends React.Component {
                                 text: '取消授权',
                                 onPress: () => Utils.onConfirm('确定取消授权？', this.doCancel.bind(this, rowData.user_id)),
                                 style: {
-                                    backgroundColor: Const.color_danger,
+                                    backgroundColor: Const.ui.color_danger,
                                     color: '#fff'
                                 },
                             }]}
@@ -72,7 +72,7 @@ export default class AdminList extends React.Component {
                         <Button>添加管理员</Button>
                     </a>
                 </ButtonWrap>
-            </Page>
+            </div>
         );
     } 
 };

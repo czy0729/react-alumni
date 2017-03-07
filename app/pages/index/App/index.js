@@ -16,10 +16,6 @@ export default class IndexApp extends React.Component {
     render() {
         const { children } = this.props;
 
-        return (
-            <div className={prefixCls}>
-                {children}
-            </div>
-        );
+        return children;
     }
 };

@@ -7,9 +7,8 @@
 import React from 'react';
 import { form, observer } from 'decorators';
 import { $notice, $popout } from 'stores';
-
 import { Button } from 'antd-mobile';
-import { Page, Content, ButtonWrap, AppForm } from 'components';
+import { Content, ButtonWrap, AppForm } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-admin__notice';
@@ -71,7 +70,7 @@ export default class AdminNotice extends React.Component {
         const data = this.notice_id ? $notice.getById(this.notice_id, 'detail') : {};
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 {/*表单*/}
                 <AppForm
                     form={form}
@@ -107,7 +106,7 @@ export default class AdminNotice extends React.Component {
                         预览
                     </Button>
                 </ButtonWrap>
-            </Page>
+            </div>
         );
     } 
 };

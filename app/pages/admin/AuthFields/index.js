@@ -1,6 +1,7 @@
 /**
  * 认证需填写字段
  * @version 170219 1.0
+ * @version 170307 1.1 判断是否来源于#/add_alumni/
  */
 'use strict';
 
@@ -8,7 +9,7 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $auth } from 'stores';
 import { List, Button } from 'antd-mobile';
-import { Page, Title, ButtonWrap, AppForm } from 'components';
+import { Title, ButtonWrap, AppForm } from 'components';
 import { generateFieldsConfig } from '../_utils';
 import './index.less';
 
@@ -25,12 +26,14 @@ export default class AdminAuthFields extends React.Component {
 
     componentDidMount() {
     	$auth.fetch_auth_fields({ alumni_id: this.alumni_id });
+
+        console.log(this.is_from_add_alumni)
     }
 
     async handleSubmit(values) {
         await $auth.update_auth_fields({
             alumni_id: this.alumni_id,
-            ...values
+            ...values,
         });
 
         Utils.onSuccess();
@@ -38,6 +41,10 @@ export default class AdminAuthFields extends React.Component {
 
     get alumni_id() {
         return this.props.params.alumni_id;
+    }
+
+    get is_from_add_alumni() {
+        return this.props.location.query;
     }
 
     renderForms() {
@@ -105,7 +112,7 @@ export default class AdminAuthFields extends React.Component {
         const { form, onSubmit } = this.props;
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <Title>请设置加入该校友录的校友需要填写的个人信息。</Title>
                 {this.renderForms()}
 
@@ -117,7 +124,7 @@ export default class AdminAuthFields extends React.Component {
                         保存
                     </Button>
                 </ButtonWrap>
-            </Page>
+            </div>
         );
     } 
 };

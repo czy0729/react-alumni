@@ -7,9 +7,8 @@
 import React from 'react';
 import { observer } from 'decorators';
 import { $notice, $alumni } from 'stores';
-
 import { Icon } from 'antd-mobile';
-import { Page, Content, Permission, AppPopover } from 'components';
+import { Content, Permission, AppPopover } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-index__notice';
@@ -64,7 +63,7 @@ export default class Notice extends React.Component {
         const data_alumni = $alumni.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <div className={`${prefixCls}__head`}>
                     {/*右上角按钮*/}
                     {/*①我是管理员*/}
@@ -97,7 +96,7 @@ export default class Notice extends React.Component {
 
                 {/*正文*/}
                 <Content className={`${prefixCls}__content`} value={data.content} />
-            </Page>
+            </div>
         );
     } 
 };

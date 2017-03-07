@@ -1,8 +1,22 @@
 @import '~styles/var';
 
+/* .components__page {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: @distance*4;
+    overflow-x: hidden;
+    background: @color-bg;
+} */
+
 .components__page {
-	position: relative;
-	min-height: 100vh;
-	padding-bottom: @distance*4;
-	overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding-bottom: @distance*4;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: @color-bg;
+    -webkit-overflow-scrolling: touch;
 }

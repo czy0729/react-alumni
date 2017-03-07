@@ -77,7 +77,7 @@ export default class AppFormTextarea extends React.Component {
                 className={classNames(prefixCls, className, {
                     [`${prefixCls}__textarea_emoji`]: emoji,
                 })}
-                title={_utils.getLabelDecorator(option)(title)}
+                title={title && _utils.getLabelDecorator(option)(title)}
                 placeholder={`请输入${title}`}
                 rows={4}
                 count={100}

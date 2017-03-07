@@ -7,9 +7,7 @@
 import React from 'react';
 import { observer } from 'decorators';
 import { $alumni } from 'stores';
-
 import { Grid, Icon, Badge } from 'antd-mobile';
-import { Page } from 'components';
 import { menuDS } from './ds';
 import './index.less';
 
@@ -33,7 +31,7 @@ export default class Center extends React.Component {
         const data = $alumni.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <div className={`${prefixCls}__head`}>
                     <p className={`${prefixCls}__head_name`}>{data.school_name}</p>
                     <p className={`${prefixCls}__head_desc`}>
@@ -50,14 +48,14 @@ export default class Center extends React.Component {
                     renderItem={(item) => (
                         <a 
                             className={`${prefixCls}__item`}
-                            href={`#/${this.alumni_id}/${item.href}`}
+                            href={`#${item.href({ alumni_id: this.alumni_id })}`}
                         >
                             <Icon type={item.icon} />
                             <p>{item.label}</p>
                         </a>
                     )}
                 />
-            </Page>
+            </div>
         );
     } 
 };

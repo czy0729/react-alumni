@@ -8,7 +8,7 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $alumni } from 'stores';
 import { Button } from 'antd-mobile';
-import { Page, ButtonWrap, AppForm } from 'components';
+import { ButtonWrap, AppForm } from 'components';
 
 const prefixCls = 'pages-admin__info';
 
@@ -43,7 +43,7 @@ export default class AdminInfo extends React.Component {
         const data = $alumni.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <AppForm 
                 	form={form}
                 	onSubmit={e => onSubmit(e, form, this.doUpdate)}
@@ -83,7 +83,7 @@ export default class AdminInfo extends React.Component {
                 		保存
                 	</Button>
                 </ButtonWrap>
-            </Page>
+            </div>
         );
     } 
 };

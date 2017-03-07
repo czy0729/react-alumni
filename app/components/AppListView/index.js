@@ -11,15 +11,16 @@ import { ListView } from 'antd-mobile';
 import './index.less';
 
 const prefixCls = 'components__app-list-view';
+const defaultSection = [{
+    _noSection: true,
+    title: '',
+    filter: (item) => 1,
+}];
 
 export default class AppListView extends React.Component {
     static defaultProps = {
         data: [],
-        section: [{
-            _noSection: true,
-            title: '',
-            filter: (item) => 1,
-        }],
+        section: defaultSection,
         renderSectionHeader: (sectionData) => null,
     };
 
@@ -60,15 +61,19 @@ export default class AppListView extends React.Component {
             return this.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs);
         };
 
+        const section = props.section.length == 0 ? defaultSection : props.section;
+        
         this.state = {
-            dataSource: this.createDs(props.data, props.section),
+            dataSource: this.createDs(props.data, section),
         };
         Utils.binds(this, ['onEndReached']);
     }
 
     componentWillReceiveProps(nextProps) {
+        const section = nextProps.section.length == 0 ? defaultSection : nextProps.section;
+        
         this.setState({
-            dataSource: this.createDs(nextProps.data, nextProps.section),
+            dataSource: this.createDs(nextProps.data, section),
         });
     }
 
@@ -77,8 +82,11 @@ export default class AppListView extends React.Component {
     }
 
     render(){
-        const { className, section, data, ...other } = this.props;
+        const { className, data, ...other } = this.props;
+        let { section } = this.props;
         const state = this.state;
+
+        if (section.length == 0) section = defaultSection;
 
         return (
             <ListView.IndexedList

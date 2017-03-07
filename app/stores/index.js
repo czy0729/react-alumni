@@ -5,6 +5,7 @@
 const stores = {
 	$admin    : require('./$admin'),
 	$alumni   : require('./$alumni'),
+	$app      : require('./$app'),
 	$auth     : require('./$auth'),
 	$identity : require('./$identity'),
 	$notice   : require('./$notice'),

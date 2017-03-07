@@ -27,7 +27,7 @@ class store {
 	 * 从state取一个id值
 	 * @version 170208 1.0
 	 * @version 170213 1.1 新增@param key
-	 * @version 170219 1.2 为了安全，返回的数据做了浅拷贝处理
+	 * @version 170219 1.2 为了安全，返回的数据做了浅拷贝处理，以后可能使用immutable
 	 */
 	getById(id, key) {
 		if (key) {

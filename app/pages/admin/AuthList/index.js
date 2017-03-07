@@ -8,7 +8,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $auth } from 'stores';
 import { Result, Button } from 'antd-mobile';
-import { Page, Img, AppListView } from 'components';
+import { Img, AppListView } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-admin__auth-list';
@@ -49,7 +49,7 @@ export default class AdminAuthList extends React.Component {
         const data = $auth.getById(this.alumni_id, 'auth_list');
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 {/*列表*/}
                 <AppListView
                     data={data.data}
@@ -79,7 +79,7 @@ export default class AdminAuthList extends React.Component {
                     )}
                     renderSeparator={(sectionID, rowID) => <div key={`${sectionID}-${rowID}`} className="tool-separator" />}
                 />
-            </Page>
+            </div>
         );
     } 
 };

@@ -1,7 +1,8 @@
 export default {
 	...require('./base'),
 	...require('./const'),
-	...require('./ui'),
+	
 	...require('./rules'),
+	ui: require('./ui'),
 	router: require('./router'),
 };

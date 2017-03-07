@@ -18,7 +18,7 @@ const Title = ({ className, children, ...other }) => {
 			{...other}
 		>
 			<Icon type="exclamation-circle-o" />
-			<span>{children}</span>
+			<span> {children}</span>
 		</div>
 	);
 }

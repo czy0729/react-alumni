@@ -7,4 +7,5 @@
 export default {
 	web: 'http://alumni.maigit.com',
 	date: 'y/m/d H:i',
+	img: require('../images/default.png'),
 };

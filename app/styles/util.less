@@ -43,3 +43,76 @@
 
 //float
 .pull-right             { float: right }
+
+//css-transition-group
+//170304
+.swap {
+	&-enter {
+	    opacity: .01;
+	    transition: all .3s;
+
+	    &&-active {
+	    	transform: translateZ(0);
+	    	opacity: 1;
+	    }
+	}
+	&-leave {
+    	opacity: 1;
+
+    	&&-active {
+    		transform: translateZ(0);
+    		opacity: 1;
+    	}
+	}
+}
+
+//170305
+//向左
+@keyframes left-in {
+    0% {
+        transform: translate3d(100%,0,0);
+    } to {
+        transform: translateZ(0);
+    }
+}
+@keyframes left-out {
+    0% {
+        transform: translateZ(0);
+    } to {
+        transform: translate3d(-40%,0,0);
+    }
+}
+//向右
+@keyframes right-in {
+    0% {
+        transform: translate3d(-100%,0,0);
+    } to {
+        transform: translateZ(0);
+    }
+}
+@keyframes right-out {
+    0% {
+        transform: translateZ(0);
+    } to {
+        transform: translate3d(40%,0,0);
+    }
+}
+
+.slide-left {
+	&-enter {
+		z-index: 99;
+	    animation: left-in .6s cubic-bezier(0.23, 1, 0.320, 1);
+	}
+	&-leave {
+	    animation: left-out .6s cubic-bezier(0.23, 1, 0.320, 1);
+	}
+}
+.slide-right {
+	&-enter {
+		z-index: 99;
+	    animation: right-in .6s cubic-bezier(0.23, 1, 0.320, 1);
+	}
+	&-leave {
+	    animation: right-out .6s cubic-bezier(0.23, 1, 0.320, 1);
+	}
+}

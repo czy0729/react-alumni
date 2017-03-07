@@ -8,7 +8,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $notice, $alumni } from 'stores';
 import { List, Button } from 'antd-mobile';
-import { Page, Permission, ButtonWrap, AppListView } from 'components';
+import { Permission, ButtonWrap, AppListView } from 'components';
 
 const prefixCls = 'pages-index__notice-list';
 
@@ -36,7 +36,7 @@ export default class NoticeList extends React.Component {
         const data_alumni = $alumni.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 {/*按钮*/}
                 {/*①我是管理员*/}
                 <Permission
@@ -66,7 +66,7 @@ export default class NoticeList extends React.Component {
                         </List.Item>
                     )}
                 />
-            </Page>
+            </div>
         );
     } 
 };

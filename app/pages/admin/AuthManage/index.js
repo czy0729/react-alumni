@@ -8,7 +8,6 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $auth } from 'stores';
 import { List } from 'antd-mobile';
-import { Page } from 'components';
 
 const prefixCls = 'pages-admin__auth-manage';
 const Item = List.Item;
@@ -36,7 +35,7 @@ export default class AdminAuthManage extends React.Component {
         const data = $auth.getById(this.alumni_id, 'count');
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <List className="mt-distance">
                     <Item extra={`${data.had_authenti_count}人`}>已认证</Item>
                     <Item 
@@ -59,7 +58,7 @@ export default class AdminAuthManage extends React.Component {
                         认证后可见信息
                     </Item>
                 </List>
-            </Page>
+            </div>
         );
     } 
 };

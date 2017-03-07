@@ -70,8 +70,8 @@ export default class EmojiPicker extends React.Component {
                     onClick={show ? this.hide : this.show}
                 >
                     {emojify(':grinning:', {
-                        host: 'http://localhost:8080',
-                        path: './common/emoji',
+                        //host: 'http://localhost:8080',
+                        //path: './common/emoji',
                         attributes: {
                             width: undefined,
                             height: undefined,
@@ -83,8 +83,8 @@ export default class EmojiPicker extends React.Component {
                     [`${prefixCls}__items_open`]: show,
                 })}>
                     {emojiDS.map((item) => emojify(item, {
-                        host: 'http://localhost:8080',
-                        path: './common/emoji',
+                        //host: 'http://localhost:8080',
+                        //path: './common/emoji',
                         attributes: {
                             width: undefined,
                             height: undefined,

@@ -24,10 +24,10 @@ var config = {
     entry: {
         index: './entry/index.js',
     },
-    /*externals: {
+    externals: {
         'react': 'React',
         'react-dom': 'ReactDOM',
-    },*/
+    },
     output: {
         path: path.resolve(__dirname, '../dist/'),
         filename: './[name].bundle.js',
@@ -47,9 +47,18 @@ var config = {
             test: /\.css$/,
             loader: 'style!css!postcss',
         }, {
-            test: /\.(woff|svg|eot|ttf)\??.*$/,
+            //test: /\.(woff|svg|eot|ttf)\??.*$/,
+            test: /\.(woff|eot|ttf)\??.*$/,
             loader: 'url?limit=51200&name=fonts/[name]_[hash:6].[ext]',
         }, {
+            test: /\.(svg)$/i,
+            loader: 'svg-sprite',
+            // 把 svgDirs 路径下的所有 svg 文件交给 svg-sprite-loader 插件处理
+            include: [
+                require.resolve('antd-mobile').replace(/warn\.js$/, ''), // 1. 属于 antd-mobile 内置 svg 文件
+                // path.resolve(__dirname, 'src/my-project-svg-foler'),  // 2. 自己私人的 svg 存放目录
+            ],  
+        },{
             test: /\.(png|jpg|gif)$/,
             loader: 'url?limit=4096&name=images/[name]_[hash:6].[ext]',
         }]
@@ -84,7 +93,12 @@ switch (env){
         config.output.publicPath = '/static/build/';
         config.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }));
         break;
-    
+
+    //开发环境1
+    case 1:
+    default:
+        break;
+   
     //开发环境 webpack-dev-server
     case 2:
     case 'hot':
@@ -93,11 +107,6 @@ switch (env){
         config.output.publicPath = 'http://localhost:8080/';
         config.devServer = { inline: true };
         config.plugins.push(new webpack.HotModuleReplacementPlugin());
-        break;
-    
-    //开发环境1
-    case 1:
-    default:
         break;
 }
 

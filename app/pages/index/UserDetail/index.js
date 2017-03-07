@@ -8,7 +8,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $alumni, $user, $admin } from 'stores';
 import { List, Button, Icon, Switch } from 'antd-mobile';
-import { Page, Img, Permission, ButtonWrap } from 'components';
+import { Img, Permission, ButtonWrap } from 'components';
 
 const prefixCls = 'pages-index__user-detail';
 const Item = List.Item;
@@ -174,10 +174,10 @@ export default class UserDetail extends React.Component {
                                                 is_hidden
                                                   ? <span className="text-mini text-default">(交换名片后可见)</span>
                                                   : is_format
-                                                      ? <span>{Const.getOptionLabel(i[5].format, i[1])}</span>
-                                                      : <span>{i[1]}</span>
+                                                      ? <span>{Const.getOptionLabel(i[5].format, i[1]) || '-'}</span>
+                                                      : <span>{i[1] || '-'}</span>
                                             }
-                                            {!is_hidden && is_tel && <Icon className="pull-right text-default" type="mobile" />}
+                                            {!is_hidden && is_tel && i[1] && <Icon className="pull-right text-default" type="mobile" />}
                                         </Item>
                                     );
                                 })
@@ -269,7 +269,7 @@ export default class UserDetail extends React.Component {
         const self = this.alumni_info;
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 {this.renderHead()}
                 {this.renderDetail()}
 
@@ -310,7 +310,7 @@ export default class UserDetail extends React.Component {
                 >
                     {this.renderQuit()}
                 </Permission>
-            </Page>
+            </div>
         );
     } 
 };

@@ -112,7 +112,7 @@ class store extends common {
 	async submit_auth(query, config) {
 		const { alumni_id } = query;
 
-		await Ajax('submit_alumni_auth', query, config);
+		await Ajax('do_submit_alumni_auth', query, config);
 
 		this.fetch_auth_list({ alumni_id });
 	}

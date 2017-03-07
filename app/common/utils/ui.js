@@ -8,6 +8,8 @@ import React from 'react';
 import { Toast, Modal } from 'antd-mobile';
 import { emojify } from 'react-emoji';
 
+const pageTransitionKeys = [];
+
 export default {
     /**
      * 普通请求成功后应调用此方法
@@ -64,8 +66,8 @@ export default {
      */
     emojify(value, style) {
         const config = {
-            host: 'http://localhost:8080',
-            path: './common/emoji',
+            //host: 'http://localhost:8080',
+            //path: './common/emoji',
             attributes: {
                 width: undefined,
                 height: undefined,
@@ -74,5 +76,43 @@ export default {
         };
 
         return emojify(value, config) || [];
+    },
+
+    /**
+     * 利用react-router的hash _k判断页面是进还是出，并记录
+     * @version 170302 1.0
+     * @param  {String} key       下一个页面路由
+     * @param  {String} action    `REPLACE` or other
+     * @param  {String} pathname  路由名称
+     * @return {Bool}   true为进，false为退
+     */
+    getPageTransition({ key, action, pathname }) {
+        if (key == '' || pathname == '') return false;
+
+        if (pathname == '/') {
+            pageTransitionKeys.push(key);
+            return false;
+
+        } else {
+
+            //router.replace一定是进
+            if (action == 'REPLACE') {
+                pageTransitionKeys[pageTransitionKeys.length - 1] = key;
+                return true;
+
+            } else {
+                if (
+                    pageTransitionKeys[pageTransitionKeys.length - 1] != key 
+                    && pageTransitionKeys[pageTransitionKeys.length - 2] != key
+                ) {
+                    pageTransitionKeys.push(key);
+                    return true;
+
+                } else {
+                    pageTransitionKeys.pop();
+                    return false;
+                }
+            }
+        }
     },
 };

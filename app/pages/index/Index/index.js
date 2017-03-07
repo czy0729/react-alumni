@@ -8,7 +8,6 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $alumni } from 'stores';
 import { Tabs, Icon } from 'antd-mobile';
-import { Page } from 'components';
 import Member from './member';
 import Event from './event';
 import './index.less';
@@ -18,10 +17,6 @@ const TabPane = Tabs.TabPane;
 
 @observer
 export default class IndexIndex extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.any,
-    };
-
     constructor() {
         super();
     }
@@ -35,26 +30,24 @@ export default class IndexIndex extends React.Component {
     }
 
     render() {
-        const { router } = this.context;
         const data = $alumni.getById(this.alumni_id);
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 {/*详情*/}
                 <div className={`${prefixCls}__head`}>
                     <Icon 
                         className={`${prefixCls}__btn-center`} 
                         type="ellipsis"
-                        onClick={() => router.push(`/${this.alumni_id}/center`)}
+                        onClick={() => Utils.router.push(Const.router.center({ alumni_id: this.alumni_id }))}
                     />
 
-                    <p className={`${prefixCls}__head_name`}>{data.school_name}</p>
-                    <p className={`${prefixCls}__head_desc`}>{data.name}</p>
+                    <p className={`${prefixCls}__head_name`}>{data.name}</p>
+                    <p className={`${prefixCls}__head_desc`}>{data.school_name}</p>
                     <p className={`${prefixCls}__head_sub`}>
                         {Utils.emojify(data.description, {
                             width: '.3rem',
                             height: '.3rem',
-                            margin: '0 .04rem',
                         })}
                     </p>
                 </div>
@@ -71,7 +64,7 @@ export default class IndexIndex extends React.Component {
                         <Event alumni_id={this.alumni_id} />
                     </TabPane>
                 </Tabs>
-            </Page>
+            </div>
         );
     } 
 };

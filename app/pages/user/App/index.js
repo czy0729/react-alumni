@@ -1,14 +1,14 @@
 /**
- * admin容器
- * @version 170123 1.0
+ * user分组容器
+ * @version 170228 1.0
  */
 'use strict';
 
 import React from 'react';
 
-const prefixCls = 'pages-admin__app';
+const prefixCls = 'pages-user__app';
 
-export default class AdminApp extends React.Component {
+export default class UserApp extends React.Component {
     constructor() {
         super();
     }

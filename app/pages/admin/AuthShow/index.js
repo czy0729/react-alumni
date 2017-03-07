@@ -8,7 +8,7 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $auth } from 'stores';
 import { List, Button } from 'antd-mobile';
-import { Page, Title, ButtonWrap, AppForm } from 'components';
+import { Title, ButtonWrap, AppForm } from 'components';
 import { generateFieldsConfig } from '../_utils';
 import './index.less';
 
@@ -95,7 +95,7 @@ export default class AdminAuthShow extends React.Component {
         const { form, onSubmit } = this.props;
 
         return (
-            <Page className={prefixCls}>
+            <div className={prefixCls}>
                 <Title>请设置已认证的校友可以查看其它校友的信息。不建议勾选重要或全部信息，没勾选或全部信息交换名片方可查看。</Title>
                 {this.renderForms()}
 
@@ -107,7 +107,7 @@ export default class AdminAuthShow extends React.Component {
                         保存
                     </Button>
                 </ButtonWrap>
-            </Page>
+            </div>
         );
     } 
 };

@@ -7,45 +7,50 @@
 import { Toast, Modal } from 'antd-mobile';
 import Utils from './utils';
 
+const _fetch = async (api, query) => {
+    const response = await fetch(`${Const.web}${api}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: Utils.getQueryStr({ access_token, ...query }),
+    });
+
+    const res = await response.json();
+    
+    return res;
+};
+
+/**
+ * POST
+ * @version 170306 1.0
+ * @param {String} *api
+ * @param {Object} query
+ * @param {Object} config -> `show`请求时显示Toast，`fail`服务器端请求结果失败自定义回调
+ */
 const P = (api, query = {}, config = {}) => {
-	const { show = true } = config;
+    return new Promise(async (resolve, reject) => {
+        const { show = true, fail } = config;
+        
+        show && Toast.loading('请求中...', 0);
 
-	return new Promise((resolve, reject) => {
-		show && Toast.loading('请求中...', 0);
+        const res = await _fetch(api, query);
 
-		fetch(`${Const.web}${api}`, {
-			method: 'POST',
-			headers: { 
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-			body: Utils.getQueryStr({
-				access_token,
-				...query,
-			}),
-		})
-			.then(response => response.json())
-			.then(res => {
-				show && Toast.hide();
+        show && Toast.hide();
 
-				if (res.code == 0) {
-					resolve(res.data);
-				} else {
-					//Modal.alert('请求失败', res.err);
-					reject(res);
-				}
-			})
-			.catch(ex => {
-				show && Toast.hide();
-                
-                //Modal.alert('请求失败', '服务器出错');
-				console.log('parsing failed', ex);
-			});
-	});
-};	
+        if (res.code != 0) {
+            const _fail = res => Utils.onAlert(`[${res.code}] ${res.err}`);
+
+            typeof fail === 'function' ? fail(res, _fail) : _fail(res);
+
+            reject(res);
+        }
+
+        resolve(res.data);
+    });
+};
 
 const map = {
-	/*================== 0 ==================*/
-	/**
+    /*================== 0 ==================*/
+    /**
      * 0.0 用户基本信息
      * @version 170201 1.0
      */
@@ -56,9 +61,36 @@ const map = {
      * @version 170206 1.0
      * @param {String} *data 图片base64
      */
-    upload_file               : '/common/upload/appUpload',
+    do_upload_file               : '/common/upload/appUpload',
 
-	/*================== 1 ==================*/
+    /*================== 1 ==================*/
+    /**
+     * 1.0 添加校友录
+     * @version 170305 1.0
+     * @param {String} *name        校友录名称
+     * @param {String} *school_name 学校名称
+     * @param {String} *description 描述
+     * @param {Base64} logo         校友录头像
+     */
+    add_alumni: '/alumni/createAlumni',
+
+    /**
+     * 1.1 填写个人认证信息
+     * @version 170305 1.0
+     * @param {String}  *alumni_id 校友录id
+     * @param {String}  real_name  真实姓名
+     * @param ...
+     */
+    do_alumni_auth: '/user/addUserInfo',
+
+    /**
+     * 1.2.0 用户经过分享连接进入到校友录 - 检查是否验证过校友录
+     * @version 170305 1.0
+     * @param  {String} *alumni_id 校友录id
+     * @return {Object}            -2第一次进来，-1被拒绝，0待认证，1已同意
+     */
+    do_check_alumni_auth_status: '/alumni/validateAlumniUser',
+
     /**
      * 1.2.1 邀请好友进入 获取校友录认证字段
      * @version 170219 1.0
@@ -66,17 +98,25 @@ const map = {
      */
     get_alumni_auth_fields    : '/user/getAlumniAuthentiField',
 
-	/*================== 2 校友录 ==================*/
+    /**
+     * 1.2.2 执行校友认证
+     * @version 170305 1.0
+     * @param {String} *alumni_id    校友录id
+     * @param {String} leave_message 留言
+     */
+    do_alumni_user_auth: '/user/alumnierAuthenti',
+
+    /*================== 2 校友录 ==================*/
     /**
      * 2.1.0 我的校友录列表
      * @version 170224 1.0
      */
     get_alumni_list: '/alumni/index',
 
-	/**
+    /**
      * 2.1.1 获取校友录基本信息
      * @version 170203 1.0
-     * @param {Int}	*alumni_id 校友录id
+     * @param {Int} *alumni_id 校友录id
      */
     get_alumni_info           : '/alumni/getAlumniById',
 
@@ -84,8 +124,8 @@ const map = {
      * 2.1.2 修改校友录基本信息
      * @version 170207 1.0
      * @param {Int}    *alumni_id  校友录id
-     * @param {String} logo 	   校友录头像
-     * @param {String} name 	   校友录名称
+     * @param {String} logo        校友录头像
+     * @param {String} name        校友录名称
      * @param {String} school_name 学校名称
      * @param {String} description 描述
      */
@@ -115,10 +155,19 @@ const map = {
     do_exchange_card          : '/alumni/exchangeCard',
 
     /**
+     * 2.1.6 设置用户所在校友录身份
+     * @version 170305 1.0
+     * @param {Int} *alumni_id         校友录id
+     * @param {Int} *user_id           用户id
+     * @param {Int} *identity_type_ids 身份id
+     */
+    update_user_identity: '/alumni/setIdentity',
+
+    /**
      * 2.1.7 设置或取消管理员授权
      * @version 170211 1.0
-     * @param {Int} *alumni_id 	校友录id
-     * @param {Int} *user_id 	用户id
+     * @param {Int} *alumni_id     校友录id
+     * @param {Int} *user_id     用户id
      * @param {Int} *is_manager 1设置为管理员,0取消管理员
      */
     update_admin_list         : '/alumni/setAlumniUser',
@@ -163,7 +212,7 @@ const map = {
      * @param {Int} *notice_id 通知id
      * @param {Int} *status    同意状态1同意 -1拒绝
      */
-    submit_alumni_auth        : '/alumni/allowOrDenyAlumni',
+    do_submit_alumni_auth        : '/alumni/allowOrDenyAlumni',
 
     /**
      * 2.2.3 设置用户备注名
