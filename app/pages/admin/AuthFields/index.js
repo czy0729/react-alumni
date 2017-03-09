@@ -1,7 +1,7 @@
 /**
  * 认证需填写字段
  * @version 170219 1.0
- * @version 170307 1.1 判断是否来源于#/add_alumni/
+ * @version 170307 1.1 判断来源add_alumni
  */
 'use strict';
 
@@ -10,7 +10,6 @@ import { form, observer } from 'decorators';
 import { $auth } from 'stores';
 import { List, Button } from 'antd-mobile';
 import { Title, ButtonWrap, AppForm } from 'components';
-import { generateFieldsConfig } from '../_utils';
 import './index.less';
 
 const prefixCls = 'pages-admin__auth-fields';
@@ -25,9 +24,7 @@ export default class AdminAuthFields extends React.Component {
     }
 
     componentDidMount() {
-    	$auth.fetch_auth_fields({ alumni_id: this.alumni_id });
-
-        console.log(this.is_from_add_alumni)
+        $auth.fetch_auth_fields({ alumni_id: this.alumni_id });
     }
 
     async handleSubmit(values) {
@@ -36,14 +33,25 @@ export default class AdminAuthFields extends React.Component {
             ...values,
         });
 
-        Utils.onSuccess();
+        switch (this.query.from) {
+            case 'add_alumni':
+                Utils.router.replace({
+                    pathname: Const.router.admin_auth_show({ alumni_id: this.alumni_id }),
+                    query: this.query,
+                });
+                break;
+
+            default:
+                Utils.onSuccess();
+                break;
+        }
     }
 
     get alumni_id() {
         return this.props.params.alumni_id;
     }
 
-    get is_from_add_alumni() {
+    get query() {
         return this.props.location.query;
     }
 
@@ -51,7 +59,7 @@ export default class AdminAuthFields extends React.Component {
         const { form } = this.props;
         const data = $auth.getById(this.alumni_id, 'auth_fields');
 
-        return generateFieldsConfig(data).map((item, index) => (
+        return Utils.generateFieldsConfig(data).map((item, index) => (
             <AppForm 
                 key={index}
                 renderHeader={() => (
@@ -108,22 +116,40 @@ export default class AdminAuthFields extends React.Component {
         );
     }
 
-    render() {
+    renderBtn() {
         const { form, onSubmit } = this.props;
+        let text;
 
+        switch (this.query.from) {
+            case 'add_alumni':
+                text = '下一步 (2/4)';
+                break;
+
+            default: 
+                text = '保存';
+                break;
+        }
+
+        return (
+            <ButtonWrap>
+                <Button 
+                    type="primary" 
+                    onClick={(e) => onSubmit(e, form, this.handleSubmit)}
+                >
+                    {text}
+                </Button>
+            </ButtonWrap>
+        );
+    }
+
+    render() {
         return (
             <div className={prefixCls}>
                 <Title>请设置加入该校友录的校友需要填写的个人信息。</Title>
+
                 {this.renderForms()}
 
-                <ButtonWrap>
-                    <Button 
-                        type="primary" 
-                        onClick={(e) => onSubmit(e, form, this.handleSubmit)}
-                    >
-                        保存
-                    </Button>
-                </ButtonWrap>
+                {this.renderBtn()}
             </div>
         );
     } 

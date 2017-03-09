@@ -14,6 +14,11 @@ const _fetch = async (api, query) => {
         body: Utils.getQueryStr({ access_token, ...query }),
     });
 
+    /*const response = await fetch(`./api${api}.json`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    });*/
+
     const res = await response.json();
     
     return res;

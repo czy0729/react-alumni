@@ -80,13 +80,13 @@ export default class AdminNotice extends React.Component {
                         name="title"
                         placeholder="请输入标题"
                         initialValue={data.title}
-                        option={Const.required}
+                        option={Const.rules.required}
                     />
                     <AppForm.Textarea
                         name="content"
                         placeholder="请输入正文"
                         initialValue={data.content}
-                        option={Const.required}
+                        option={Const.rules.required}
                         rows={10}
                         count={500}
                         emoji

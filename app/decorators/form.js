@@ -30,9 +30,14 @@ function formDecorator(ComposedComponent) {
             /**
              * 验证返回的err是false时，执行next
              * @version 170205 1.0
+             * @version 170310 1.1 #todo 验证错误并自动滚动到错误项的y轴位置
              */
-            onOk(err, values, next = () => {}) {
-                if (err) return false;
+            onOk(err, values, form, next = () => {}) {
+                if (err) {
+                    console.log(err)
+                    //console.log(form.getFieldInstance('real_name').refs.input.getBoundingClientRect())
+                    return false;
+                }
 
                 next(values);
             }
@@ -43,7 +48,7 @@ function formDecorator(ComposedComponent) {
              */
             onSubmit(e, form, next = () => {}) {
                 this.onValidate(e, form, (err, values) => {
-                    this.onOk(err, values, next);
+                    this.onOk(err, values, form, next);
                 });
             }
             

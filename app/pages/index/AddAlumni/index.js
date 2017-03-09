@@ -20,22 +20,14 @@ export default class AddAlumni extends React.Component {
         Utils.binds(this, ['doAdd']);
     }
 
-    componentDidMount() {
-        Utils.router.push({
-            pathname: Const.router.admin_auth_fields({ alumni_id: 137 }),
-            query: {
-                from: 'add_alumni',
-            },
-        });
-    }
-
     async doAdd(values) {
         const { alumni_id } = await $alumni.add(values);
 
         Utils.router.push({
             pathname: Const.router.admin_auth_fields({ alumni_id }),
-            query: { modal: true },
-            state: { fromDashboard: true }
+            query: {
+                from: 'add_alumni',
+            },
         });
     }
 
@@ -44,7 +36,6 @@ export default class AddAlumni extends React.Component {
 
         return (
             <div className={prefixCls}>
-                {/*标题*/}
                 <div className="tool-block" style={{ height: '30vw' }}>
                     <h1 className="text-primary">新建校友录</h1>
                 </div>
@@ -56,12 +47,12 @@ export default class AddAlumni extends React.Component {
                     <AppForm.Input
                         name="name"
                         placeholder="校友录名称"
-                        option={Const.required}
+                        option={Const.rules.required}
                     />
                     <AppForm.Input
                         name="school_name"
                         placeholder="学校名称"
-                        option={Const.required}
+                        option={Const.rules.required}
                     />
                     <AppForm.Textarea
                         name="description"
@@ -76,7 +67,7 @@ export default class AddAlumni extends React.Component {
                         form="form"
                         htmlType="submit"
                     >
-                        下一步(1/4)
+                        下一步 (1/4)
                     </Button>
                 </ButtonWrap>
             </div>

@@ -50,11 +50,13 @@ class store {
     		  		[key]: {
     		  			...this.state[key],
     		  			...data,
+    		  			_loaded: true,
     		  		},
     		    }
     		  : {
     		  		...this.state,
     		  		...data,
+    		  		_loaded: true,
     		    }
     	});
 	}

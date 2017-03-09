@@ -70,6 +70,34 @@ export default {
     },
 
     /**
+     * 简单验证
+     * @version 160427 1.1
+     * @version 160620 1.2 [+] 6位数字验证码
+     * @version 160819 2.0 [+] {String} type
+     * @version 160819 2.1 [+] 微信号 [-] {Number} type
+     * @param {Mixed} str 检验值
+     * @param {String} type 检验类型
+     * @return {Boolean}
+     */
+    validate(str, type) {
+        const patrn = {
+            email   : /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,    //邮件
+            mobile  : /^1\d{10}$/,                                      //手机号
+            phone   : /^\d{3,4}[-]\d{7,8}$/,                            //固话
+            number  : /^\d*$/,                                          //数字
+            decimal : /^[-]{0,1}(\d+)[\.]+(\d+)$/,                      //带小数的数字格式，可为负数
+            money   : /^[0-9]+[\.][0-9]{0,2}$/,                         //金额格式，格式定义为带小数的正数，小数点后最多两位
+            zh      : /^([\u4e00-\u9fa5]){2,7}$/,                       //中文2-7位
+            captcha : /^\d{6}$/,                                        //6位数字验证码
+            wechat  : /^[a-zA-Z\d_\-]{5,}$/,                            //微信号
+        };
+
+        if (!type || !patrn[type]) return false;
+
+        return patrn[type].test(str);
+    },
+
+    /**
      * 时间戳距离现在时间的描述
      * @version 170217 1.0
      * @param  {String} timestamp 时间戳

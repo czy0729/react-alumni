@@ -16,7 +16,7 @@ const AppForm = (props) => {
 	const { 
 		form, onSubmit,
 		id = 'form', renderHeader,
-		className, children, ...other
+		className, children, ...other,
 	} = props;
 
 	return (
@@ -47,9 +47,11 @@ AppForm.propTypes = {
 	form: React.PropTypes.object.isRequired,
 };
 
-AppForm.Input    = require('./input');
-AppForm.Radio    = require('./radio');
-AppForm.Textarea = require('./textarea');
-AppForm.Upload   = require('./upload');
+AppForm.DatePicker = require('./DatePicker');
+AppForm.Input      = require('./Input');
+AppForm.Picker     = require('./Picker');
+AppForm.Radio      = require('./Radio');
+AppForm.Textarea   = require('./Textarea');
+AppForm.Upload     = require('./Upload');
 
 export default AppForm;

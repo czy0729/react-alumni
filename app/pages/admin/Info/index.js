@@ -52,19 +52,19 @@ export default class AdminInfo extends React.Component {
                 		name="logo"
                 		title="图标"
                 		initialValue={data.logo}
-                        option={Const.required}
+                        option={Const.rules.required}
                 	/>
                     <AppForm.Input
                         name="name"
                         title="名称"
                         initialValue={data.name}
-                        option={Const.required}
+                        option={Const.rules.required}
                     />
                     <AppForm.Input
                         name="school_name"
                         title="学校"
                         initialValue={data.school_name}
-                        option={Const.required}
+                        option={Const.rules.required}
                     />
                     <AppForm.Textarea
                         name="description"

@@ -1,6 +1,7 @@
 /**
  * 认证需填写字段
  * @version 170220 1.0
+ * @version 170307 1.1 判断来源add_alumni
  */
 'use strict';
 
@@ -9,7 +10,6 @@ import { form, observer } from 'decorators';
 import { $auth } from 'stores';
 import { List, Button } from 'antd-mobile';
 import { Title, ButtonWrap, AppForm } from 'components';
-import { generateFieldsConfig } from '../_utils';
 import './index.less';
 
 const prefixCls = 'pages-admin__auth-show';
@@ -24,21 +24,40 @@ export default class AdminAuthShow extends React.Component {
     }
 
     componentDidMount() {
-        $auth.fetch_auth_fields({ alumni_id: this.alumni_id });
-    	$auth.fetch_show_fields({ alumni_id: this.alumni_id });
+        const { alumni_id } = this;
+
+        $auth.fetch_auth_fields({ alumni_id });
+    	$auth.fetch_show_fields({ alumni_id });
     }
 
     async handleSubmit(values) {
+        const { alumni_id } = this;
+
         await $auth.update_show_fields({
-            alumni_id: this.alumni_id,
+            alumni_id,
             ...values,
         });
 
-        Utils.onSuccess();
+        switch (this.query.from) {
+            case 'add_alumni':
+                Utils.router.replace({
+                    pathname: Const.router.auth({ alumni_id }),
+                    query: this.query,
+                });
+                break;
+
+            default:
+                Utils.onSuccess();
+                break;
+        }
     }
 
     get alumni_id() {
         return this.props.params.alumni_id;
+    }
+
+    get query() {
+        return this.props.location.query;
     }
 
     renderForms() {
@@ -46,7 +65,7 @@ export default class AdminAuthShow extends React.Component {
         const dataShowFields = $auth.getById(this.alumni_id, 'show_fields');
         const dataAuthFields = $auth.getById(this.alumni_id, 'auth_fields');
 
-        return generateFieldsConfig(dataShowFields).map((item, index) => {
+        return Utils.generateFieldsConfig(dataShowFields).map((item, index) => {
             const items = [];
 
             item.forEach((i, idx) => {
@@ -91,22 +110,42 @@ export default class AdminAuthShow extends React.Component {
         });
     }
 
+    renderBtn() {
+        const { form, onSubmit } = this.props;
+        let text;
+
+        switch (this.query.from) {
+            case 'add_alumni':
+                text = '下一步 (3/4)';
+                break;
+
+            default: 
+                text = '保存';
+                break;
+        }
+
+        return (
+            <ButtonWrap>
+                <Button 
+                    type="primary" 
+                    onClick={(e) => onSubmit(e, form, this.handleSubmit)}
+                >
+                    {text}
+                </Button>
+            </ButtonWrap>
+        );
+    }
+
     render() {
         const { form, onSubmit } = this.props;
 
         return (
             <div className={prefixCls}>
                 <Title>请设置已认证的校友可以查看其它校友的信息。不建议勾选重要或全部信息，没勾选或全部信息交换名片方可查看。</Title>
+                
                 {this.renderForms()}
 
-                <ButtonWrap>
-                    <Button 
-                        type="primary" 
-                        onClick={(e) => onSubmit(e, form, this.handleSubmit)}
-                    >
-                        保存
-                    </Button>
-                </ButtonWrap>
+                {this.renderBtn()}
             </div>
         );
     } 

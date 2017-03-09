@@ -100,19 +100,33 @@
 
 .slide-left {
 	&-enter {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
 		z-index: 99;
+        overflow: hidden;
 	    animation: left-in .6s cubic-bezier(0.23, 1, 0.320, 1);
 	}
 	&-leave {
+        position: relative;
 	    animation: left-out .6s cubic-bezier(0.23, 1, 0.320, 1);
 	}
 }
 .slide-right {
 	&-enter {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
 		z-index: 99;
+        overflow: hidden;
 	    animation: right-in .6s cubic-bezier(0.23, 1, 0.320, 1);
 	}
 	&-leave {
+        position: relative;
 	    animation: right-out .6s cubic-bezier(0.23, 1, 0.320, 1);
 	}
 }

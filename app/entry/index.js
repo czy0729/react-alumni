@@ -24,6 +24,7 @@ ReactDOM.render((
                 <Route path="notice_list"          component={require('pages/index/NoticeList')}   title="通知"           />
                 <Route path="notice/:notice_id"    component={require('pages/index/Notice')}       title="通知正文"       />
                 <Route path="user_detail/:user_id" component={require('pages/index/UserDetail')}   title="用户详情"       />
+                <Route path="auth"                component={require('pages/index/Auth')}         title="校友认证"       />
             </Route>
             
             {/*个人相关页面*/}

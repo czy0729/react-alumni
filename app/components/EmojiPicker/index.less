@@ -2,58 +2,58 @@
 @import '~styles/mixin';
 
 .components__emoji-picker {
-	&__full {
-		position: fixed;
-		z-index: 149;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-	}
-	&__items {
-		position: fixed;
-		z-index: 150;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		display: flex;
-		flex-wrap: wrap;
-		max-height: 50vw;
-		padding: @md @sm;
-		background: #fff;
-		box-shadow: 0 0 .24rem rgba(0,0,0,.1);
-		transform: translate3d(0,100%,0);
-		transition: all 250ms ease-in-out;
-		overflow-y: scroll;
+    &__full {
+        position: fixed;
+        z-index: 149;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    &__items {
+        position: fixed;
+        z-index: 150;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-wrap: wrap;
+        max-height: 50vw;
+        padding: @md @sm;
+        background: #fff;
+        box-shadow: 0 0 .24rem rgba(0,0,0,.1);
+        transform: translate3d(0,100%,0);
+        transition: all 250ms ease-in-out;
+        overflow-y: scroll;
 
-		&&_open {
-			transform: translate3d(0,0,0);
-		}
-	}
-	&__item {
-		width: .64rem;
-		height: .64rem;
-		margin: .08rem;
-	}
-	&__btn-toggle {
-		position: absolute;
-		z-index: 150;
-		top: 50%;
-		right: 0;
-		.flex-center;
-		padding: @sm;
-		background: @color-bg;
-		border-radius: 50% 0 0 50%; 
-		opacity: .5;
-		transform: translate3d(0,-50%,0);
-		transition: all 250ms ease-in-out;
-	
-		&&_active {
-			opacity: 1;
-		}
-		img {
-			width: .56rem;
-			height: .56rem;
-		}
-	}
+        &&_open {
+            transform: translate3d(0,0,0);
+        }
+    }
+    &__item {
+        width: .64rem;
+        height: .64rem;
+        margin: .08rem;
+    }
+    &__btn-toggle {
+        position: absolute;
+        z-index: 150;
+        top: 50%;
+        right: 0;
+        .flex-center;
+        padding: @sm;
+        background: @color-bg;
+        border-radius: 50% 0 0 50%; 
+        opacity: .5;
+        transform: translate3d(0,-50%,0);
+        transition: all 250ms ease-in-out;
+    
+        &&_active {
+            opacity: 1;
+        }
+        img {
+            width: .56rem;
+            height: .56rem;
+        }
+    }
 }
