@@ -27,6 +27,7 @@ const _fetch = async (api, query) => {
 /**
  * POST
  * @version 170306 1.0
+ * @version 170313 1.1 loading处理方式改变，showToast换成loading Button形式
  * @param {String} *api
  * @param {Object} query
  * @param {Object} config -> `show`请求时显示Toast，`fail`服务器端请求结果失败自定义回调
@@ -34,17 +35,20 @@ const _fetch = async (api, query) => {
 const P = (api, query = {}, config = {}) => {
     return new Promise(async (resolve, reject) => {
         const { show = true, fail } = config;
-        
-        show && Toast.loading('请求中...', 0);
+        const { $app } = require('../stores');
 
-        const res = await _fetch(api, query);
+        const isSubmitApi = api.indexOf('get_') !== 0;
 
-        show && Toast.hide();
+        isSubmitApi && $app.loading();
+
+        const res = await _fetch(map[api], query);
+
+        isSubmitApi && $app.loading(false);
 
         if (res.code != 0) {
             const _fail = res => Utils.onAlert(`[${res.code}] ${res.err}`);
 
-            typeof fail === 'function' ? fail(res, _fail) : _fail(res);
+            //typeof fail === 'function' ? fail(res, _fail) : _fail(res);
 
             reject(res);
         }
@@ -80,7 +84,7 @@ const map = {
     add_alumni: '/alumni/createAlumni',
 
     /**
-     * 1.1 填写个人认证信息
+     * 填写创建者个人信息并完成校友录创建
      * @version 170305 1.0
      * @param {String}  *alumni_id 校友录id
      * @param {String}  real_name  真实姓名
@@ -316,12 +320,12 @@ const map = {
 
     /**
      * 2.7.1 获取待认证用户列表
-     * 见：2.2.0 通知栏--用户收到的通知列表
+     * 见2.2.0
      */
 
     /**
      * 2.7.2 获取校友录已有的认证信息
-     * 见：1.2.1
+     * 见1.2.1
      */
 
     /**
@@ -346,6 +350,27 @@ const map = {
      * @param {Int} ...is_show_mobile 如：上个接口的参数
      */
     update_alumni_show_fields : '/alumni/updateAuthentiShow',
+
+
+    /*================== 3 个人中心 ==================*/
+    /**
+     * [$user] 3.0.0 修改我的名片
+     * @version 170313 1.0
+     * 见1.1
+     */
+    update_user_info: '/user/updateUserInfo',
+
+    /**
+     * 3.1.0 名片库
+     * @version 170313 1.0
+     */
+    get_cards: '/cards/index',
+
+    /**
+     * 3.2.0 黑名单
+     * @version 170313 1.0
+     */
+    get_blacklist: '/user/blackUserLists',
 };
 
-export default (api, ...arg) => P(map[api], ...arg);
+export default (api, ...arg) => P(api, ...arg);

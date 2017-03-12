@@ -6,7 +6,7 @@
 
 import React from 'react';
 const { CSSTransitionGroup } = React.addons;
-import stores, { $user } from 'stores';
+import stores, { $app } from 'stores';
 import { TabBar, Icon } from 'antd-mobile';
 import { Page } from 'components';
 import Tabbar from '../Tabbar';

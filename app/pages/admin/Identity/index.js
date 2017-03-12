@@ -21,7 +21,7 @@ export default class AdminIdentity extends React.Component {
     }
 
     componentDidMount() {
-    	$identity.fetch({ alumni_id: this.alumni_id });
+        $identity.fetch({ alumni_id: this.alumni_id });
     }
 
     async doAdd(name) {

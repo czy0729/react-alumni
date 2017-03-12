@@ -11,14 +11,14 @@ import './index.less';
 const prefixCls = 'components__page';
 
 const Page = ({ className, children, ...other }) => {
-	return (
-		<div 
-			className={classNames(prefixCls, className)}
-			{...other}
-		>
-			{children}
-		</div>
-	);
+    return (
+        <div 
+            className={classNames(prefixCls, className)}
+            {...other}
+        >
+            {children}
+        </div>
+    );
 }
 
 export default Page;

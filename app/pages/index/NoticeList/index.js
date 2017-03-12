@@ -14,7 +14,7 @@ const prefixCls = 'pages-index__notice-list';
 
 @observer
 export default class NoticeList extends React.Component {
-	static contextTypes = {
+    static contextTypes = {
         router: React.PropTypes.any,
     };
 
@@ -31,7 +31,7 @@ export default class NoticeList extends React.Component {
     }
 
     render() {
-    	const { router } = this.context;
+        const { router } = this.context;
         const data = $notice.getById(this.alumni_id, 'list');
         const data_alumni = $alumni.getById(this.alumni_id);
 
@@ -58,11 +58,11 @@ export default class NoticeList extends React.Component {
                             arrow="horizontal"
                             onClick={() => router.push(`/${this.alumni_id}/notice/${rowData.notice_id}/`)}
                         >
-                        	<p>{rowData.title}</p>
-                    		<p className="mt-space text-mini text-default">
-                    			<span>{rowData.nickname}</span>
-                    			<span className="ml-sm">{Utils.lastDate(rowData.ctime)}</span>
-                    		</p>
+                            <p>{rowData.title}</p>
+                            <p className="mt-space text-mini text-default">
+                                <span>{rowData.nickname}</span>
+                                <span className="ml-sm">{Utils.lastDate(rowData.ctime)}</span>
+                            </p>
                         </List.Item>
                     )}
                 />

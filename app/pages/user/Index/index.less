@@ -1,0 +1,32 @@
+@import '~styles/var';
+@import '~styles/mixin';
+
+.pages-user__index {
+    &__top {
+    	position: relative;
+    	height: 50vw;
+    	padding: 34vw @wind @space;
+		.bg-gradient(@color-bg 40%, #fff 40%);
+
+		.components__img {
+	    	position: absolute;
+	    	top: 40%;
+	    	left: @wind;
+	    	width: 20vw;
+	    	height: 20vw;
+	    	border-radius: 50%;
+	    	transform: translateY(-50%);
+	    }
+	    p {
+	    	font-size: @font-size-heading;
+	    }
+    }
+    
+    &__menu {
+    	margin-top: @distance;
+
+    	.anticon {
+    		color: @color-primary;
+    	}
+    }
+}

@@ -32,7 +32,7 @@ const AppFormPicker = (props) => {
             })}
         >
             <List.Item 
-                className={`${prefixCls}__list-item`} 
+                className={classNames(`${prefixCls}__list-item`, _utils.getFormItemCls(name))} 
                 arrow="horizontal"
             >
                 {title && _utils.getLabelDecorator(option)(title)}

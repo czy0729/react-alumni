@@ -62,7 +62,11 @@ export default {
     },
 
     /**
+     * 格式化emoji字符串
      * @version 170218 1.0
+     * @param  {String}   *value 带有emoji符号的字符串
+     * @param  {Object}   style  格式化后<img />的样式
+     * @return {Elements}
      */
     emojify(value, style) {
         const config = {
@@ -115,4 +119,25 @@ export default {
             }
         }
     },
+
+    /**
+     * 滚动到指定y轴坐标
+     * @version 170312 1.0
+     * @param {Int} y 文档y轴坐标
+     */
+    scrollTo(y = 0) {
+        const timer = setInterval(() => {
+            //获取滚动条的滚动高度
+            const osTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+            //用于设置速度差，产生缓动的效果
+            const speed = Math.floor(- osTop / 6);
+
+            //控制新滚动高度一定不能小于y
+            const limit = osTop + speed <= y ? y : osTop + speed;
+            document.documentElement.scrollTop = document.body.scrollTop = limit;
+
+            if (osTop <= y) clearInterval(timer);
+        }, 30);
+    }
 };

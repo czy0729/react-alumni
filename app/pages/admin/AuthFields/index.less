@@ -2,48 +2,48 @@
 @import '~styles/mixin';
 
 .pages-admin__auth-fields {
-	&__radios {
-		position: relative;
-		.flex-center;
-		float: right;
-		width: 2rem;
-		height: .68rem;
+    &__radios {
+        position: relative;
+        .flex-center;
+        float: right;
+        width: 2rem;
+        height: .68rem;
 
-		.am-radio-item {
-			flex: 1;
-			width: .68rem;
-			height: .92rem;
-			padding-left: 0;
-			background: @color-primary-light;
+        .am-radio-item {
+            flex: 1;
+            width: .68rem;
+            height: .92rem;
+            padding-left: 0;
+            background: @color-primary-light;
 
-			&:last-child .am-radio:before {
-				display: block;
-			    position: absolute;
-			    content: '';
-			    top: 25%;
-			    bottom: 25%;
-			    right: auto;
-			    left: auto;
-			    height: 50%;
-			    border-right: 1PX solid tint(@color-primary, 70%);
-			    transform: scaleX(.5);
-			}
-		}
-		.am-list-line:after {
-			content: initial !important;
-		}
-	}
+            &:last-child .am-radio:before {
+                display: block;
+                position: absolute;
+                content: '';
+                top: 25%;
+                bottom: 25%;
+                right: auto;
+                left: auto;
+                height: 50%;
+                border-right: 1PX solid tint(@color-primary, 70%);
+                transform: scaleX(.5);
+            }
+        }
+        .am-list-line:after {
+            content: initial !important;
+        }
+    }
 
-	&__form-header {
-		div {
-			display: flex;
-			float: right;
-			width: 2rem;
-			color: @color-primary-hover;
-		}
-		span {
-			flex: 1;
-			text-align: center;
-		}
-	}
+    &__form-header {
+        div {
+            display: flex;
+            float: right;
+            width: 2rem;
+            color: @color-primary-hover;
+        }
+        span {
+            flex: 1;
+            text-align: center;
+        }
+    }
 }

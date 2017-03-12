@@ -1,5 +1,10 @@
 @import './var';
 
+//170312 渐变
+.bg-gradient(@color1, @color2, @position: bottom) {
+    background-image: linear-gradient(to @position, @color1, @color2);
+}
+
 //170307 GPU加速
 .Z() {
     transform: translateZ(0);

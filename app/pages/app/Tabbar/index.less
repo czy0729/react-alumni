@@ -2,35 +2,35 @@
 @import '~styles/mixin';
 
 .pages-app__tabbar {
-	.am-tab-bar-bar {
-		height: .88rem;
+    .am-tab-bar-bar {
+        height: .88rem;
 
-		.anticon {
-	        font-size: .34rem;
-	    }
-	}
+        .anticon {
+            font-size: .34rem;
+        }
+    }
 
-	&__btn-toggle {
-		position: fixed;
-		.flex-center;
-		z-index: 101;
-		right: 7%;
-		bottom: 0;
-		width: 11%;
-		height: .4rem;
-		color: @color-default;
-		background: #fff;
-		border: 1PX solid @color-border;
-		border-bottom: 0;
-		border-radius: @radius-md @radius-md 0 0;
-		transform: translate3D(0,100%,0);
-		transition: all .2s; 
+    &__btn-toggle {
+        position: fixed;
+        .flex-center;
+        z-index: 101;
+        right: 7%;
+        bottom: 0;
+        width: 11%;
+        height: .4rem;
+        color: @color-default;
+        background: #fff;
+        border: 1PX solid @color-border;
+        border-bottom: 0;
+        border-radius: @radius-md @radius-md 0 0;
+        transform: translate3D(0,100%,0);
+        transition: all .2s; 
 
-		&_active {
-			transform: translateZ(0);
-		}
-		.anticon {
-	        font-size: .24rem;
-	    }
-	}
+        &_active {
+            transform: translateZ(0);
+        }
+        .anticon {
+            font-size: .24rem;
+        }
+    }
 }

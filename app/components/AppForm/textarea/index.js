@@ -74,7 +74,7 @@ export default class AppFormTextarea extends React.Component {
                     initialValue,
                     option,
                 })}
-                className={classNames(prefixCls, className, {
+                className={classNames(prefixCls, _utils.getFormItemCls(name), className, {
                     [`${prefixCls}__textarea_emoji`]: emoji,
                 })}
                 title={title && _utils.getLabelDecorator(option)(title)}

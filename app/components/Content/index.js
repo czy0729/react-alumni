@@ -12,37 +12,37 @@ import './index.less';
 const prefixCls = 'components__content';
 
 const Content = (props) => {
-	const { className, value, ...other } = props;
+    const { className, value, ...other } = props;
 
     return (
-    	<div 
-    		className={classNames(prefixCls, className)}
-    		{...other}
-    	>
-    		{
-    			Utils.emojify(value).map((item) => {
-			        if (typeof item !== 'string') return item;
+        <div 
+            className={classNames(prefixCls, className)}
+            {...other}
+        >
+            {
+                Utils.emojify(value).map((item) => {
+                    if (typeof item !== 'string') return item;
 
-			        if (item.indexOf('\n') === -1) {
-			            return item;
+                    if (item.indexOf('\n') === -1) {
+                        return item;
 
-			        } else {
-			            const temp = [];
+                    } else {
+                        const temp = [];
 
-			            item.split('\n').forEach((i, idx) => {
-			                if (idx == 0) {
-			                    i !== '' && temp.push(i);
-			                } else {
-			                    temp.push(<br />);
-			                    i !== '' && temp.push(i)
-			                }
-			            });
+                        item.split('\n').forEach((i, idx) => {
+                            if (idx == 0) {
+                                i !== '' && temp.push(i);
+                            } else {
+                                temp.push(<br />);
+                                i !== '' && temp.push(i)
+                            }
+                        });
 
-			            return temp;
-			        }
-			    })
-    		}
-    	</div>
+                        return temp;
+                    }
+                })
+            }
+        </div>
     );
 };
 

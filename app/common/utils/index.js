@@ -11,7 +11,7 @@ import { createHashHistory } from 'history';
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });*/
 
 export default {
-	...require('./cache'),
+    ...require('./cache'),
     ...require('./tool'),
     ...require('./ui'),
     ...require('./addOn'),

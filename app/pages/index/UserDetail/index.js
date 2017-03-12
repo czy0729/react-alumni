@@ -22,7 +22,7 @@ export default class UserDetail extends React.Component {
     }
 
     componentDidMount() {
-    	this.initFetch();
+        this.initFetch();
     }
 
     initFetch() {

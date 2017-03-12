@@ -13,38 +13,38 @@ import './index.less';
 const prefixCls = 'components__app-form';
 
 const AppForm = (props) => {
-	const { 
-		form, onSubmit,
-		id = 'form', renderHeader,
-		className, children, ...other,
-	} = props;
+    const { 
+        form, onSubmit,
+        id = 'form', renderHeader,
+        className, children, ...other,
+    } = props;
 
-	return (
-		<form 
-			className={classNames(prefixCls, className, {
-				[`${prefixCls}_has-header`]: !!renderHeader,
-			})}
-			id={id}
-			onSubmit={onSubmit}
-		>
-			<List 
-				renderHeader={renderHeader}
-				{...other}
-			>
-				{
-					React.Children.map(children, (item, idx) =>
-						React.cloneElement(item, {
-							key: `${prefixCls}-${idx}`,
-							form
-						}))
-				}
-			</List>
-		</form>
-	);
+    return (
+        <form 
+            className={classNames(prefixCls, className, {
+                [`${prefixCls}_has-header`]: !!renderHeader,
+            })}
+            id={id}
+            onSubmit={onSubmit}
+        >
+            <List 
+                renderHeader={renderHeader}
+                {...other}
+            >
+                {
+                    React.Children.map(children, (item, idx) =>
+                        React.cloneElement(item, {
+                            key: `${prefixCls}-${idx}`,
+                            form
+                        }))
+                }
+            </List>
+        </form>
+    );
 };
 
 AppForm.propTypes = {
-	form: React.PropTypes.object.isRequired,
+    form: React.PropTypes.object.isRequired,
 };
 
 AppForm.DatePicker = require('./DatePicker');

@@ -12,18 +12,18 @@ import './index.less';
 const prefixCls = 'components__img';
 
 const AppImg = (props) => {
-	const { src, size, empty, style, className, ...other } = props;
+    const { src, size, empty, style, className, ...other } = props;
 
-	return (
-		<div 
-		    className={classNames(prefixCls, className)} 
-		    style={size
-	          ? { width: size, height: size, backgroundImage: `url(${Utils.getAppImgUrl(src) || empty})`, ...style }
-	          : { backgroundImage: `url(${Utils.getAppImgUrl(src) || empty})`, ...style }
-		    }
-		    {...other}
-		/>
-	);
+    return (
+        <div 
+            className={classNames(prefixCls, className)} 
+            style={size
+              ? { width: size, height: size, backgroundImage: `url(${Utils.getAppImgUrl(src) || empty})`, ...style }
+              : { backgroundImage: `url(${Utils.getAppImgUrl(src) || empty})`, ...style }
+            }
+            {...other}
+        />
+    );
 };
 
 export default AppImg;

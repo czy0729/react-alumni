@@ -12,15 +12,15 @@ import './index.less';
 const prefixCls = 'components__title';
 
 const Title = ({ className, children, ...other }) => {
-	return (
-		<div 
-			className={classNames(prefixCls, className)}
-			{...other}
-		>
-			<Icon type="exclamation-circle-o" />
-			<span> {children}</span>
-		</div>
-	);
+    return (
+        <div 
+            className={classNames(prefixCls, className)}
+            {...other}
+        >
+            <Icon type="exclamation-circle-o" />
+            <span> {children}</span>
+        </div>
+    );
 }
 
 export default Title;

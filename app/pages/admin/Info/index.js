@@ -22,16 +22,16 @@ export default class AdminInfo extends React.Component {
     }
 
     componentDidMount() {
-    	$alumni.fetch({ alumni_id: this.alumni_id });
+        $alumni.fetch({ alumni_id: this.alumni_id });
     }
 
     async doUpdate(values) {
-    	await $alumni.update({
-    		alumni_id: this.alumni_id,
-    		...values,
-    	});
+        await $alumni.update({
+            alumni_id: this.alumni_id,
+            ...values,
+        });
 
-    	Utils.onSuccess();
+        Utils.onSuccess();
     }
 
     get alumni_id() {
@@ -45,15 +45,14 @@ export default class AdminInfo extends React.Component {
         return (
             <div className={prefixCls}>
                 <AppForm 
-                	form={form}
-                	onSubmit={e => onSubmit(e, form, this.doUpdate)}
+                    form={form}
+                    onSubmit={e => onSubmit(e, form, this.doUpdate)}
                 >
-                	<AppForm.Upload
-                		name="logo"
-                		title="图标"
-                		initialValue={data.logo}
-                        option={Const.rules.required}
-                	/>
+                    <AppForm.Upload
+                        name="logo"
+                        title="图标"
+                        initialValue={data.logo}
+                    />
                     <AppForm.Input
                         name="name"
                         title="名称"
@@ -69,19 +68,19 @@ export default class AdminInfo extends React.Component {
                     <AppForm.Textarea
                         name="description"
                         title="描述"
-                       	initialValue={data.description}
+                        initialValue={data.description}
                         emoji
                     />
                 </AppForm>
 
                 <ButtonWrap>
-                	<Button 
-                		type="primary"
-                		form="form"
-                		htmlType="submit"
-                	>
-                		保存
-                	</Button>
+                    <Button 
+                        type="primary"
+                        form="form"
+                        htmlType="submit"
+                    >
+                        保存
+                    </Button>
                 </ButtonWrap>
             </div>
         );

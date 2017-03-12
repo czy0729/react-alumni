@@ -25,7 +25,7 @@ export default class UserAlumni extends React.Component {
     }
 
     componentDidMount() {
-    	$alumni.fetch_list();
+        $alumni.fetch_list();
     }
 
     handleChange(value) {
@@ -36,18 +36,37 @@ export default class UserAlumni extends React.Component {
 
     handleItemClick({ status, alumni_id }) {
         switch (parseInt(status)) {
+            //(2/4)
             case Const.alumni_list_status.new:
-                
+                Utils.router.push({
+                    pathname: Const.router.admin_auth_fields({ alumni_id }),
+                    query: {
+                        from: 'add_alumni',
+                    },
+                });
                 break;
 
+            //(3/4)
             case Const.alumni_list_status.auth:
-                
+                Utils.router.push({
+                    pathname: Const.router.admin_auth_show({ alumni_id }),
+                    query: {
+                        from: 'add_alumni',
+                    },
+                });
                 break;
 
+            //(4/4)
             case Const.alumni_list_status.show:
-                
+                Utils.router.push({
+                    pathname: Const.router.auth({ alumni_id }),
+                    query: {
+                        from: 'add_alumni',
+                    },
+                });
                 break;
 
+            //完成创建的
             case Const.alumni_list_status.finish:
                 Utils.router.push(Const.router.index({ alumni_id }));
                 break;

@@ -24,7 +24,7 @@ const AppFormRadio = (props) => {
                 initialValue,
                 ...option,
             })}
-            className={classNames(prefixCls, className)}
+            className={classNames(prefixCls, _utils.getFormItemCls(name), className)}
             checked={form.getFieldValue(name) == value}
             onChange={() => {
                 onChange();

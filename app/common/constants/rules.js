@@ -10,6 +10,7 @@
 /**
  * rc-form rules生成器
  * @version 170310 1.0
+ * @version 170313 1.1 fixed bug
  * @param  {String}  type       规则
  * @param  {Boolean} isRequierd 是否必须
  * @return {Object}  rc-form Decorator rules
@@ -18,7 +19,7 @@ const genRules = (type, isRequired = true) => {
     const rules = [];
     const required = {
         required: true, 
-        message: '必填',
+        message: '管理员要求此项必填',
     };
 
     switch (type) {
@@ -33,11 +34,11 @@ const genRules = (type, isRequired = true) => {
                 validator(rule, value, callback) {
                     //callback需要至少执行一次
                     //https://github.com/ant-design/ant-design/issues/5155
-                    if (!Utils.validate(value, type)) {
-                        callback(`${rule.field} format error`);
-                    } else {
-                        callback();
-                    }
+                    let errMsg;
+
+                    if (!Utils.validate(value, type)) errMsg = `${rule.field} format error`;
+
+                    callback(errMsg);
                 }
             });
 
@@ -49,11 +50,11 @@ const genRules = (type, isRequired = true) => {
 
             rules.push({
                 validator(rule, value, callback) {
-                    if (!Array.isArray(value) || value[0] === undefined) {
-                        callback(`${rule.field} is required`);
-                    } else {
-                        callback();
-                    }
+                    let errMsg;
+
+                    if (!Array.isArray(value) || value[0] === undefined) errMsg = `${rule.field} is required`;
+
+                    callback(errMsg);
                 }
             })
 
@@ -63,7 +64,13 @@ const genRules = (type, isRequired = true) => {
         //string, !number, boolean, method, regexp, integer, float, 
         //array, object, enum, date, url, hex, !email
         default: 
-            rules.push(type ? { ...required, type } : required);
+            if (type || isRequired) {
+                rules.push(
+                    type 
+                      ? isRequired ? { ...required, type } : { type }
+                      : required
+                );
+            }
 
             break;
     }
@@ -72,6 +79,6 @@ const genRules = (type, isRequired = true) => {
 };
 
 export default {
-	required: genRules(),
+    required: genRules(),
     genRules,
 };

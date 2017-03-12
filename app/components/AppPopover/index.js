@@ -11,16 +11,16 @@ import { Popover } from 'antd-mobile';
 const prefixCls = 'components__app-popover';
 
 class AppPopover extends React.Component {
-	static propTypes = {
-		overlay: React.PropTypes.array.isRequired,
-		onSelect: React.PropTypes.func,
-	};
+    static propTypes = {
+        overlay: React.PropTypes.array.isRequired,
+        onSelect: React.PropTypes.func,
+    };
 
-	static defaultProps = {
+    static defaultProps = {
         onSelect: (node, key) => {},
     };
 
-	constructor() {
+    constructor() {
         super();
 
         this.state = {
@@ -30,28 +30,28 @@ class AppPopover extends React.Component {
     }
 
     handleVisibleChange(visible) {
-    	this.setState({
-    		visible,
-    	});
+        this.setState({
+            visible,
+        });
     }
 
     handleSelect(node, key) {
-    	const { onSelect } = this.props;
+        const { onSelect } = this.props;
 
-    	this.setState({
-    		visible: false,
-    	});
+        this.setState({
+            visible: false,
+        });
 
-    	onSelect(node, key);
+        onSelect(node, key);
     }
 
     render() {
-    	const { onSelect, className, children, ...other } = this.props;
-    	const { visible } = this.state;
+        const { onSelect, className, children, ...other } = this.props;
+        const { visible } = this.state;
 
-    	return (
-    		<Popover
-    			className={classNames(prefixCls, className)}
+        return (
+            <Popover
+                className={classNames(prefixCls, className)}
                 mask
                 visible={visible}
                 popupAlign={{
@@ -64,7 +64,7 @@ class AppPopover extends React.Component {
             >
                 {children}
             </Popover>
-    	);
+        );
     }
 };
 

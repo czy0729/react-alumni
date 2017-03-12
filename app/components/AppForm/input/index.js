@@ -24,12 +24,14 @@ const AppFormInput = (props) => {
                 initialValue,
                 ...option,
             })}
-            className={classNames(prefixCls, className)}
+            className={classNames(prefixCls, _utils.getFormItemCls(name), className)}
+            name={name}
             clear
             placeholder={`请输入${title}`}
+            updatePlaceholder
             error={!!form.getFieldError(name)}
             onErrorClick={() => {
-                Modal.alert('提示', form.getFieldError(name).join('、'));
+                Modal.alert('提示', form.getFieldError(name).join('，'));
             }}
             {...other}
         >

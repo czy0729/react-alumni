@@ -47,6 +47,7 @@ const AppFormDatePicker = (props) => {
 
     return (
         <DatePicker
+            className={classNames(prefixCls, className)}
             mode={mode}
             format={format}
             title={`选择${title}`}
@@ -59,7 +60,7 @@ const AppFormDatePicker = (props) => {
             {...other}
         >
             <List.Item 
-                className={`${prefixCls}__list-item`} 
+                className={classNames(`${prefixCls}__list-item`, _utils.getFormItemCls(name))} 
                 arrow="horizontal"
             >
                 {title && _utils.getLabelDecorator(option)(title)}

@@ -1,31 +1,31 @@
  @import './mixin';
 
 //flex
-.flex 					{ display: flex }
-.flex-align-center 		{ .flex; align-items: center }
-.flex-justify-center 	{ .flex; justify-content: center }
-.flex-center 			{ .flex-align-center; .flex-justify-center }
+.flex                   { display: flex }
+.flex-align-center      { .flex; align-items: center }
+.flex-justify-center    { .flex; justify-content: center }
+.flex-center            { .flex-align-center; .flex-justify-center }
 
-.flex-wrap          	{ flex-wrap: wrap }
-.direction-row      	{ flex-direction: row }
-.justify-between    	{ justify-content: space-between }
-.justify-around     	{ justify-content: space-around }
-.flex-1             	{ flex: 1 }
+.flex-wrap              { flex-wrap: wrap }
+.direction-row          { flex-direction: row }
+.justify-between        { justify-content: space-between }
+.justify-around         { justify-content: space-around }
+.flex-1                 { flex: 1 }
 
 //margin
-.m-space           	    { margin-top: @space; margin-bottom: @space }
-.mt-space           	{ margin-top: @space }
-.mt-distance           	{ margin-top: @distance }
-.mt-xs           		{ margin-top: @xs }
-.mt-sm           		{ margin-top: @sm }
+.m-space                { margin-top: @space; margin-bottom: @space }
+.mt-space               { margin-top: @space }
+.mt-distance            { margin-top: @distance }
+.mt-xs                  { margin-top: @xs }
+.mt-sm                  { margin-top: @sm }
 
 .mb-distance            { margin-bottom: @distance }
 
-.ml-xs              	{ margin-left: @xs }
-.ml-sm              	{ margin-left: @sm }
-.ml-md              	{ margin-left: @md }
-.ml-lg              	{ margin-left: @lg }
-.ml-xl              	{ margin-left: @xl }
+.ml-xs                  { margin-left: @xs }
+.ml-sm                  { margin-left: @sm }
+.ml-md                  { margin-left: @md }
+.ml-lg                  { margin-left: @lg }
+.ml-xl                  { margin-left: @xl }
 
 //text
 .text-mini, .text-xs    { font-size: .24rem }
@@ -33,13 +33,15 @@
 .text-14                { font-size: .28rem }
 .text-15                { font-size: .3rem }
 
+.text-caption-sm        { font-size: @font-size-caption-sm }
+
 .text-center            { text-align: center }
 
-.text-primary 			{ color: @color-primary }
-.text-warning 			{ color: @color-warning }
-.text-success 			{ color: @color-success }
-.text-danger 			{ color: @color-danger }
-.text-default 			{ color: @color-default }
+.text-primary             { color: @color-primary }
+.text-warning             { color: @color-warning }
+.text-success             { color: @color-success }
+.text-danger             { color: @color-danger }
+.text-default             { color: @color-default }
 
 //float
 .pull-right             { float: right }
@@ -47,23 +49,23 @@
 //css-transition-group
 //170304
 .swap {
-	&-enter {
-	    opacity: .01;
-	    transition: all .3s;
+    &-enter {
+        opacity: .01;
+        transition: all .3s;
 
-	    &&-active {
-	    	transform: translateZ(0);
-	    	opacity: 1;
-	    }
-	}
-	&-leave {
-    	opacity: 1;
+        &&-active {
+            transform: translateZ(0);
+            opacity: 1;
+        }
+    }
+    &-leave {
+        opacity: 1;
 
-    	&&-active {
-    		transform: translateZ(0);
-    		opacity: 1;
-    	}
-	}
+        &&-active {
+            transform: translateZ(0);
+            opacity: 1;
+        }
+    }
 }
 
 //170305
@@ -99,34 +101,34 @@
 }
 
 .slide-left {
-	&-enter {
+    &-enter {
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-		z-index: 99;
+        z-index: 99;
         overflow: hidden;
-	    animation: left-in .6s cubic-bezier(0.23, 1, 0.320, 1);
-	}
-	&-leave {
+        animation: left-in .6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+    &-leave {
         position: relative;
-	    animation: left-out .6s cubic-bezier(0.23, 1, 0.320, 1);
-	}
+        animation: left-out .6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
 }
 .slide-right {
-	&-enter {
+    &-enter {
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-		z-index: 99;
+        z-index: 99;
         overflow: hidden;
-	    animation: right-in .6s cubic-bezier(0.23, 1, 0.320, 1);
-	}
-	&-leave {
+        animation: right-in .6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+    &-leave {
         position: relative;
-	    animation: right-out .6s cubic-bezier(0.23, 1, 0.320, 1);
-	}
+        animation: right-out .6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
 }

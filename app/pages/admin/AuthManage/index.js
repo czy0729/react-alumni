@@ -23,7 +23,7 @@ export default class AdminAuthManage extends React.Component {
     }
 
     componentDidMount() {
-    	$auth.fetch_count({ alumni_id: this.alumni_id });
+        $auth.fetch_count({ alumni_id: this.alumni_id });
     }
 
     get alumni_id() {

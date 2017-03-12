@@ -22,7 +22,7 @@ export default class AdminList extends React.Component {
     }
 
     componentDidMount() {
-    	$admin.fetch({ alumni_id: this.alumni_id });
+        $admin.fetch({ alumni_id: this.alumni_id });
     }
 
     doCancel(user_id) {

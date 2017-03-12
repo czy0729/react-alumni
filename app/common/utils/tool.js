@@ -7,7 +7,7 @@
 import Const from '../constants';
 
 export default {
-	/**
+    /**
      * 复数方法bind(this)
      * @version 160602 1.0
      * @param  {Obj}  target 绑定目标，通常是this

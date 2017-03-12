@@ -7,8 +7,8 @@
 import moment from 'moment';
 
 export default {
-	web: 'http://alumni.maigit.com',
-	date: 'y/m/d H:i',
-	img: require('../images/default.png'),
-	now: moment().locale('zh-cn').utcOffset(8),
+    web: 'http://alumni.maigit.com',
+    date: 'y/m/d H:i',
+    img: require('../images/default.png'),
+    now: moment().locale('zh-cn').utcOffset(8),
 };

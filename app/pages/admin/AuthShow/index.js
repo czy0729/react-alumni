@@ -27,7 +27,7 @@ export default class AdminAuthShow extends React.Component {
         const { alumni_id } = this;
 
         $auth.fetch_auth_fields({ alumni_id });
-    	$auth.fetch_show_fields({ alumni_id });
+        $auth.fetch_show_fields({ alumni_id });
     }
 
     async handleSubmit(values) {

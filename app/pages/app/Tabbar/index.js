@@ -15,11 +15,11 @@ const prefixCls = 'pages-app__tabbar';
 
 @observer
 export default class AppTabbar extends React.Component {
-	constructor() {
-		super();
-	}
+    constructor() {
+        super();
+    }
 
-	renderTabBarItem(props) {
+    renderTabBarItem(props) {
         const { location } = this.props;
         const { pathname, title, icon, selectedIcon, ...other } = props;
 
@@ -36,8 +36,8 @@ export default class AppTabbar extends React.Component {
         );
     }
 
-	render() {
-		return (
+    render() {
+        return (
             <div className={prefixCls}>
                 <TabBar
                     unselectedTintColor={Const.ui.color_default}
@@ -55,10 +55,10 @@ export default class AppTabbar extends React.Component {
                         pathname: Const.router.user_alumni(),
                     })}
                     {this.renderTabBarItem({
-                        title: '我的',
+                        title: '个人',
                         icon: <Icon type="smile" />,
                         selectedIcon: <Icon type="smile-circle" />,
-                        pathname: Const.router.user(),
+                        pathname: Const.router.user_center(),
                     })}
                     {this.renderTabBarItem({
                         title: '收起',
@@ -69,15 +69,15 @@ export default class AppTabbar extends React.Component {
                 </TabBar>
 
                 <div 
-                	className={classNames({
-	                	[`${prefixCls}__btn-toggle`]: 1,
-	                	[`${prefixCls}__btn-toggle_active`]: !$app.state.tabbar.show,
-	                })}
-	                onClick={() => $app.showTabbar()}
-	            >
-                	<Icon type="up" />
+                    className={classNames({
+                        [`${prefixCls}__btn-toggle`]: 1,
+                        [`${prefixCls}__btn-toggle_active`]: !$app.state.tabbar.show,
+                    })}
+                    onClick={() => $app.showTabbar()}
+                >
+                    <Icon type="up" />
                 </div>
             </div>
         );
-	}
+    }
 };

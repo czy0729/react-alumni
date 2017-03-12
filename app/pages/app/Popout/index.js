@@ -15,32 +15,32 @@ const prefixCls = 'pages-app__popout';
 
 @observer
 export default class Popout extends React.Component {
-	constructor() {
-		super();
-	}
+    constructor() {
+        super();
+    }
 
-	renderMask() {
-		const { mask } = $popout.state;
-		const { show, content, config = {} } = mask;
-		const { className } = config;
-		delete config.className;
+    renderMask() {
+        const { mask } = $popout.state;
+        const { show, content, config = {} } = mask;
+        const { className } = config;
+        delete config.className;
 
-		return show && (
-			<div 
-				className={classNames('am-modal-mask', `${prefixCls}__mask`, className)}
-				onClick={e => $popout.hideMask()}
-				{...config}
-			>
-				{content}
-			</div>
-		);
-	}
+        return show && (
+            <div 
+                className={classNames('am-modal-mask', `${prefixCls}__mask`, className)}
+                onClick={e => $popout.hideMask()}
+                {...config}
+            >
+                {content}
+            </div>
+        );
+    }
 
-	render() {
-		return (
-			<div className={prefixCls}>
-				{this.renderMask()}
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div className={prefixCls}>
+                {this.renderMask()}
+            </div>
+        );
+    }
 };

@@ -10,53 +10,53 @@ import common from './common';
 useStrict(true);
 
 class store extends common {
-	constructor() {
-		super();
+    constructor() {
+        super();
 
-		this.config = {
-			namespace: '$popout',
-			cache: false,
-		};
-	}
+        this.config = {
+            namespace: '$popout',
+            cache: false,
+        };
+    }
 
-	@observable state = this.initState({
-		mask: {},
-	});
+    @observable state = this.initState({
+        mask: {},
+    });
 
-	/**
+    /**
      * 全局popout隐藏
      * @version 170216 1.0
      * @param {Element} content
      */
-	@action
-	hide() {
-		this.hideMask();
-	}
+    @action
+    hide() {
+        this.hideMask();
+    }
 
-	/**
+    /**
      * 显示遮罩背景层
      * @version 170216 1.0
      * @param {Element} content
      */
-	@action
-	showMask(content, config) {
-		this.setState({
-			show: true,
-			content,
-			config,
-		}, 'mask');
-	}
+    @action
+    showMask(content, config) {
+        this.setState({
+            show: true,
+            content,
+            config,
+        }, 'mask');
+    }
 
-	/**
+    /**
      * 隐藏遮罩背景层
      * @version 170216 1.0
      */
-	@action
-	hideMask() {
-		this.setState({
-			show: false,
-		}, 'mask');
-	}
+    @action
+    hideMask() {
+        this.setState({
+            show: false,
+        }, 'mask');
+    }
 };
 
 export default new store();

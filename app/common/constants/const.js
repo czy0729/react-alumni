@@ -114,39 +114,39 @@ const form = {
      * [字段名]: [名称，分组，排序，配置]
      * 配置 { 
      *    component : '表单使用的组件',
-     *    config    : 'component的参数',
+     *    config    : 'component的参数', //type 银行卡bankCard,手机号phone（此时最大长度固定为11,maxLength设置无效）,密码password, 数字number（尽量唤起数字键盘）
      *    rules     : 'Const.rules.genRules(这里的值, isRequired)',
-     *    type      : 'input的type',
      *    tel       : '是否能拨号，生成按钮调用拨号',
      *    format    : '显示值时是否调用Utils.getOptionLabel()',
      * }
      */
     fields: {
+        headimgurl                : ['头像',         0, 0,   { component: 'Upload' }],
         real_name                 : ['真实姓名',     0, 10,  {}],
-        mobile                    : ['手机号',       0, 20,  { rules: 'mobile', type: 'tel', tel: true }],
+        mobile                    : ['手机号',       0, 20,  { config: { type: 'number' }, rules: 'mobile', tel: true }],
         nickname                  : ['昵称',         0, 25,  {}],
         area                      : ['地区',         0, 30,  {}],
-        sex                       : ['性别',         0, 40,  { format: 'sex' }],
+        sex                       : ['性别',         0, 40,  { component: 'Picker', rules: 'picker', format: 'sex' }],
 
-        birthday                  : ['生日',         1, 100, { component: 'DatePicker', type: 'date' }],
+        birthday                  : ['生日',         1, 100, { component: 'DatePicker' }],
         wx_sn                     : ['微信号',       1, 110, { rules: 'wechat' }],
-        qq                        : ['QQ',           1, 120, { rules: 'number', type: 'tel' }],
+        qq                        : ['QQ',           1, 120, { config: { type: 'number' }, rules: 'number' }],
         email                     : ['邮箱',         1, 130, { rules: 'email'}],
         phone                     : ['座机',         1, 140, { tel: true }],
         address                   : ['住址',         1, 150, {}],
-        zip_code                  : ['邮编',         1, 160, { type: 'tel' }],
+        zip_code                  : ['邮编',         1, 160, { config: { type: 'number' } }],
         household                 : ['户籍',         1, 170, {}],
         hobby                     : ['爱好',         1, 180, {}],
         emotion_status            : ['情感状态',     1, 190, { component: 'Picker', rules: 'picker', format: 'emotion_status' }],
 
         big_school_name           : ['名称',         2, 200, {}],
-        attend_big_school_date    : ['入学年份',     2, 210, { component: 'DatePicker', config: { mode: 'year' }, type: 'tel' }],
+        attend_big_school_date    : ['入学年份',     2, 210, { component: 'DatePicker', config: { mode: 'year' } }],
         academy                   : ['学院',         2, 220, {}],
         major                     : ['专业',         2, 230, {}],
         big_class                 : ['班级',         2, 240, {}],
 
         middle_school_name        : ['名称',         3, 300, {}],
-        attend_middle_school_date : ['入学年份',     3, 310, { component: 'DatePicker', config: { mode: 'year' }, type: 'tel' }],
+        attend_middle_school_date : ['入学年份',     3, 310, { component: 'DatePicker', config: { mode: 'year' } }],
         middle_type               : ['类型',         3, 320, { component: 'Picker', rules: 'picker', format: 'middle_type' }],
         middle_attend_grade       : ['年级',         3, 330, { component: 'Picker', rules: 'picker', format: 'middle_attend_grade' }],
         middle_class              : ['班级',         3, 340, {}],
@@ -181,53 +181,53 @@ const option = {
 
     //情感状态
     emotion_status: [{
-    	label: '单身',
-    	value: '1',
+        label: '单身',
+        value: '1',
     }, {
-    	label: '有对象',
-    	value: '2',
+        label: '有对象',
+        value: '2',
     }, {
-    	label: '已婚',
-    	value: '3',
+        label: '已婚',
+        value: '3',
     }],
 
     //中学类型
     middle_type: [{
-    	label: '初中',
-    	value: '1',
+        label: '初中',
+        value: '1',
     }, {
-    	label: '高中',
-    	value: '2',
+        label: '高中',
+        value: '2',
     }],
 
     //中学入读年级
     middle_attend_grade: [{
-    	label: '初一',
-    	value: '1',
+        label: '初一',
+        value: '1',
     }, {
-    	label: '初二',
-    	value: '2',
+        label: '初二',
+        value: '2',
     }, {
-    	label: '初三',
-    	value: '3',
+        label: '初三',
+        value: '3',
     }, {
-    	label: '高一',
-    	value: '4',
+        label: '高一',
+        value: '4',
     }, {
-    	label: '高二',
-    	value: '5',
+        label: '高二',
+        value: '5',
     }, {
-    	label: '高三',
-    	value: '6',
+        label: '高三',
+        value: '6',
     }],
 
     //学院类型
     school_type: [{
-    	label: '大学',
-    	value: '1',
+        label: '大学',
+        value: '1',
     }, {
-    	label: '中学',
-    	value: '0',
+        label: '中学',
+        value: '0',
     }],
 
     //爱好

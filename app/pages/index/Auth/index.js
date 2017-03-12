@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { form, observer } from 'decorators';
-import { $auth, $user } from 'stores';
+import { $auth, $user, $alumni } from 'stores';
 import { Button } from 'antd-mobile';
 import { Title, ButtonWrap, AppForm } from 'components';
 
@@ -29,8 +29,44 @@ export default class Auth extends React.Component {
         $auth.fetch_auth_fields({ alumni_id: this.alumni_id });
     }
 
-    handleSubmit(value) {
-        console.log(value)
+    async handleSubmit(value) {
+        const { alumni_id } = this;
+
+        switch (this.query.from) {
+            //创建校友录第四步
+            case 'add_alumni':
+                //创建者信息认证
+                await $auth.alumni_auth({
+                    alumni_id,
+                    ...value,
+                });
+
+                //更新校友录信息
+                await $alumni.fetch({ alumni_id });
+
+                Utils.router.replace({
+                    pathname: Const.router.result(),
+                    state: {
+                        title: '创建成功',
+                        message: '您现在可以通过分享，邀请其他校友进入校友录',
+                        button: [{
+                            type: 'primary',
+                            text: '进入校友录',
+                            href: Const.router.index({ alumni_id }),
+                        }, {
+                            text: '邀请页',
+                            href: Const.router.share({ alumni_id }),
+                        }],
+                    },
+                });
+
+                break;
+
+            //用户申请加入校友录
+            default:
+                
+                break;
+        }
     }
 
     get alumni_id() {
@@ -44,7 +80,7 @@ export default class Auth extends React.Component {
     renderForms() {
         const { form } = this.props;
         const data = $auth.getById(this.alumni_id, 'auth_fields');
-        const user = $user.state;
+        const user = $user.getState();
 
         return Utils.generateFieldsConfig(data).map((item, index) => {
             const items = [];

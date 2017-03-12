@@ -43,14 +43,11 @@ export default class AppFormUpload extends React.Component {
               ? [{ url: Utils.getAppImgUrl(initialValue) }] 
               : []; 
 
-        const cls = classNames({
-            [prefixCls]: true,
-            [`${prefixCls}_disabled-input`]: files.length > 0,
-        });
-
         return (
             <List.Item 
-                className={cls}
+                className={classNames(prefixCls, _utils.getFormItemCls(name), {
+                    [`${prefixCls}_disabled-input`]: files.length > 0,
+                })}
                 arrow="horizontal"
             >
                 <div className={`${prefixCls}__wrap`}>
