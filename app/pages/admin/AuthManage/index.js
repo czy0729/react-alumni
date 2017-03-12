@@ -1,6 +1,7 @@
 /**
  * 认证管理
  * @version 170219 1.0
+ * @version 170313 1.1 fixed bug
  */
 'use strict';
 
@@ -14,10 +15,6 @@ const Item = List.Item;
 
 @observer
 export default class AdminAuthManage extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.any,
-    };
-
     constructor() {
         super();
     }
@@ -31,8 +28,8 @@ export default class AdminAuthManage extends React.Component {
     }
 
     render() {
-        const { router } = this.context;
-        const data = $auth.getById(this.alumni_id, 'count');
+        const { alumni_id } = this;
+        const data = $auth.getById(alumni_id, 'count');
 
         return (
             <div className={prefixCls}>
@@ -41,19 +38,19 @@ export default class AdminAuthManage extends React.Component {
                     <Item 
                         extra={`${data.none_authenti_count}人`}
                         arrow="horizontal"
-                        onClick={() => router.push(`/${this.alumni_id}/admin/auth_list/`)}
+                        onClick={() => Utils.router.push(Const.router.admin_auth_list({ alumni_id }))}
                     >
                         待认证
                     </Item>
                     <Item 
                         arrow="horizontal"
-                        onClick={() => router.push(`/${this.alumni_id}/admin/auth_fields/`)}
+                        onClick={() => Utils.router.push(Const.router.admin_auth_fields({ alumni_id }))}
                     >
                         认证需填写信息
                     </Item>
                     <Item 
                         arrow="horizontal"
-                        onClick={() => router.push(`/${this.alumni_id}/admin/auth_show/`)}
+                        onClick={() => Utils.router.push(Const.router.admin_auth_show({ alumni_id }))}
                     >
                         认证后可见信息
                     </Item>
