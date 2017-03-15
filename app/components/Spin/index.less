@@ -1,0 +1,65 @@
+@import '~styles/var';
+
+@keyframes antRotate{to{-webkit-transform:rotate(405deg);transform:rotate(405deg)}}
+@keyframes antSpinMove{to{-webkit-transform:scale(.9);transform:scale(.9);opacity:1}}
+
+.components__spin {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	z-index: 4;
+	
+	&__dot {
+		position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    margin: -.3rem;
+	    width: .6rem;
+	    height: .6rem;
+	    transform: rotate(45deg);
+	    animation: antRotate 2s infinite linear;
+
+	    i {
+    	    width: .26rem;
+		    height: .26rem;
+		    border-radius: 100%;
+		    background-color: #108ee9;
+		    transform: scale(.6);
+		    display: block;
+		    position: absolute;
+		    opacity: .3;
+		    animation: antSpinMove 1s infinite linear alternate;
+		    transform-origin: 50% 50%;
+
+		    &:first-child {
+		    	left: 0;
+    			top: 0;
+		    }
+		    &:nth-child(2) {
+		    	right: 0;
+			    top: 0;
+			    animation-delay: .4s;
+		    }
+		    &:nth-child(3) {
+		    	right: 0;
+			    bottom: 0;
+			    animation-delay: .8s;
+		    }
+		    &:nth-child(4) {
+			    left: 0;
+			    bottom: 0;
+			    animation-delay: 1.2s;
+		    }
+	    }
+	}
+
+	&__container {
+		transition: all .3s cubic-bezier(.645,.045,.355,1);
+
+		&&_blur {
+			opacity: .7;
+			filter: blur(.8PX);
+			transform: translateZ(0);
+		}
+	}
+}

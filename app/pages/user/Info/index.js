@@ -45,6 +45,7 @@ export default class UserInfo extends React.Component {
                 const title = i[2];
                 const name = i[0];
                 const El = AppForm[component];
+                
                 items.push(
                     <El
                         key={name}

@@ -8,6 +8,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $alumni } from 'stores';
 import { Tabs, Icon } from 'antd-mobile';
+import { Spin } from 'components';
 import Member from './member';
 import Event from './event';
 import './index.less';
@@ -33,7 +34,10 @@ export default class IndexIndex extends React.Component {
         const data = $alumni.getById(this.alumni_id);
 
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={!data._loaded}
+            >
                 {/*详情*/}
                 <div className={`${prefixCls}__head`}>
                     <Icon 
@@ -64,7 +68,7 @@ export default class IndexIndex extends React.Component {
                         <Event alumni_id={this.alumni_id} />
                     </TabPane>
                 </Tabs>
-            </div>
+            </Spin>
         );
     } 
 };

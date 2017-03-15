@@ -7,8 +7,8 @@
 import React from 'react';
 import { observer } from 'decorators';
 import { $user } from 'stores';
-import { List, Icon } from 'antd-mobile';
-import { Img } from 'components';
+import { List, Icon, Button } from 'antd-mobile';
+import { AvatarBlock } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-user__index';
@@ -28,13 +28,10 @@ export default class UserIndex extends React.Component {
 
         return (
             <div className={prefixCls}>
-                <div className={`${prefixCls}__top`}>
-                    <Img src={data.headimgurl} />
-                    <p>
-                        <span>{data.nickname}</span>
-                        <span className="ml-sm text-caption-sm text-default">({data.wx_sn})</span>
-                    </p>
-                </div>
+                <AvatarBlock src={data.headimgurl}>
+                    <span>{data.nickname}</span>
+                    <span className="ml-sm text-caption-sm text-default">({data.wx_sn})</span>
+                </AvatarBlock>
 
                 <List className={`${prefixCls}__menu`}>
                     <List.Item

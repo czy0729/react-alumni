@@ -36,7 +36,7 @@ class store extends common {
     async fetch_count(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_auth_count', query, {
+        const result = await Ajax.P('get_auth_count', query, {
             show: !this.getById(alumni_id, 'count')._loaded,
             ...config,
         });
@@ -54,7 +54,7 @@ class store extends common {
     async fetch_auth_list(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_message_list', {
+        const result = await Ajax.P('get_message_list', {
             ...query,
             category: 2,
         }, {
@@ -74,7 +74,7 @@ class store extends common {
     async fetch_auth_fields(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_alumni_auth_fields', query, {
+        const result = await Ajax.P('get_alumni_auth_fields', query, {
             show: !this.getById(alumni_id, 'auth_fields')._loaded,
             ...config,
         });
@@ -91,7 +91,7 @@ class store extends common {
     async fetch_show_fields(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_alumni_show_fields', query, {
+        const result = await Ajax.P('get_alumni_show_fields', query, {
             show: !this.getById(alumni_id, 'show_fields')._loaded,
             ...config,
         });
@@ -112,7 +112,7 @@ class store extends common {
     async submit_auth(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('do_submit_alumni_auth', query, config);
+        await Ajax.P('do_submit_alumni_auth', query, config);
 
         this.fetch_auth_list({ alumni_id });
     }
@@ -127,7 +127,7 @@ class store extends common {
     async update_auth_fields(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('update_alumni_auth_fields', query, config);
+        await Ajax.P('update_alumni_auth_fields', query, config);
 
         this.fetch_auth_fields({ alumni_id });
     }
@@ -142,7 +142,7 @@ class store extends common {
     async update_show_fields(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('update_alumni_show_fields', query, config);
+        await Ajax.P('update_alumni_show_fields', query, config);
 
         this.fetch_show_fields({ alumni_id });
     }
@@ -156,7 +156,7 @@ class store extends common {
      */
     @action
     async alumni_auth(query, config) {
-        return await Ajax('do_alumni_auth', query, config);
+        return await Ajax.P('do_alumni_auth', query, config);
     }    
 };
 

@@ -48,7 +48,7 @@
 
 //css-transition-group
 //170304
-.swap {
+.fade {
     &-enter {
         opacity: .01;
         transition: all .3s;
@@ -60,6 +60,7 @@
     }
     &-leave {
         opacity: 1;
+        transition: all .3s;
 
         &&-active {
             transform: translateZ(0);

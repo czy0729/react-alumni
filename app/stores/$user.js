@@ -31,7 +31,7 @@ class store extends common {
      */
     @action
     async fetch(query, config) {
-        const result = await Ajax('get_user_info', query, {
+        const result = await Ajax.P('get_user_info', query, {
             show: !this.state._loaded,
             ...config,
         });
@@ -48,7 +48,7 @@ class store extends common {
     async fetch_list(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_alumni_user_list', query, {
+        const result = await Ajax.P('get_alumni_user_list', query, {
             show: !this.getById(alumni_id, 'list')._loaded,
             ...config,
         });
@@ -67,7 +67,7 @@ class store extends common {
         const { alumni_id, user_id } = query;
         const pk = `${alumni_id}-${user_id}`;
 
-        const result = await Ajax('get_alumni_user_detail', query, {
+        const result = await Ajax.P('get_alumni_user_detail', query, {
             show: !this.getById(pk, 'detail')._loaded,
             ...config,
         });
@@ -84,7 +84,23 @@ class store extends common {
      */
     @action
     async exchange_card(query, config) {
-        return await Ajax('do_exchange_card', query, config);
+        return await Ajax.P('do_exchange_card', query, config);
+    }
+
+    /**
+     * 2.1.11 同意、拒绝或取消交换名片
+     * @version 170313 1.1
+     * @param {Int} *user_id 用户id
+     * @param {Int} *status  resolve|reject|cancel
+     */
+    @action
+    async allow_exchange_card(query, status, config) {
+        const api = 'do_allow_exchange_card';
+
+        return await Ajax.P(api, {
+            ...query,
+            status: Ajax.getParam(api, 'status', status),
+        }, config);
     }
 
     /**
@@ -95,7 +111,7 @@ class store extends common {
      */
     @action
     async delete(query, config) {
-        return await Ajax('delete_alumni_user', query, config);
+        return await Ajax.P('delete_alumni_user', query, config);
     }
 
     /**
@@ -105,18 +121,24 @@ class store extends common {
      */
     @action
     async quit(query, config) {
-        return await Ajax('do_quit_alumni', query, config);
+        return await Ajax.P('do_quit_alumni', query, config);
     }
 
     /**
      * 2.1.10 设置或取消加入黑名单
      * @version 170224 1.0
-     * @param {Int} *user_id 某个用户id
-     * @param {Int} *status  -1设置为设为黑名单,0取消黑名单
+     * @version 170315 1.1 参数绑定
+     * @param {Int} *user_id 用户id
+     * @param {Int} *status  yes|no
      */
     @action
-    async set_black(query, config) {
-        return await Ajax('do_set_black', query, config);
+    async set_black(query, status, config) {
+        const api = 'do_set_black';
+
+        return await Ajax.P(api, {
+            ...query,
+            status: Ajax.getParam(api, 'status', status),
+        }, config);
     }
 
     /**
@@ -128,7 +150,7 @@ class store extends common {
      */
     @action
     async set_back_name(query, config) {
-        return await Ajax('do_set_black', query, config);
+        return await Ajax.P('do_set_black', query, config);
     }
 
     /**
@@ -138,7 +160,7 @@ class store extends common {
      */
     @action
     async update_info(query, config) {
-        const result = await Ajax('update_user_info', query, config);
+        const result = await Ajax.P('update_user_info', query, config);
 
         return result;
     }

@@ -155,6 +155,8 @@ export default class UserDetail extends React.Component {
 
     /*==================== render ====================*/
     render() {
+        console.log(this.user_detail._loaded, this.alumni_info._loaded, this.identity._loaded)
+
         return (
             <Spin 
                 className={prefixCls}

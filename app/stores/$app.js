@@ -22,7 +22,7 @@ class store extends common {
     @observable state = this.initState({
         loading: false,
         tabbar: {
-            show: true,
+            show: false,
         },
     }, ['loading']);
 

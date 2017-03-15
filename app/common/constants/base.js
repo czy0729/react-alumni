@@ -5,10 +5,12 @@
 'use strict';
 
 import moment from 'moment';
+import { checkDeviceType } from '../utils';
 
 export default {
-    web: 'http://alumni.maigit.com',
-    date: 'y/m/d H:i',
-    img: require('../images/default.png'),
-    now: moment().locale('zh-cn').utcOffset(8),
+    date       : 'y/m/d H:i',
+    deviceType : checkDeviceType(),
+    img        : require('../images/default.png'),
+    now        : moment().locale('zh-cn').utcOffset(8),
+    web        : 'http://alumni.maigit.com',
 };

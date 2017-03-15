@@ -22,15 +22,21 @@ export default class App extends React.Component {
 
     componentDidMount() {
         //测试用
-        if (typeof wx == 'undefined') {
+        if (typeof wx === 'undefined') {
             window.Const = Const;
             window.Utils = Utils;
-            window.addEventListener('beforeunload', e => stores.setCache(), false);
+            window.Ajax = Ajax;
+
+            //开启缓存stores
+            //window.addEventListener('beforeunload', e => stores.setCache(), false);
         }
     }
-    
+
     render() {
-        const { location, children } = this.props;
+        const { routes, location, children } = this.props;
+
+        //页面切换时更新页面title
+        document.title = routes[routes.length - 1].title;
 
         return (
             <div className={prefixCls}>
@@ -38,10 +44,13 @@ export default class App extends React.Component {
                     className={`${prefixCls}__transition`}
                     component="div"
                     transitionName={Utils.getPageTransition(location) ? 'slide-left' : 'slide-right'}
-                    transitionEnterTimeout={650}
+                    transitionEnterTimeout={620}
                     transitionLeaveTimeout={600}
                 >
-                    {React.cloneElement(<Page>{children}</Page> || <div />, { key: location.pathname })}
+                    {React.cloneElement(
+                        <Page>{children}</Page> || <div />, 
+                        { key: location.pathname }
+                    )}
                 </CSSTransitionGroup>
 
                 <Tabbar location={location} />

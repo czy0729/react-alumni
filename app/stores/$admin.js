@@ -30,7 +30,7 @@ class store extends common {
     async fetch(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_admin_list', query, {
+        const result = await Ajax.P('get_admin_list', query, {
             show: !this.getById(alumni_id)._loaded,
             ...query,
         });
@@ -49,7 +49,7 @@ class store extends common {
     async auth(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('update_admin_list', query, config);
+        await Ajax.P('update_admin_list', query, config);
 
         this.fetch({ alumni_id });
     }

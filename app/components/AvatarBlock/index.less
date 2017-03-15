@@ -1,0 +1,27 @@
+@import '~styles/var';
+@import '~styles/mixin';
+
+.components__avatar-block {
+    position: relative;
+    height: 50vw;
+    padding: 34vw @wind @space;
+    font-size: @font-size-heading;
+    .bg-gradient(@color-bg 40%, #fff 40%);
+
+    .components__img {
+        position: absolute;
+        top: 40%;
+        left: @wind;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        transform: translateY(-50%);
+    }
+    &__extra {
+        position: absolute;
+        top: 50%;
+        right: @wind;
+        margin-top: 10vw;
+        transform: translateY(-50%);
+    }
+}

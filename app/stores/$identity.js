@@ -30,7 +30,7 @@ class store extends common {
     async fetch(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_identity_list', query, {
+        const result = await Ajax.P('get_identity_list', query, {
             show: !this.getById(alumni_id)._loaded,
             ...query,
         });
@@ -48,7 +48,7 @@ class store extends common {
     async add(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('add_identity', query, config);
+        await Ajax.P('add_identity', query, config);
 
         this.fetch({ alumni_id });
     }
@@ -64,7 +64,7 @@ class store extends common {
     async update(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('update_identity', query, config);
+        await Ajax.P('update_identity', query, config);
 
         this.fetch({ alumni_id });
     }
@@ -79,9 +79,21 @@ class store extends common {
     async delete(query, config) {
         const { alumni_id } = query;
 
-        await Ajax('delete_identity', query, config);
+        await Ajax.P('delete_identity', query, config);
 
         this.fetch({ alumni_id });
+    }
+
+    /**
+     * 2.1.6 设置用户所在校友录身份
+     * @version 170314 1.0
+     * @param {Int} *alumni_id         校友录id
+     * @param {Int} *user_id           用户id
+     * @param {Int} *identity_type_ids 身份id
+     */
+    @action
+    async set(query, config) {
+        return await Ajax.P('update_user_identity', query, config);
     }
 };
 

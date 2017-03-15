@@ -34,7 +34,7 @@ class store extends common {
     async fetch_list(query, config) {
         const { alumni_id } = query;
 
-        const result = await Ajax('get_notice_list', query, {
+        const result = await Ajax.P('get_notice_list', query, {
             show: !this.getById(alumni_id, 'list')._loaded,
             ...config,
         });
@@ -51,7 +51,7 @@ class store extends common {
     async fetch_detail(query, config) {
         const { notice_id } = query;
 
-        const result = await Ajax('get_notice', query, {
+        const result = await Ajax.P('get_notice', query, {
             show: !this.getById(notice_id, 'detail')._loaded,
             ...config,
         });
@@ -68,7 +68,7 @@ class store extends common {
      */
     @action
     async add(query, config) {
-        await Ajax('add_notice', query, config);
+        await Ajax.P('add_notice', query, config);
     }
 
     /**
@@ -80,7 +80,7 @@ class store extends common {
      */
     @action
     async update(query, config) {
-        await Ajax('update_notice', query, config);
+        await Ajax.P('update_notice', query, config);
     }
 
     /**
@@ -90,7 +90,7 @@ class store extends common {
      */
     @action
     async delete(query, config) {
-        await Ajax('delete_notice', query, config);
+        await Ajax.P('delete_notice', query, config);
     }
 };
 

@@ -7,57 +7,7 @@
 import { Toast, Modal } from 'antd-mobile';
 import Utils from './utils';
 
-const _fetch = async (api, query) => {
-    const response = await fetch(`${Const.web}${api}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: Utils.getQueryStr({ access_token, ...query }),
-    });
-
-    /*const response = await fetch(`./api${api}.json`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    });*/
-
-    const res = await response.json();
-    
-    return res;
-};
-
-/**
- * POST
- * @version 170306 1.0
- * @version 170313 1.1 loading处理方式改变，showToast换成loading Button形式
- * @param {String} *api
- * @param {Object} query
- * @param {Object} config -> `show`请求时显示Toast，`fail`服务器端请求结果失败自定义回调
- */
-const P = (api, query = {}, config = {}) => {
-    return new Promise(async (resolve, reject) => {
-        const { show = true, fail } = config;
-        const { $app } = require('../stores');
-
-        const isSubmitApi = api.indexOf('get_') !== 0;
-
-        isSubmitApi && $app.loading();
-
-        const res = await _fetch(map[api], query);
-
-        isSubmitApi && $app.loading(false);
-
-        if (res.code != 0) {
-            const _fail = res => Utils.onAlert(`[${res.code}] ${res.err}`);
-
-            //typeof fail === 'function' ? fail(res, _fail) : _fail(res);
-
-            reject(res);
-        }
-
-        resolve(res.data);
-    });
-};
-
-const map = {
+const apis = {
     /*================== 0 ==================*/
     /**
      * 0.0 用户基本信息
@@ -164,7 +114,7 @@ const map = {
     do_exchange_card          : '/alumni/exchangeCard',
 
     /**
-     * 2.1.6 设置用户所在校友录身份
+     * [$identity] 2.1.6 设置用户所在校友录身份
      * @version 170305 1.0
      * @param {Int} *alumni_id         校友录id
      * @param {Int} *user_id           用户id
@@ -197,12 +147,33 @@ const map = {
     do_quit_alumni            : '/alumni/logoutAlumni',
 
     /**
-     * 2.1.10 设置或取消加入黑名单
+     * [$user] 2.1.10 设置或取消加入黑名单
      * @version 170224 1.0
      * @param {Int} *user_id 某个用户id
-     * @param {Int} *status  -1设置为设为黑名单,0取消黑名单
+     * @param {Int} *status
      */
-    do_set_black              : '/user/setBlack',
+    do_set_black: {
+        api: '/user/setBlack',   
+        status: {
+            yes: -1, //设为黑名单
+            no: 0,   //取消黑名单
+        },
+    },
+
+    /**
+     * [$user] 2.1.11 同意、拒绝或取消交换名片
+     * @version 170313 1.1
+     * @param {Int} *user_id 用户id
+     * @param {Int} *status
+     */
+    do_allow_exchange_card: {
+        api: '/alumni/allowExchangeCard',   
+        status: {
+            resolve: 1, //同意
+            reject: -1, //拒绝
+            cancel: -2, //取消
+        },
+    },
 
     /**
      * 2.2.1 用户收到的通知列表
@@ -373,4 +344,56 @@ const map = {
     get_blacklist: '/user/blackUserLists',
 };
 
-export default (api, ...arg) => P(api, ...arg);
+const _fetch = async (api, query) => {
+    const response = await fetch(`${Const.web}${api}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: Utils.getQueryStr({ access_token, ...query }),
+    });
+
+    /*const response = await fetch(`./api${api}.json`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    });*/
+
+    return await response.json();
+};
+
+/**
+ * POST
+ * @version 170306 1.0
+ * @version 170313 1.1 loading处理方式改变，showToast换成loading Button形式
+ * @param {String} *api
+ * @param {Object} query
+ * @param {Object} config -> `show`请求时显示Toast，`fail`服务器端请求结果失败自定义回调
+ */
+const P = (api, query = {}, config = {}) => {
+    return new Promise(async (resolve, reject) => {
+        const { $app }    = require('../stores');
+        const { fail }    = config;
+        const isSubmit    = api.indexOf('get_') !== 0; //判断api是不是操作型的
+        const apiAddress  = typeof apis[api] === 'object' ? apis[api].api : apis[api]; //api地址
+
+        //操作型的设置一个AppButton的loading反馈
+        isSubmit && $app.loading();
+
+        const res = await _fetch(apiAddress, query);
+
+        isSubmit && $app.loading(false);
+
+        if (res.code != 0) {
+            const _fail = res => Utils.onAlert(`[${res.code}] ${res.err}`);
+
+            //typeof fail === 'function' ? fail(res, _fail) : _fail(res);
+
+            reject(res);
+        }
+
+        resolve(res.data);
+    });
+};
+
+export default {
+    P,
+    getParam: (api, paramName, keyName) => apis[api][paramName][keyName],
+};

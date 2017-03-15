@@ -23,7 +23,7 @@ export default class AppFormUpload extends React.Component {
     async onChange(files, e) {
         const { form, name } = this.props;
 
-        const result = await Ajax('do_upload_file', { 
+        const result = await Ajax.P('do_upload_file', { 
             data: files.data,
         });
 
