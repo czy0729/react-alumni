@@ -2,7 +2,7 @@
  * Ajax
  * @Date: 2017-02-01 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 06:41:29
+ * @Last Modified time: 2017-03-21 07:50:00
  */
 'use strict';
 
@@ -368,7 +368,7 @@ const _fetch = async (api, query) => {
     let response;
 
     if (Const._offline) {
-        response = await fetch(`./api${api}.json`, {
+        response = await fetch(`./build/api${api}.json`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
