@@ -1,6 +1,8 @@
 /**
  * 身份管理
- * @version 170212 1.0
+ * @Date: 2017-02-12 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:44:44
  */
 'use strict';
 
@@ -8,7 +10,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $identity } from 'stores';
 import { Button } from 'antd-mobile';
-import { Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
+import { Spin, Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
 
 const prefixCls = 'pages-admin__identity';
 
@@ -56,26 +58,40 @@ export default class AdminIdentity extends React.Component {
         return this.props.params.alumni_id;
     }
 
+    get data() {
+        return {
+            identity: $identity.getStateById(this.alumni_id),
+        };
+    }
+
     render() {
-        const data = $identity.getById(this.alumni_id);
+        const { identity } = this.data;
 
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <AppListView
-                    data={data.data}
+                    data={identity.data}
+                    loaded={identity._loaded}
                     renderRow={(rowData, sectionID, rowID) => (
                         <AppSwipeActionItem
                             key={rowID}
                             right={[{
                                 text: '重命名',
-                                onPress: () => Utils.onPrompt('重命名身份', (value) => this.doUpdate(value, rowData.identity_type_id), rowData.name),
+                                onPress: () => Utils.onPrompt('重命名身份', 
+                                    (value) => this.doUpdate(value, rowData.identity_type_id), rowData.name
+                                ),
                                 style: {
                                     backgroundColor: Const.ui.color_warning,
                                     color: '#fff'
                                 },
                             }, {
                                 text: '删除',
-                                onPress: () => Utils.onConfirm('确定删除？', () => this.doDelete(rowData.identity_type_id)),
+                                onPress: () => Utils.onConfirm('确定删除？', 
+                                    () => this.doDelete(rowData.identity_type_id)
+                                ),
                                 style: {
                                     backgroundColor: Const.ui.color_danger,
                                     color: '#fff'
@@ -89,9 +105,9 @@ export default class AdminIdentity extends React.Component {
                 />
 
                 <ButtonWrap>
-                    <Button onClick={e => Utils.onPrompt('添加身份', (value) => this.doAdd(value))}>添加身份</Button>
+                    <Button onClick={(e) => Utils.onPrompt('添加身份', this.doAdd)}>添加身份</Button>
                 </ButtonWrap>
-            </div>
+            </Spin>
         );
     } 
 };

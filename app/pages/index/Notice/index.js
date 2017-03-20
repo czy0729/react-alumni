@@ -1,6 +1,8 @@
 /**
  * 通知正文
- * @version 170215 1.0
+ * @Date: 2017-02-15 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 07:38:07
  */
 'use strict';
 
@@ -8,18 +10,14 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $notice, $alumni } from 'stores';
 import { Icon } from 'antd-mobile';
-import { Content, Permission, AppPopover } from 'components';
+import { Spin, Content, Permission, AppPopover } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-index__notice';
 const Item = AppPopover.Item;
 
 @observer
-export default class Notice extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.any,
-    };
-
+export default class IndexNotice extends React.Component {
     constructor() {
         super();
 
@@ -31,11 +29,14 @@ export default class Notice extends React.Component {
     }
 
     handleSelect(node, key) {
-        const { router } = this.context;
-
         switch (key) {
             case 0:
-                router.push(`/${this.alumni_id}/admin/notice/${this.notice_id}`);
+                Utils.router.push(
+                    Const.router.admin_notice({
+                        alumni_id: this.alumni_id,
+                        notice_id: this.notice_id,
+                    })
+                );
                 break;
 
             case 1:
@@ -58,9 +59,15 @@ export default class Notice extends React.Component {
         return this.props.routeParams.notice_id;
     }
 
+    get data() {
+        return {
+            alumni: $alumni.getStateById(this.alumni_id),
+            detail: $notice.getStateById(this.notice_id, 'detail'),
+        };
+    }
+
     render() {
-        const data = $notice.getById(this.notice_id, 'detail');
-        const data_alumni = $alumni.getById(this.alumni_id);
+        const { alumni, detail } = this.data;
 
         return (
             <div className={prefixCls}>
@@ -70,7 +77,7 @@ export default class Notice extends React.Component {
                     <Permission 
                         rules={[{
                             condition : [Const.user_type.super, Const.user_type.admin],
-                            value     : data_alumni.user_type,
+                            value     : alumni.user_type,
                         }]}
                     >
                         <AppPopover
@@ -85,17 +92,17 @@ export default class Notice extends React.Component {
                     </Permission>
 
                     {/*正文详情*/}
-                    <p className={`${prefixCls}__head_name`}>{data.title}</p>
+                    <p className={`${prefixCls}__head_name`}>{detail.title}</p>
                     <p className={`${prefixCls}__head_desc`}>
                         <Icon type="calendar" />
-                        <span className="ml-sm">{Utils.date(data.ctime)}</span>
+                        <span className="ml-sm">{Utils.date(detail.ctime)}</span>
                         <Icon className="ml-xl" type="user" />
-                        <span className="ml-sm">{data.nickname}</span>
+                        <span className="ml-sm">{detail.nickname}</span>
                     </p>
                 </div>
 
                 {/*正文*/}
-                <Content className={`${prefixCls}__content`} value={data.content} />
+                <Content className={`${prefixCls}__content`} value={detail.content} />
             </div>
         );
     } 

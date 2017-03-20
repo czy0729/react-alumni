@@ -7,15 +7,15 @@ const Item = List.Item;
 const Control = (props) => {
     const { 
         alumni_id,
-        user_detail, identity, 
+        detail, identity, 
         doSetIdentity, doSetAdmin, doSetBlack,
     } = props;
 
     //用户各种状态
-    const is_manager = user_detail.is_manager == Const.is_manager.yes;
-    const is_creater = user_detail.is_creater == Const.is_creater.yes;
-    const is_black   = user_detail.status == Const.user_detail_status.yes;
-    const is_self    = user_detail.type == Const.user_detail_type.self;
+    const is_manager = detail.is_manager == Const.is_manager.yes;
+    const is_creater = detail.is_creater == Const.is_creater.yes;
+    const is_black   = detail.status == Const.user_detail_status.yes;
+    const is_self    = detail.type == Const.user_detail_type.self;
 
     //身份DS
     const identityDS = identity.map((item) => ({ 
@@ -34,9 +34,9 @@ const Control = (props) => {
                 data={identityDS}
                 cols={1}
                 value={
-                    user_detail.identity.length === 0 
+                    detail.identity.length === 0 
                       ? [''] 
-                      : [user_detail.identity[0].identity_type_id]
+                      : [detail.identity[0].identity_type_id]
                 }
                 disabled={isIdentityEmpty}
                 onChange={doSetIdentity}

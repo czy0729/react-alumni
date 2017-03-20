@@ -4,16 +4,16 @@ import React from 'react';
 import { List, Icon } from 'antd-mobile';
 
 const Detail = (props) => {
-    const { user_detail } = props;
+    const { detail } = props;
 
-    const _user_detail = { ...user_detail };
+    const _detail = { ...detail };
 
-    delete _user_detail.nickname;
-    delete _user_detail.headimgurl;
+    delete _detail.nickname;
+    delete _detail.headimgurl;
 
     return (
         <div>
-            {Utils.generateFieldsConfig(_user_detail).map((item, index) => (
+            {Utils.generateFieldsConfig(_detail).map((item, index) => (
                 <List 
                     key={Const.fileds_group[index]}
                     renderHeader={() => <div>{Const.fileds_group[index]}</div>}
@@ -36,7 +36,7 @@ const Detail = (props) => {
                                           ? <span>{Const.getOptionLabel(i[5].format, i[1]) || '-'}</span>
                                           : <span>{i[1] || '-'}</span>
                                 }
-                                {!is_hidden && is_tel && i[1] && <Icon className="pull-right text-default" type="mobile" />}
+                                {!is_hidden && is_tel && i[1] && <Icon className="pull-right text-default" type={require('common/svg/mobile.svg')} />}
                             </List.Item>
                         );
                     })}

@@ -1,6 +1,8 @@
 /**
  * 请求列表
- * @version 170220 1.0
+ * @Date: 2017-02-20 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 00:53:34
  */
 'use strict';
 
@@ -8,17 +10,13 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $auth } from 'stores';
 import { Result, Button } from 'antd-mobile';
-import { Img, AppListView } from 'components';
+import { Spin, Img, AppListView } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-admin__auth-list';
 
 @observer
 export default class AdminAuthList extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.any,
-    };
-
     constructor() {
         super();
 
@@ -34,8 +32,7 @@ export default class AdminAuthList extends React.Component {
             alumni_id: this.alumni_id,
             user_id,
             notice_id,
-            status,
-        });
+        }, status);
 
         Utils.onSuccess();
     }
@@ -44,15 +41,22 @@ export default class AdminAuthList extends React.Component {
         return this.props.params.alumni_id;
     }
 
+    get data() {
+        return {
+            auth_list: $auth.getStateById(this.alumni_id, 'auth_list'),
+        }
+    }
+
     render() {
-        const { router } = this.context;
-        const data = $auth.getById(this.alumni_id, 'auth_list');
+        const { auth_list } = this.data;
 
         return (
-            <div className={prefixCls}>
-                {/*列表*/}
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <AppListView
-                    data={data.data}
+                    data={auth_list.data}
                     renderRow={(rowData, sectionID, rowID) => (
                         <div>
                             <p className={`${prefixCls}__date`}>{Utils.date(rowData.ctime)}</p>
@@ -64,22 +68,25 @@ export default class AdminAuthList extends React.Component {
                             <div className={`${prefixCls}__confirm`}>
                                 <Button 
                                     type="ghost" 
-                                    onClick={this.handleSubmit.bind(this, rowData, Const.auth_status.resolve)}
+                                    onClick={() => this.handleSubmit(rowData, 'resolve')}
                                 >
                                     同意
                                 </Button>
                                 <Button 
                                     onClick={() => Utils.onConfirm('确定拒绝校友申请？', 
-                                        this.handleSubmit.bind(this, rowData, Const.auth_status.reject))}
+                                        () => this.handleSubmit(rowData, 'reject')
+                                    )}
                                 >
                                     拒绝
                                 </Button>
                             </div>
                         </div>
                     )}
-                    renderSeparator={(sectionID, rowID) => <div key={`${sectionID}-${rowID}`} className="tool-separator" />}
+                    renderSeparator={(sectionID, rowID) => (
+                        <div key={`${sectionID}-${rowID}`} className="tool-separator" />
+                    )}
                 />
-            </div>
+            </Spin>
         );
     } 
 };

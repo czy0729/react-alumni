@@ -4,20 +4,16 @@
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
 
 useStrict(true);
 
 class store extends common {
-    constructor() {
-        super();
-
-        this.config = {
-            namespace: '$app',
-            cache: true,
-        };
-    }
+    config = {
+        namespace: '$app',
+        cache: true,
+    };
 
     @observable state = this.initState({
         loading: false,
@@ -26,7 +22,12 @@ class store extends common {
         },
     }, ['loading']);
 
+    constructor() {
+        super();
+    }
+
     /**
+     * 隐藏Tabbar
      * @version 170306 1.0
      */
     @action
@@ -37,6 +38,7 @@ class store extends common {
     }
 
     /**
+     * 显示Tabbar
      * @version 170306 1.0
      */
     @action
@@ -47,6 +49,7 @@ class store extends common {
     }
 
     /**
+     * 标识action是否ajax请求中
      * @version 170313 1.0
      */
     @action

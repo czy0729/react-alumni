@@ -56,7 +56,7 @@ const Btn = (props) => {
     return (
         <Button 
             size="small" 
-            style={{ width: '1.8rem' }}
+            style={{ width: '2.2rem' }}
             {...config}
         />
     );

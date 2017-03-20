@@ -1,6 +1,8 @@
 /**
- * @observer
- * @version 170203 1.0
+ * Mobx @observer
+ * @Date: 2017-02-03 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 08:23:38
  */
 'use strict';
 

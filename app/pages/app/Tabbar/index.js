@@ -1,6 +1,8 @@
 /**
- * Tabbar
- * @version 170306 1.0
+ * Tabbar 导航条
+ * @Date: 2017-03-06 19:46:25
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-20 08:49:25
  */
 'use strict';
 
@@ -46,23 +48,22 @@ export default class AppTabbar extends React.Component {
                 >
                     {this.renderTabBarItem({
                         title: '新建',
-                        icon: <Icon type="plus" />,
+                        icon: <Icon size="xxs" type={require('common/svg/plus.svg')} />,
                         pathname: Const.router.add_alumni(),
                     })}
                     {this.renderTabBarItem({
                         title: '校友录',
-                        icon: <Icon type="bars" />,
+                        icon: <Icon size="xxs" type={require('common/svg/bars.svg')} />,
                         pathname: Const.router.user_alumni(),
                     })}
                     {this.renderTabBarItem({
                         title: '个人',
-                        icon: <Icon type="smile" />,
-                        selectedIcon: <Icon type="smile-circle" />,
+                        icon: <Icon size="xxs" type={require('common/svg/me.svg')} />,
                         pathname: Const.router.user_center(),
                     })}
                     {this.renderTabBarItem({
                         title: '收起',
-                        icon: <Icon type="down" />,
+                        icon: <Icon size="xxs" type={require('common/svg/close.svg')} />,
                         pathname: '_down',
                         onPress: () => $app.hideTabbar(),
                     })}

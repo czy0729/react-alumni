@@ -1,6 +1,8 @@
 /**
  * 发布/修改通知
- * @version 170213 1.0
+ * @Date: 2017-02-13 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:54:50
  */
 'use strict';
 
@@ -8,7 +10,7 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $notice, $popout } from 'stores';
 import { Button } from 'antd-mobile';
-import { Content, ButtonWrap, AppForm } from 'components';
+import { Spin, Content, ButtonWrap, AppForm } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-admin__notice';
@@ -23,7 +25,13 @@ export default class AdminNotice extends React.Component {
     }
 
     componentDidMount() {
-        if (this.notice_id) $notice.fetch_detail({ notice_id: this.notice_id });
+        const { notice_id } = this;
+
+        if (notice_id) {
+            $notice.fetch_detail({ 
+                notice_id,
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -65,27 +73,38 @@ export default class AdminNotice extends React.Component {
         return this.props.routeParams.notice_id;
     }
 
+    get data() {
+        const { notice_id } = this;
+
+        return {
+            detail: notice_id ? $notice.getStateById(notice_id, 'detail') : {},
+        };
+    }
+
     render() {
         const { form, onSubmit } = this.props;
-        const data = this.notice_id ? $notice.getById(this.notice_id, 'detail') : {};
+        const { notice_id } = this;
+        const { detail } = this.data;
 
         return (
-            <div className={prefixCls}>
-                {/*表单*/}
+            <Spin 
+                className={prefixCls}
+                spinning={notice_id && Utils.isSpinning(this.data)}
+            >
                 <AppForm
                     form={form}
-                    onSubmit={e => onSubmit(e, form, this.notice_id ? this.doUpdate : this.doAdd)}
+                    onSubmit={e => onSubmit(e, form, notice_id ? this.doUpdate : this.doAdd)}
                 >
                     <AppForm.Input
                         name="title"
                         placeholder="请输入标题"
-                        initialValue={data.title}
+                        initialValue={detail.title}
                         option={Const.rules.required}
                     />
                     <AppForm.Textarea
                         name="content"
                         placeholder="请输入正文"
-                        initialValue={data.content}
+                        initialValue={detail.content}
                         option={Const.rules.required}
                         rows={10}
                         count={500}
@@ -93,20 +112,17 @@ export default class AdminNotice extends React.Component {
                     />
                 </AppForm>
 
-                {/*按钮*/}
                 <ButtonWrap>
                     <Button 
                         type="primary"
                         form="form"
                         htmlType="submit"
                     >
-                        {this.notice_id ? '修改通知' : '确认发布'}
+                        {notice_id ? '修改通知' : '确认发布'}
                     </Button>
-                    <Button onClick={this.showView}>
-                        预览
-                    </Button>
+                    <Button onClick={this.showView}>预览</Button>
                 </ButtonWrap>
-            </div>
+            </Spin>
         );
     } 
 };

@@ -1,6 +1,8 @@
 /**
- * user分组容器
- * @version 170228 1.0
+ * user分组
+ * @Date: 2017-03-01 03:47:47
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 08:10:29
  */
 'use strict';
 

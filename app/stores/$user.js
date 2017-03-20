@@ -1,28 +1,31 @@
 /**
  * 用户
- * @version 170223 1.0
+ * @Date: 2017-02-23 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 18:57:19
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
+
 useStrict(true);
 
 class store extends common {
-    constructor() {
-        super();
-
-        this.config = {
-            namespace: '$user',
-            cache: true,
-        };
-    }
+    config = {
+        namespace: '$user',
+        cache: true,
+    };
 
     @observable state = this.initState({
-        //...self
+        base: {},
         list: {},
         detail: {},
     });
+
+    constructor() {
+        super();
+    }
 
     /*==================== view ====================*/
     /**
@@ -30,13 +33,8 @@ class store extends common {
      * @version 170223 1.0
      */
     @action
-    async fetch(query, config) {
-        const result = await Ajax.P('get_user_info', query, {
-            show: !this.state._loaded,
-            ...config,
-        });
-
-        this.setState(result);
+    fetch(query, config) {
+        return this.fetchThenSetState(query, config, 'get_user_info');
     }
 
     /**
@@ -45,15 +43,8 @@ class store extends common {
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async fetch_list(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_alumni_user_list', query, {
-            show: !this.getById(alumni_id, 'list')._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result, 'list');
+    fetch_list(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_alumni_user_list', 'alumni_id', 'list');
     }
 
     /**
@@ -63,16 +54,11 @@ class store extends common {
      * @param {Int} *user_id   用户id
      */
     @action
-    async fetch_detail(query, config) {
-        const { alumni_id, user_id } = query;
-        const pk = `${alumni_id}-${user_id}`;
-
-        const result = await Ajax.P('get_alumni_user_detail', query, {
-            show: !this.getById(pk, 'detail')._loaded,
-            ...config,
-        });
-
-        this.setStateById(pk, result, 'detail');
+    fetch_detail(query, config) {
+        return this.fetchThenSetStateById({
+            _pk: `${query.alumni_id}-${query.user_id}`,
+            ...query,
+        }, config, 'get_alumni_user_detail', '_pk', 'detail');
     }
 
     /*==================== action ====================*/
@@ -83,8 +69,8 @@ class store extends common {
      * @param {Int} *user_id   用户id
      */
     @action
-    async exchange_card(query, config) {
-        return await Ajax.P('do_exchange_card', query, config);
+    exchange_card(query, config) {
+        return Ajax.P('do_exchange_card', query, config);
     }
 
     /**
@@ -94,13 +80,10 @@ class store extends common {
      * @param {Int} *status  resolve|reject|cancel
      */
     @action
-    async allow_exchange_card(query, status, config) {
+    allow_exchange_card(query, status, config) {
         const api = 'do_allow_exchange_card';
 
-        return await Ajax.P(api, {
-            ...query,
-            status: Ajax.getParam(api, 'status', status),
-        }, config);
+        return Ajax.P(api, Ajax.genQuery(api, 'status', status, query), config);
     }
 
     /**
@@ -110,8 +93,8 @@ class store extends common {
      * @param {Int} *user_id   用户id
      */
     @action
-    async delete(query, config) {
-        return await Ajax.P('delete_alumni_user', query, config);
+    delete(query, config) {
+        return Ajax.P('delete_alumni_user', query, config);
     }
 
     /**
@@ -120,8 +103,8 @@ class store extends common {
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async quit(query, config) {
-        return await Ajax.P('do_quit_alumni', query, config);
+    quit(query, config) {
+        return Ajax.P('do_quit_alumni', query, config);
     }
 
     /**
@@ -132,13 +115,10 @@ class store extends common {
      * @param {Int} *status  yes|no
      */
     @action
-    async set_black(query, status, config) {
+    set_black(query, status, config) {
         const api = 'do_set_black';
 
-        return await Ajax.P(api, {
-            ...query,
-            status: Ajax.getParam(api, 'status', status),
-        }, config);
+        return Ajax.P(api, Ajax.genQuery(api, 'status', status, query), config);
     }
 
     /**
@@ -149,8 +129,8 @@ class store extends common {
      * @param {String} *back_name 用户备注名
      */
     @action
-    async set_back_name(query, config) {
-        return await Ajax.P('do_set_black', query, config);
+    set_back_name(query, config) {
+        return Ajax.P('do_set_black', query, config);
     }
 
     /**
@@ -159,10 +139,8 @@ class store extends common {
      * 见1.1
      */
     @action
-    async update_info(query, config) {
-        const result = await Ajax.P('update_user_info', query, config);
-
-        return result;
+    update_info(query, config) {
+        return Ajax.P('update_user_info', query, config);
     }
 };
 

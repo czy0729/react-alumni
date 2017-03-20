@@ -1,6 +1,8 @@
 /**
- * 入口
- * @version 170120 1.0
+ * 路由表
+ * @Date: 2017-01-20 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 08:18:08
  */
 'use strict';
 

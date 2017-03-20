@@ -1,6 +1,8 @@
 /**
  * 我的校友录列表
- * @version 170228 1.0
+ * @Date: 2017-03-01 03:48:54
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 19:48:23
  */
 'use strict';
 
@@ -8,7 +10,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $alumni } from 'stores';
 import { SearchBar, List } from 'antd-mobile';
-import { Img, AppListView } from 'components';
+import { Spin, Img, AppListView } from 'components';
 import { section } from './ds';
 
 const prefixCls = 'pages-user__alumni';
@@ -39,7 +41,9 @@ export default class UserAlumni extends React.Component {
             //(2/4)
             case Const.alumni_list_status.new:
                 Utils.router.push({
-                    pathname: Const.router.admin_auth_fields({ alumni_id }),
+                    pathname: Const.router.admin_auth_fields({ 
+                        alumni_id,
+                    }),
                     query: {
                         from: 'add_alumni',
                     },
@@ -49,7 +53,9 @@ export default class UserAlumni extends React.Component {
             //(3/4)
             case Const.alumni_list_status.auth:
                 Utils.router.push({
-                    pathname: Const.router.admin_auth_show({ alumni_id }),
+                    pathname: Const.router.admin_auth_show({ 
+                        alumni_id,
+                    }),
                     query: {
                         from: 'add_alumni',
                     },
@@ -59,7 +65,9 @@ export default class UserAlumni extends React.Component {
             //(4/4)
             case Const.alumni_list_status.show:
                 Utils.router.push({
-                    pathname: Const.router.auth({ alumni_id }),
+                    pathname: Const.router.auth({ 
+                        alumni_id,
+                    }),
                     query: {
                         from: 'add_alumni',
                     },
@@ -68,7 +76,11 @@ export default class UserAlumni extends React.Component {
 
             //完成创建的
             case Const.alumni_list_status.finish:
-                Utils.router.push(Const.router.index({ alumni_id }));
+                Utils.router.push(
+                    Const.router.index({ 
+                        alumni_id,
+                    })
+                );
                 break;
         }
     }
@@ -85,6 +97,12 @@ export default class UserAlumni extends React.Component {
         if (item.school_name.indexOf(search) !== -1) return true;
 
         return false;
+    }
+
+    get data() {
+        return {
+            list: $alumni.getState('list'),
+        };
     }
 
     renderExtra(status) {
@@ -112,21 +130,21 @@ export default class UserAlumni extends React.Component {
     }
 
     render() {
-        const { data = [] } = $alumni.state.list;
-        const ds = data.filter(this.onSearch);
+        const { list } = this.data;
 
         return (
-            <div className={prefixCls}>
-                {/*搜索栏*/}
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <SearchBar
                     placeholder="搜索"
-                    focused
                     onChange={this.handleChange}
                 />
 
-                {/*列表*/}
                 <AppListView
-                    data={ds}
+                    data={list.data && list.data.filter(this.onSearch)}
+                    loaded={list._loaded}
                     section={section}
                     renderSectionHeader={(sectionData) => <div>{sectionData}</div>}
                     renderRow={(rowData, sectionID, rowID) => (
@@ -144,7 +162,7 @@ export default class UserAlumni extends React.Component {
                         </List.Item>
                     )}
                 />
-            </div>
+            </Spin>
         );
     } 
 };

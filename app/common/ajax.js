@@ -1,6 +1,8 @@
 /**
  * Ajax
- * @version 170201 1.0
+ * @Date: 2017-02-01 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 19:43:04
  */
 'use strict';
 
@@ -10,7 +12,7 @@ import Utils from './utils';
 const apis = {
     /*================== 0 ==================*/
     /**
-     * 0.0 用户基本信息
+     * [$user] 0.0 用户基本信息
      * @version 170201 1.0
      */
     get_user_info             : '/user/getUserInfo',
@@ -24,7 +26,7 @@ const apis = {
 
     /*================== 1 ==================*/
     /**
-     * 1.0 添加校友录
+     * [$alumni] 1.0 添加校友录
      * @version 170305 1.0
      * @param {String} *name        校友录名称
      * @param {String} *school_name 学校名称
@@ -34,7 +36,7 @@ const apis = {
     add_alumni: '/alumni/createAlumni',
 
     /**
-     * 填写创建者个人信息并完成校友录创建
+     * [$auth] 1.1 填写创建者个人信息并完成校友录创建
      * @version 170305 1.0
      * @param {String}  *alumni_id 校友录id
      * @param {String}  real_name  真实姓名
@@ -46,12 +48,12 @@ const apis = {
      * 1.2.0 用户经过分享连接进入到校友录 - 检查是否验证过校友录
      * @version 170305 1.0
      * @param  {String} *alumni_id 校友录id
-     * @return {Object}            -2第一次进来，-1被拒绝，0待认证，1已同意
+     * @return {Int}               -2第一次进来，-1被拒绝，0待认证，1已同意
      */
     do_check_alumni_auth_status: '/alumni/validateAlumniUser',
 
     /**
-     * 1.2.1 邀请好友进入 获取校友录认证字段
+     * [$auth] 1.2.1 获取校友录认证字段
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
@@ -67,20 +69,20 @@ const apis = {
 
     /*================== 2 校友录 ==================*/
     /**
-     * 2.1.0 我的校友录列表
+     * [$alumni] 2.1.0 我的校友录列表
      * @version 170224 1.0
      */
     get_alumni_list: '/alumni/index',
 
     /**
-     * 2.1.1 获取校友录基本信息
+     * [$alumni] 2.1.1 获取校友录基本信息
      * @version 170203 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_alumni_info           : '/alumni/getAlumniById',
 
     /**
-     * 2.1.2 修改校友录基本信息
+     * [$alumni] 2.1.2 修改校友录基本信息
      * @version 170207 1.0
      * @param {Int}    *alumni_id  校友录id
      * @param {String} logo        校友录头像
@@ -91,14 +93,14 @@ const apis = {
     update_alumni_info        : '/alumni/updateAlumni',
 
     /**
-     * 2.1.3 校友录用户列表
+     * [$user] 2.1.3 校友录用户列表
      * @version 170220 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_alumni_user_list      : '/alumni/getAlumniUserLists',
 
     /**
-     * 2.1.4 校友录用户详情
+     * [$user] 2.1.4 校友录用户详情
      * @version 170222 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
@@ -106,7 +108,7 @@ const apis = {
     get_alumni_user_detail    : '/alumni/getAlumniUserDetail',
 
     /**
-     * 2.1.5 校友录发出交换名片请求
+     * [$user] 2.1.5 校友录发出交换名片请求
      * @version 170224 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
@@ -123,16 +125,22 @@ const apis = {
     update_user_identity: '/alumni/setIdentity',
 
     /**
-     * 2.1.7 设置或取消管理员授权
+     * [$admin] 2.1.7 设置或取消管理员授权
      * @version 170211 1.0
-     * @param {Int} *alumni_id     校友录id
-     * @param {Int} *user_id     用户id
-     * @param {Int} *is_manager 1设置为管理员,0取消管理员
+     * @param {Int} *alumni_id  校友录id
+     * @param {Int} *user_id    用户id
+     * @param {Int} *is_manager
      */
-    update_admin_list         : '/alumni/setAlumniUser',
+    update_admin_list         : {
+        api: '/alumni/setAlumniUser',
+        is_manager: {
+            yes: 1, //设置为管理员
+            no: 0,  //取消管理员
+        },
+    },
 
     /**
-     * 2.1.8 删除校友录用户
+     * [$user] 2.1.8 删除校友录用户
      * @version 170224 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
@@ -140,7 +148,7 @@ const apis = {
     delete_alumni_user        : '/alumni/deleteAlumniUser',
 
     /**
-     * 2.1.9 用户退出校友录
+     * [$user] 2.1.9 用户退出校友录
      * @version 170224 1.0
      * @param {Int} *alumni_id 校友录id
      */
@@ -176,26 +184,38 @@ const apis = {
     },
 
     /**
-     * 2.2.1 用户收到的通知列表
+     * [$auth] 2.2.1 用户收到的通知列表
      * @version 170220 1.0
      * @param {Int} *alumni_id 校友录id
-     * @param {Int} *category  1获取用户收到的通知列表，2获取获取待认证用户列表
+     * @param {Int} *category  后端约定的
      * @param {Int} page       分页
      */
-    get_message_list          : '/notice/getNoticeList',
+    get_message_list          : {
+        api: '/notice/getNoticeList',
+        category: {
+            message: 1, //获取用户收到的通知列表
+            auth: 2,    //获取待认证用户列表
+        },
+    },
 
     /**
-     * 2.2.2 同意或拒绝用户进入校友录
+     * [$auth] 2.2.2 同意或拒绝用户进入校友录
      * @version 170221 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   加入的用户id
      * @param {Int} *notice_id 通知id
-     * @param {Int} *status    同意状态1同意 -1拒绝
+     * @param {Int} *status    同意状态
      */
-    do_submit_alumni_auth        : '/alumni/allowOrDenyAlumni',
+    do_submit_alumni_auth        : {
+        api: '/alumni/allowOrDenyAlumni',
+        status: {
+            resolve: 1,
+            reject: -1,
+        },
+    },
 
     /**
-     * 2.2.3 设置用户备注名
+     * [$user] 2.2.3 设置用户备注名
      * @version 170224 1.0
      * @param {Int}    *alumni_id 校友录id
      * @param {Int}    *user_id   加入的用户id
@@ -204,21 +224,21 @@ const apis = {
     update_back_name          : '/cards/updateNickName',
 
     /**
-     * 2.3.0 管理员列表
+     * [$admin] 2.3.0 管理员列表
      * @version 170208 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_admin_list            : '/alumni/getManagerList',
 
     /**
-     * 2.4.0 身份列表
+     * [$identity] 2.4.0 身份列表
      * @version 170212 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_identity_list         : '/identity/index',
 
     /**
-     * 2.4.1 添加身份
+     * [$identity] 2.4.1 添加身份
      * @version 170212 1.0
      * @param {Int}    *alumni_id 校友录id
      * @param {String} *name      名称
@@ -226,7 +246,7 @@ const apis = {
     add_identity              : '/identity/createIdentity',
 
     /**
-     * 2.4.2 修改身份
+     * [$identity] 2.4.2 修改身份
      * @version 170212 1.0
      * @param {Int}    *alumni_id        校友录id
      * @param {Int}    *identity_type_id 身份管理类型id
@@ -235,7 +255,7 @@ const apis = {
     update_identity           : '/identity/updateIdentity',
 
     /**
-     * 2.4.3 删除身份
+     * [$identity] 2.4.3 删除身份
      * @version 170212 1.0
      * @param {Int} *alumni_id        校友录id
      * @param {Int} *identity_type_id 身份管理类型id
@@ -243,7 +263,7 @@ const apis = {
     delete_identity           : '/identity/deleteIdentity',
 
     /**
-     * 2.5.0 发布通知
+     * [$notice] 2.5.0 发布通知
      * @version 170213 1.0
      * @param {Int}    *alumni_id 校友录id
      * @param {String} *title     标题
@@ -252,7 +272,7 @@ const apis = {
     add_notice                : '/notice/createNotice',
 
     /**
-     * 2.5.1 通知列表
+     * [$notice] 2.5.1 通知列表
      * @version 170213 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} page
@@ -260,14 +280,14 @@ const apis = {
     get_notice_list           : '/notice/index',
 
     /**
-     * 2.5.2 通知详细
+     * [$notice] 2.5.2 通知详细
      * @version 170213 1.0
      * @param {Int} *notice_id 文章id
      */
     get_notice                : '/notice/getNoticeDetail',
 
     /**
-     * 2.5.3 修改通知
+     * [$notice] 2.5.3 修改通知
      * @version 170213 1.0
      * @param {Int}    *notice_id 文章id
      * @param {String} *title     标题
@@ -276,14 +296,14 @@ const apis = {
     update_notice             : '/notice/updateNotice',
 
     /**
-     * 2.5.4 删除通知
+     * [$notice] 2.5.4 删除通知
      * @version 170213 1.0
      * @param {Int} *notice_id 文章id
      */
     delete_notice             : '/notice/deleteNotice',
 
     /**
-     * 2.7.0 <认证管理> 获取已经认证和未认证数量
+     * [$auth] 2.7.0 获取已经认证和未认证数量
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
@@ -300,7 +320,7 @@ const apis = {
      */
 
     /**
-     * 2.7.3 修改认证需要填写的信息
+     * [$auth] 2.7.3 修改认证需要填写的信息
      * @version 170219 1.0
      * @param {Int} *alumni_id        校友录id
      * @param {Int} ...is_need_mobile 如：上个接口的参数
@@ -308,14 +328,14 @@ const apis = {
     update_alumni_auth_fields : '/alumni/updateAuthenti',
 
     /**
-     * 2.7.4 获取认证后可见信息
+     * [$auth] 2.7.4 获取认证后可见信息
      * @version 170220 1.0
      * @param {Int} *alumni_id        校友录id
      */
     get_alumni_show_fields    : '/alumni/getAuthentiShow',
 
     /**
-     * 2.7.5 修改认证认证后可见信息
+     * [$auth] 2.7.5 修改认证认证后可见信息
      * @version 170220 1.0
      * @param {Int} *alumni_id        校友录id
      * @param {Int} ...is_show_mobile 如：上个接口的参数
@@ -338,23 +358,28 @@ const apis = {
     get_cards: '/cards/index',
 
     /**
-     * 3.2.0 黑名单
+     * [$user] 3.2.0 黑名单
      * @version 170313 1.0
      */
     get_blacklist: '/user/blackUserLists',
 };
 
 const _fetch = async (api, query) => {
-    const response = await fetch(`${Const.web}${api}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: Utils.getQueryStr({ access_token, ...query }),
-    });
+    let response;
 
-    /*const response = await fetch(`./api${api}.json`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    });*/
+    if (Const._offline) {
+        response = await fetch(`./api${api}.json`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        });
+
+    } else {
+        response = await fetch(`${Const.web}${api}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: Utils.getQueryStr({ access_token, ...query }),
+        });
+    }
 
     return await response.json();
 };
@@ -362,38 +387,68 @@ const _fetch = async (api, query) => {
 /**
  * POST
  * @version 170306 1.0
- * @version 170313 1.1 loading处理方式改变，showToast换成loading Button形式
  * @param {String} *api
  * @param {Object} query
  * @param {Object} config -> `show`请求时显示Toast，`fail`服务器端请求结果失败自定义回调
  */
 const P = (api, query = {}, config = {}) => {
-    return new Promise(async (resolve, reject) => {
-        const { $app }    = require('../stores');
-        const { fail }    = config;
-        const isSubmit    = api.indexOf('get_') !== 0; //判断api是不是操作型的
-        const apiAddress  = typeof apis[api] === 'object' ? apis[api].api : apis[api]; //api地址
+    return new Promise((resolve, reject) => {
+        const { fail, show = true } = config;
+        const isSubmitApi = api.indexOf('get_') !== 0; //判断api是不是操作型的
+        const isNeedShowToast = show && isSubmitApi;
 
-        //操作型的设置一个AppButton的loading反馈
-        isSubmit && $app.loading();
+        const apiAddress = typeof apis[api] === 'object' ? apis[api].api : apis[api]; //api地址
 
-        const res = await _fetch(apiAddress, query);
+        isNeedShowToast && Toast.loading('请求中...');
 
-        isSubmit && $app.loading(false);
+        setTimeout(async () => {
+            const res = await _fetch(apiAddress, query);
 
-        if (res.code != 0) {
-            const _fail = res => Utils.onAlert(`[${res.code}] ${res.err}`);
+            isNeedShowToast && Toast.hide();
 
-            //typeof fail === 'function' ? fail(res, _fail) : _fail(res);
+            if (res.code != 0) {
+                const _fail = res => Utils.onAlert(`[${res.code}] ${res.err}`);
 
-            reject(res);
-        }
+                typeof fail === 'function' ? fail(res, _fail) : _fail(res);
 
-        resolve(res.data);
+                reject(res);
+
+            } else {
+                resolve(res.data);
+            }
+        }, 600);
     });
+};
+
+/**
+ * 获取api字段的枚举值
+ * @version 170310 1.0
+ * @param  {String} *api       api名称
+ * @param  {String} *paramName 字段name
+ * @param  {String} *keyName   字段值枚举key
+ * @return {String}
+ */
+const getParam = (api, paramName, keyName) => apis[api][paramName][keyName];
+
+
+/**
+ * 获取api字段的枚举值并构造query
+ * @version 170318 1.0
+ * @param  {String} *api       api名称
+ * @param  {String} *paramName 字段name
+ * @param  {String} *keyName   字段值枚举key
+ * @param  {Object} query      可以把fetch的其他query一同传过来构造
+ * @return {Object}
+ */
+const genQuery = (api, paramName, keyName, query) => {
+    return {
+        ...query,
+        [paramName]: getParam(api, paramName, keyName),
+    };
 };
 
 export default {
     P,
-    getParam: (api, paramName, keyName) => apis[api][paramName][keyName],
+    getParam,
+    genQuery, 
 };

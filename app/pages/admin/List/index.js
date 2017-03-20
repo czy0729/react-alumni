@@ -1,6 +1,8 @@
 /**
  * 管理员列表
- * @version 170208 1.0
+ * @Date: 2017-02-28 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:49:19
  */
 'use strict';
 
@@ -8,7 +10,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $admin } from 'stores';
 import { Button } from 'antd-mobile';
-import { Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
+import { Spin, Img, ButtonWrap, AppListView, AppSwipeActionItem } from 'components';
 import { section } from './ds';
 
 const prefixCls = 'pages-admin__list';
@@ -18,32 +20,49 @@ export default class AdminList extends React.Component {
     constructor() {
         super();
 
-        Utils.binds(this, ['doCancel']);
+        Utils.binds(this, ['init', 'doCancel']);
     }
 
     componentDidMount() {
-        $admin.fetch({ alumni_id: this.alumni_id });
+        this.init();
     }
 
-    doCancel(user_id) {
-        $admin.auth({
+    init() {
+        $admin.fetch({
+            alumni_id: this.alumni_id,
+        });
+    }
+
+    async doCancel(user_id) {
+        await $admin.auth({
             alumni_id: this.alumni_id,
             user_id,
-            is_manager: 0,
-        });
+        }, 'no');
+
+        this.init();
     }
 
     get alumni_id() {
         return this.props.params.alumni_id;
     }
 
+    get data() {
+        return {
+            admin: $admin.getStateById(this.alumni_id),
+        };
+    }
+
     render() {
-        const data = $admin.getById(this.alumni_id);
+        const { admin } = this.data;
 
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <AppListView
-                    data={data.data}
+                    data={admin.data}
+                    loaded={admin._loaded}
                     section={section}
                     renderSectionHeader={(sectionData) => <div>{sectionData}</div>}
                     renderRow={(rowData, sectionID, rowID) => (
@@ -51,13 +70,21 @@ export default class AdminList extends React.Component {
                             key={rowID}
                             right={[{
                                 text: '取消授权',
-                                onPress: () => Utils.onConfirm('确定取消授权？', this.doCancel.bind(this, rowData.user_id)),
+                                onPress: () => Utils.onConfirm('确定取消授权？', 
+                                    () => this.doCancel(rowData.user_id)
+                                ),
                                 style: {
                                     backgroundColor: Const.ui.color_danger,
-                                    color: '#fff'
+                                    color: '#fff',
                                 },
                             }]}
                             disabled={rowData.is_creater == Const.is_creater.yes}
+                            onClick={() => Utils.router.push(
+                                Const.router.user_detail({ 
+                                    alumni_id: this.alumni_id,
+                                    user_id: rowData.user_id,
+                                })
+                            )}
                         >
                             <div className="flex-align-center">
                                 <Img src={rowData.headimgurl} />
@@ -68,11 +95,17 @@ export default class AdminList extends React.Component {
                 />
 
                 <ButtonWrap>
-                    <a href={`#/${this.alumni_id}/center`}>
-                        <Button>添加管理员</Button>
-                    </a>
+                    <Button 
+                        onClick={() => Utils.router.push(
+                            Const.router.index({ 
+                                alumni_id: this.alumni_id
+                            })
+                        )}
+                    >
+                        添加管理员
+                    </Button>
                 </ButtonWrap>
-            </div>
+            </Spin>
         );
     } 
 };

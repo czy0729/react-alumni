@@ -1,15 +1,17 @@
 /**
  * 认证需填写字段
- * @version 170220 1.0
- * @version 170307 1.1 判断来源add_alumni
+ * 170307 判断来源add_alumni
+ * @Date: 2017-02-20 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:39:20
  */
 'use strict';
 
 import React from 'react';
 import { form, observer } from 'decorators';
 import { $auth } from 'stores';
-import { List, Button } from 'antd-mobile';
-import { Title, ButtonWrap, AppForm } from 'components';
+import { Button } from 'antd-mobile';
+import { Spin, Title, ButtonWrap, AppForm } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-admin__auth-show';
@@ -60,17 +62,25 @@ export default class AdminAuthShow extends React.Component {
         return this.props.location.query;
     }
 
+    get data() {
+        const { alumni_id } = this;
+
+        return {
+            show_fields: $auth.getStateById(alumni_id, 'show_fields'),
+            auth_fields: $auth.getStateById(this.alumni_id, 'auth_fields'),
+        };
+    }
+
     renderForms() {
         const { form } = this.props;
-        const dataShowFields = $auth.getById(this.alumni_id, 'show_fields');
-        const dataAuthFields = $auth.getById(this.alumni_id, 'auth_fields');
+        const { show_fields, auth_fields } = this.data;
 
-        return Utils.generateFieldsConfig(dataShowFields).map((item, index) => {
+        return Utils.generateFieldsConfig(show_fields).map((item, index) => {
             const items = [];
 
             item.forEach((i, idx) => {
                 //假如authFileds里不是必填或者选填，不生成
-                if (dataAuthFields[i[0].replace('is_show_', 'is_need_')] != '0') {
+                if (auth_fields[i[0].replace('is_show_', 'is_need_')] != '0') {
                     items.push(
                         <AppForm.Radio 
                             key={`${index}-${idx}`} 
@@ -84,13 +94,14 @@ export default class AdminAuthShow extends React.Component {
                 }
             });
 
-            return items.length != 0 && (
+            return items.length !== 0 && (
                 <AppForm 
                     key={index}
+                    form={form}
                     renderHeader={() => (
                         <div className={`${prefixCls}__form-header`}>
                             {
-                                index == 0
+                                index === 0
                                   ? <span>
                                         <span>{Const.fileds_group[index]}</span>
                                         <span className="text-mini"> (昵称、地区、性别授权时自动获取)</span>
@@ -102,7 +113,6 @@ export default class AdminAuthShow extends React.Component {
                             }
                         </div>
                     )}
-                    form={form}
                 >
                     {items}
                 </AppForm>
@@ -137,16 +147,17 @@ export default class AdminAuthShow extends React.Component {
     }
 
     render() {
-        const { form, onSubmit } = this.props;
-
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <Title>请设置已认证的校友可以查看其它校友的信息。不建议勾选重要或全部信息，没勾选或全部信息交换名片方可查看。</Title>
                 
                 {this.renderForms()}
 
                 {this.renderBtn()}
-            </div>
+            </Spin>
         );
     } 
 };

@@ -1,13 +1,19 @@
 /**
- * listView
- * @version 170208 1.0
- * @version 170217 1.1 [+]变得可以不传section
+ * AppListView
+ * 
+ * 17-02-17 变得可以不传section
+ * 17-03-17 数组为空时渲染提示为空
+ * 
+ * @Date: 2017-02-02 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-17 18:12:55
  */
 'use strict';
 
 import React from 'react';
 import classNames from 'classnames';
 import { ListView } from 'antd-mobile';
+import AppResult from '../AppResult';
 import './index.less';
 
 const prefixCls = 'components__app-list-view';
@@ -16,12 +22,19 @@ const defaultSection = [{
     title: '',
     filter: (item) => 1,
 }];
+const defaultEmpty = {
+    icon: 'inbox',
+    title: '空空如也',
+    message: '您可能需要一些操作后才能看见数据',
+};
 
 export default class AppListView extends React.Component {
     static defaultProps = {
-        data: [],
+        data: undefined,
         section: defaultSection,
         renderSectionHeader: (sectionData) => null,
+        loaded: true,
+        empty: {},
     };
 
     constructor(props) {
@@ -82,14 +95,16 @@ export default class AppListView extends React.Component {
     }
 
     render(){
-        const { className, data, ...other } = this.props;
+        const { className, data, loaded, empty, ...other } = this.props;
         let { section } = this.props;
         const state = this.state;
 
-        if (section.length == 0) section = defaultSection;
+        if (section.length === 0) section = defaultSection;
 
-        return (
-            <ListView.IndexedList
+        return loaded && data.length === 0
+          ? <AppResult {...{...defaultEmpty, ...empty}} />
+
+          : <ListView.IndexedList
                 ref="listView"
                 className={classNames(prefixCls, className, {
                     [`${prefixCls}_no-section`]: section[0]._noSection,
@@ -101,13 +116,6 @@ export default class AppListView extends React.Component {
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={10}
                 {...other}
-            />
-        );
+            />;
     }
 };
-
-/*
-style={{ height: '95vh', overflow: 'auto' }}
-delayTime={10}
-delayActivityIndicator={<div style={{ padding: 25, textAlign: 'center' }}>渲染中...</div>}
-*/

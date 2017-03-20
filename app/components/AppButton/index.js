@@ -1,6 +1,8 @@
 /**
  * AppButton 封装loading状态
- * @version 170313 1.0
+ * @Date: 2017-03-13 04:52:03
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 08:24:11
  */
 'use strict';
 

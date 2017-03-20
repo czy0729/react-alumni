@@ -1,6 +1,8 @@
 /**
  * index分组容器
- * @version 170215 1.0
+ * @Date: 2017-02-15 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 07:03:27
  */
 'use strict';
 

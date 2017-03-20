@@ -1,8 +1,10 @@
 /**
  * @form rc-form createForm()
- * @version 170131 1.0
- * @version 170205 1.1 加入表单常用的几个方法
- * @version 170311 1.2 分离出onErr
+ * 17-02-05 加入表单常用的几个方法
+ * 17-03-11 分离出onErr
+ * @Date: 2017-01-31 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 08:19:09
  */
 'use strict';
 

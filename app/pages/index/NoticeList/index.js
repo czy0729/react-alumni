@@ -1,6 +1,8 @@
 /**
  * 通知列表
- * @version 170217 1.0
+ * @Date: 2017-02-17 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 07:42:38
  */
 'use strict';
 
@@ -8,16 +10,12 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $notice, $alumni } from 'stores';
 import { List, Button } from 'antd-mobile';
-import { Permission, ButtonWrap, AppListView } from 'components';
+import { Spin, Permission, ButtonWrap, AppListView } from 'components';
 
 const prefixCls = 'pages-index__notice-list';
 
 @observer
-export default class NoticeList extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.any,
-    };
-
+export default class IndexNoticeList extends React.Component {
     constructor() {
         super();
     }
@@ -30,33 +28,56 @@ export default class NoticeList extends React.Component {
         return this.props.params.alumni_id;
     }
 
+    get data() {
+        const { alumni_id } = this;
+
+        return {
+            alumni: $alumni.getStateById(alumni_id),
+            list: $notice.getStateById(alumni_id, 'list'),
+        };
+    }
+
     render() {
-        const { router } = this.context;
-        const data = $notice.getById(this.alumni_id, 'list');
-        const data_alumni = $alumni.getById(this.alumni_id);
+        const { alumni_id } = this;
+        const { alumni, list } = this.data;
 
         return (
-            <div className={prefixCls}>
-                {/*按钮*/}
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 {/*①我是管理员*/}
                 <Permission
                     rules={[{
                         condition : [Const.user_type.super, Const.user_type.admin],
-                        value     : data_alumni.user_type,
+                        value     : alumni.user_type,
                     }]}
                 >
                     <ButtonWrap>
-                        <Button onClick={() => router.push(`/${this.alumni_id}/admin/notice/`)}>发布通知</Button>
+                        <Button 
+                            onClick={() => Utils.router.push(
+                                Const.router.admin_notice({ 
+                                    alumni_id,
+                                })
+                            )}
+                        >
+                            发布通知
+                        </Button>
                     </ButtonWrap>
                 </Permission>
 
-                {/*列表*/}
                 <AppListView
-                    data={data.data}
+                    data={list.data}
+                    loaded={list._loaded}
                     renderRow={(rowData, sectionID, rowID) => (
                         <List.Item 
                             arrow="horizontal"
-                            onClick={() => router.push(`/${this.alumni_id}/notice/${rowData.notice_id}/`)}
+                            onClick={() => Utils.router.push(
+                                Const.router.notice({
+                                    alumni_id,
+                                    notice_id: rowData.notice_id,
+                                })
+                            )}
                         >
                             <p>{rowData.title}</p>
                             <p className="mt-space text-mini text-default">
@@ -66,7 +87,7 @@ export default class NoticeList extends React.Component {
                         </List.Item>
                     )}
                 />
-            </div>
+            </Spin>
         );
     } 
 };

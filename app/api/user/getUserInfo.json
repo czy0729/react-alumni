@@ -1,1 +1,36 @@
-{"code":0,"data":{"mobile":"13422369802","phone":"84783019","birthday":"1991-07-29","wx_sn":"chenzhen_0775","nickname":"chen","real_name":"\u9648\u632f\u5b87","email":"402731062@qq.com","headimgurl":"static\/uploads\/20161129\/14803905387482.jpg","sex":"1","area":"\u5e7f\u5dde","address":"\u756a\u79ba\u5927\u77f3","attend_big_school_date":"2010","big_school_name":"\u86e4\u8731\u5927\u5b66","academy":"\u65b0\u95fb\u7cfb\u5b66\u9662","major":"\u8bb0\u8005","big_class":"2\u73ed","attend_middle_school_date":"2006","middle_school_name":"\u77f3\u5317\u4e2d\u5b66","middle_type":"2","middle_attend_grade":"6","middle_class":"3\u73ed","zip_code":"511430","qq":"402731062","household":"\u5e7f\u5dde","hobby":"\u5175\u4e53\u7403\uff0c\u7fbd\u6bdb\u7403\uff0c","emotion_status":"1","specialty":"\u6559\u80b2","job_address":"\u6d77\u73e0\u533a","job_company":"\u5356\u5149\u79d1\u6280","job_phone":"10010","job_work":"\u524d\u7aef"}}
+{
+	"code": 0,
+	"data": {
+		"mobile": "13422369802",
+		"phone": "84783019",
+		"birthday": "1991-07-29",
+		"wx_sn": "chenzhen_0775",
+		"nickname": "chen",
+		"real_name": "\u9648\u632f\u5b87",
+		"email": "402731062@qq.com",
+		"headimgurl": "static\/uploads\/20161129\/14803905387482.jpg",
+		"sex": "1",
+		"area": "\u5e7f\u5dde",
+		"address": "\u756a\u79ba\u5927\u77f3",
+		"attend_big_school_date": "2010",
+		"big_school_name": "\u86e4\u8731\u5927\u5b66",
+		"academy": "\u65b0\u95fb\u7cfb\u5b66\u9662",
+		"major": "\u8bb0\u8005",
+		"big_class": "2\u73ed",
+		"attend_middle_school_date": "2006",
+		"middle_school_name": "\u77f3\u5317\u4e2d\u5b66",
+		"middle_type": "2",
+		"middle_attend_grade": "6",
+		"middle_class": "3\u73ed",
+		"zip_code": "511430",
+		"qq": "402731062",
+		"household": "\u5e7f\u5dde",
+		"hobby": "\u5175\u4e53\u7403\uff0c\u7fbd\u6bdb\u7403\uff0c",
+		"emotion_status": "1",
+		"specialty": "\u6559\u80b2",
+		"job_address": "\u6d77\u73e0\u533a",
+		"job_company": "\u5356\u5149\u79d1\u6280",
+		"job_phone": "10010",
+		"job_work": "\u524d\u7aef"
+	}
+}

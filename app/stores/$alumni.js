@@ -1,27 +1,30 @@
 /**
- * 校友录基本
- * @version 170205 1.0
+ * 校友录
+ * @Date: 2017-02-05 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-18 18:14:34
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
 
 useStrict(true);
 
 class store extends common {
-    constructor() {
-        super();
-
-        this.config = {
-            namespace: '$alumni',
-            cache: true,
-        };
-    }
+    config = {
+        namespace: '$alumni',
+        cache: true,
+    };
 
     @observable state = this.initState({
+        base: {},
         list: {},
     });
+
+    constructor() {
+        super();
+    }
 
     /*==================== view ====================*/
     /**
@@ -30,17 +33,8 @@ class store extends common {
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async fetch(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_alumni_info', query, {
-            show: !this.getById(alumni_id)._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result);
-
-        return result;
+    fetch(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_alumni_info', 'alumni_id');
     }
 
     /**
@@ -48,18 +42,8 @@ class store extends common {
      * @version 170228 1.0
      */
     @action
-    async fetch_list(query, config) {
-        const result = await Ajax.P('get_alumni_list', query, {
-            show: !this.state['list']._loaded,
-            ...config,
-        });
-
-        this.setState({
-            data: result,
-            _loaded: true,
-        }, 'list');
-
-        return result;
+    fetch_list(query, config) {
+        return this.fetchThenSetState(query, config, 'get_alumni_list', 'list');
     }
 
     /*==================== action ====================*/
@@ -72,8 +56,8 @@ class store extends common {
      * @param {Base64} logo         校友录头像
      */
     @action
-    async add(query, config) {
-        return await Ajax.P('add_alumni', query, config);
+    add(query, config) {
+        return Ajax.P('add_alumni', query, config);
     }
 
     /**
@@ -86,8 +70,8 @@ class store extends common {
      * @param {String} description 描述
      */
     @action
-    async update(query, config) {
-        return await Ajax.P('update_alumni_info', query, config);
+    update(query, config) {
+        return Ajax.P('update_alumni_info', query, config);
     }
 };
 

@@ -1,29 +1,32 @@
 /**
  * 通知
- * @version 170213 1.0
+ * @Date: 2017-02-13 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 04:33:41
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
 
 useStrict(true);
 
 class store extends common {
-    constructor() {
-        super();
-
-        this.config = {
-            namespace: '$notice',
-            cache: true,
-        };
-    }
+    config = {
+        namespace: '$notice',
+        cache: true,
+    };
 
     @observable state = this.initState({
         list: {},
         detail: {},
     });
 
+    constructor() {
+        super();
+    }
+
+    /*==================== view ====================*/
     /**
      * 2.5.1 通知列表
      * @version 170213 1.0
@@ -31,15 +34,8 @@ class store extends common {
      * @param {Int} page
      */
     @action
-    async fetch_list(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_notice_list', query, {
-            show: !this.getById(alumni_id, 'list')._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result, 'list');
+    fetch_list(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_notice_list', 'alumni_id', 'list');
     }
 
     /**
@@ -48,17 +44,11 @@ class store extends common {
      * @param {Int} *notice_id 文章id
      */
     @action
-    async fetch_detail(query, config) {
-        const { notice_id } = query;
-
-        const result = await Ajax.P('get_notice', query, {
-            show: !this.getById(notice_id, 'detail')._loaded,
-            ...config,
-        });
-
-        this.setStateById(notice_id, result, 'detail');
+    fetch_detail(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_notice', 'notice_id', 'detail');
     }
 
+    /*==================== action ====================*/
     /**
      * 2.5.0 发布通知
      * @version 170214 1.0
@@ -67,8 +57,8 @@ class store extends common {
      * @param {String} *content   内容
      */
     @action
-    async add(query, config) {
-        await Ajax.P('add_notice', query, config);
+    add(query, config) {
+        return Ajax.P('add_notice', query, config);
     }
 
     /**
@@ -79,8 +69,8 @@ class store extends common {
      * @param {String} *content   内容
      */
     @action
-    async update(query, config) {
-        await Ajax.P('update_notice', query, config);
+    update(query, config) {
+        return Ajax.P('update_notice', query, config);
     }
 
     /**
@@ -89,8 +79,8 @@ class store extends common {
      * @param {Int} *notice_id 文章id
      */
     @action
-    async delete(query, config) {
-        await Ajax.P('delete_notice', query, config);
+    delete(query, config) {
+        return Ajax.P('delete_notice', query, config);
     }
 };
 

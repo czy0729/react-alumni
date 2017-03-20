@@ -1,7 +1,8 @@
 /**
  * 用户详情
- * @version 170222 1.0
- * @version 170314 1.1 补完功能
+ * @Date: 2017-02-22 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-20 03:08:58
  */
 'use strict';
 
@@ -14,7 +15,7 @@ import { Head, Detail, Control, Delete, Quit } from './containers';
 const prefixCls = 'pages-index__user-detail';
 
 @observer
-export default class UserDetail extends React.Component {
+export default class IndexUserDetail extends React.Component {
     constructor() {
         super();
 
@@ -27,13 +28,16 @@ export default class UserDetail extends React.Component {
     }
 
     componentDidMount() {
+        const { alumni_id } = this;
+
         this.init();
 
         $alumni.fetch({
-            alumni_id: this.alumni_id,
+            alumni_id,
         });
+        
         $identity.fetch({
-            alumni_id: this.alumni_id,
+            alumni_id,
         });
     }
 
@@ -85,11 +89,12 @@ export default class UserDetail extends React.Component {
 
     //设为管理员
     async doSetAdmin(checked) {
+        const status = checked ? 'yes' : 'no';
+
         await $admin.auth({
-            alumni_id  : this.alumni_id,
-            user_id    : this.user_id,
-            is_manager : checked ? Const.is_manager.yes : Const.is_manager.no,
-        });
+            alumni_id: this.alumni_id,
+            user_id: this.user_id,
+        }, status);
 
         this.init();
     }
@@ -124,7 +129,9 @@ export default class UserDetail extends React.Component {
         });
 
         Utils.onSuccess();
-        Utils.router.replace(Const.router.user_alumni_list());
+        Utils.router.replace(
+            Const.router.user_alumni_list()
+        );
     }
 
     /*==================== get ====================*/
@@ -136,50 +143,45 @@ export default class UserDetail extends React.Component {
         return this.props.routeParams.user_id;
     }
 
-    //用户详情
-    get user_detail() {
-        const pk = `${this.alumni_id}-${this.user_id}`;
+    get data() {
+        const { alumni_id, user_id } = this;
 
-        return $user.getById(pk, 'detail');
-    }
-
-    //校友录基本信息
-    get alumni_info() {
-        return $alumni.getById(this.alumni_id);
-    }
-
-    //身份列表
-    get identity() {
-        return $identity.getById(this.alumni_id);
+        return {
+            alumni: $alumni.getStateById(alumni_id),                         //用户详情
+            detail: $user.getStateById(`${alumni_id}-${user_id}`, 'detail'), //校友录基本信息
+            identity: $identity.getStateById(alumni_id),                     //身份列表
+        }
     }
 
     /*==================== render ====================*/
     render() {
+        const { alumni, detail, identity } = this.data;
+
         return (
             <Spin 
                 className={prefixCls}
-                spinning={!this.user_detail._loaded || !this.alumni_info._loaded || !this.identity._loaded}
+                spinning={Utils.isSpinning(this.data)}
             >
                 <Head 
-                    user_detail={this.user_detail}
+                    detail={detail}
                     doExchangeCard={this.doExchangeCard}
                     doAllowExchangeCard={this.doAllowExchangeCard}
                 />
 
-                <Detail user_detail={this.user_detail} />
+                <Detail detail={detail} />
 
-                {/*这里要注意Permission的值，他(this.user_detail)和我(this.alumni_info)的不同*/}
+                {/*这里要注意Permission的值，他(this.detail)和我(this.alumni_info)的不同*/}
                 {/*①我是管理员*/}
                 <Permission
                     rules={[{
                         condition : [Const.user_type.super, Const.user_type.admin],
-                        value     : this.alumni_info.user_type,
+                        value     : alumni.user_type,
                     }]}
                 >
                     <Control 
                         alumni_id={this.alumni_id}
-                        user_detail={this.user_detail}
-                        identity={this.identity.data}
+                        detail={detail}
+                        identity={identity.data}
                         doSetIdentity={this.doSetIdentity}
                         doSetAdmin={this.doSetAdmin}
                         doSetBlack={this.doSetBlack}
@@ -190,11 +192,11 @@ export default class UserDetail extends React.Component {
                 <Permission
                     rules={[{
                         condition : [Const.user_type.super],
-                        value     : this.alumni_info.user_type,
+                        value     : alumni.user_type,
                     }, {
                         condition : [Const.user_detail_type.self],
                         type      : 'not',
-                        value     : this.user_detail.type,
+                        value     : detail.type,
                     }]}
                 >
                     <Delete doDelete={this.doDelete} />
@@ -204,11 +206,11 @@ export default class UserDetail extends React.Component {
                 <Permission
                     rules={[{
                         condition : [Const.user_detail_type.self],
-                        value     : this.user_detail.type,
+                        value     : detail.type,
                     }, {
                         condition : [Const.user_type.super],
                         type      : 'not',
-                        value     : this.alumni_info.user_type,
+                        value     : alumni.user_type,
                     }]}
                 >
                     <Quit doQuit={this.doQuit} />

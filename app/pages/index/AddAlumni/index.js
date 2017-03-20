@@ -1,6 +1,8 @@
 /**
  * 创建校友录
- * @version 170305 1.0
+ * @Date: 2017-03-05 04:37:20
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 07:03:08
  */
 'use strict';
 
@@ -13,7 +15,7 @@ import { ButtonWrap, AppForm } from 'components';
 const prefixCls = 'pages-index__add-alumni';
 
 @form
-export default class AddAlumni extends React.Component {
+export default class IndexAddAlumni extends React.Component {
     constructor() {
         super();
 
@@ -42,7 +44,7 @@ export default class AddAlumni extends React.Component {
 
                 <AppForm 
                     form={form}
-                    onSubmit={e => onSubmit(e, form, this.doAdd)}
+                    onSubmit={(e) => onSubmit(e, form, this.doAdd)}
                 >
                     <AppForm.Input
                         name="name"

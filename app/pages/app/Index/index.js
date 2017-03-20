@@ -1,6 +1,8 @@
 /**
- * 项目顶容器
- * @version 170120 1.0
+ * 项目顶层容器
+ * @Date: 2017-01-20 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:57:51
  */
 'use strict';
 
@@ -15,7 +17,7 @@ import './index.less';
 
 const prefixCls = 'pages-app__index';
 
-export default class App extends React.Component {
+export default class AppIndex extends React.Component {
     constructor() {
         super();
     }

@@ -5,21 +5,21 @@ import { AvatarBlock } from 'components';
 import Btn from './btn';
 
 const Head = (props) => {
-    const { user_detail, doExchangeCard, doAllowExchangeCard } = props;
+    const { detail, doExchangeCard, doAllowExchangeCard } = props;
 
     return (
         <AvatarBlock 
-            src={user_detail.headimgurl}
+            src={detail.headimgurl}
             extra={
                 <Btn 
-                    type={user_detail.type}
+                    type={detail.type}
                     doExchangeCard={doExchangeCard}
                     doAllowExchangeCard={doAllowExchangeCard}
                 />
             }
         >
-            <span>{user_detail.nickname}</span>
-            <span className="ml-sm text-caption-sm text-default">{user_detail.back_name && `(${user_detail.wx_sn})`}</span>
+            <span>{detail.nickname}</span>
+            <span className="ml-sm text-caption-sm text-default">{detail.back_name && `(${detail.wx_sn})`}</span>
         </AvatarBlock>
     );
 };

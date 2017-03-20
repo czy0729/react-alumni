@@ -3,7 +3,9 @@
  * [!] 作为管理员创建的第4步时，成功后跳转到创建成功结果页
  * [!] 作为用户加入校友录时，有留言字段，提交成功后，等待审核返回我的校友录
  * [!] 取得当前用户的个人信息，并作为默认值
- * @version 170307 0.1
+ * @Date: 2017-03-08 10:53:49
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 07:10:05
  */
 'use strict';
 
@@ -11,13 +13,13 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $auth, $user, $alumni } from 'stores';
 import { Button } from 'antd-mobile';
-import { Title, ButtonWrap, AppForm } from 'components';
+import { Spin, Title, ButtonWrap, AppForm } from 'components';
 
 const prefixCls = 'pages-index__auth';
 
 @form
 @observer
-export default class Auth extends React.Component {
+export default class IndexAuth extends React.Component {
     constructor() {
         super();
 
@@ -77,17 +79,23 @@ export default class Auth extends React.Component {
         return this.props.location.query;
     }
 
+    get data() {
+        return {
+            auth_fields: $auth.getStateById(this.alumni_id, 'auth_fields'),
+            user: $user.getState(),
+        };
+    }
+
     renderForms() {
         const { form } = this.props;
-        const data = $auth.getById(this.alumni_id, 'auth_fields');
-        const user = $user.getState();
+        const { auth_fields, user } = this.data;
 
-        return Utils.generateFieldsConfig(data).map((item, index) => {
+        return Utils.generateFieldsConfig(auth_fields).map((item, index) => {
             const items = [];
 
             item.forEach((i, idx) => {
                 //假如authFileds里不是必填或者选填，不生成
-                const isNeed = data[i[0]];
+                const isNeed = auth_fields[i[0]];
 
                 //isNeed 1是必填2是选填
                 if (isNeed != '0') {
@@ -110,11 +118,11 @@ export default class Auth extends React.Component {
                 }
             });
 
-            return items.length != 0 && (
+            return items.length !== 0 && (
                 <AppForm 
                     key={Const.fileds_group[index]}
-                    renderHeader={() => <div>{Const.fileds_group[index]}</div>}
                     form={form}
+                    renderHeader={() => <div>{Const.fileds_group[index]}</div>}
                 >
                     {items}
                 </AppForm>
@@ -150,13 +158,16 @@ export default class Auth extends React.Component {
 
     render() {
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <Title>校友录管理员要求，必须真实填写以下信息才可以加入校友录，以便校友之间联系和交换名片。</Title>
 
                 {this.renderForms()}
 
                 {this.renderBtn()}
-            </div>
+            </Spin>
         );
     } 
 };

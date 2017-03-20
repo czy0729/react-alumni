@@ -1,7 +1,3 @@
-/**
- * @success async包装方法，await后显示统一Modal.success
- * @version 170212 0.1
- */
 'use strict';
 
 function successDecorator(target, prop, descriptor) {

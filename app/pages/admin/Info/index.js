@@ -1,6 +1,8 @@
 /**
  * 校友录基本信息
- * @version 170127 1.0
+ * @Date: 2017-01-27 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:47:20
  */
 'use strict';
 
@@ -8,7 +10,7 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $alumni } from 'stores';
 import { Button } from 'antd-mobile';
-import { ButtonWrap, AppForm } from 'components';
+import { Spin, ButtonWrap, AppForm } from 'components';
 
 const prefixCls = 'pages-admin__info';
 
@@ -38,12 +40,21 @@ export default class AdminInfo extends React.Component {
         return this.props.params.alumni_id;
     }
 
+    get data() {
+        return {
+            alumni: $alumni.getStateById(this.alumni_id),
+        };
+    }
+
     render() {
         const { form, onSubmit } = this.props;
-        const data = $alumni.getById(this.alumni_id);
+        const { alumni } = this.data;
 
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <AppForm 
                     form={form}
                     onSubmit={e => onSubmit(e, form, this.doUpdate)}
@@ -82,7 +93,7 @@ export default class AdminInfo extends React.Component {
                         保存
                     </Button>
                 </ButtonWrap>
-            </div>
+            </Spin>
         );
     } 
 };

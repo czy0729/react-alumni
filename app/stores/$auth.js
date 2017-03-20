@@ -1,23 +1,21 @@
 /**
  * 认证
- * @version 170219 1.0
+ * @Date: 2017-02-19 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:23:23
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
 
 useStrict(true);
 
 class store extends common {
-    constructor() {
-        super();
-
-        this.config = {
-            namespace: '$auth',
-            cache: true,
-        };
-    }
+    config = {
+        namespace: '$auth',
+        cache: true,
+    };
 
     @observable state = this.initState({
         count: {},
@@ -26,6 +24,10 @@ class store extends common {
         show_fields: {},
     });
 
+    constructor() {
+        super();
+    }
+
     /*==================== view ====================*/
     /**
      * 2.7.0 获取已经认证和未认证数量
@@ -33,15 +35,8 @@ class store extends common {
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async fetch_count(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_auth_count', query, {
-            show: !this.getById(alumni_id, 'count')._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result, 'count');
+    fetch_count(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_auth_count', 'alumni_id', 'count');
     }
 
     /**
@@ -51,35 +46,23 @@ class store extends common {
      * @param {Int} page       分页
      */
     @action
-    async fetch_auth_list(query, config) {
-        const { alumni_id } = query;
+    fetch_auth_list(query, config) {
+        const api = 'get_message_list';
 
-        const result = await Ajax.P('get_message_list', {
-            ...query,
-            category: 2,
-        }, {
-            show: !this.getById(alumni_id, 'auth_list')._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result, 'auth_list');
+        return this.fetchThenSetStateById(
+            Ajax.genQuery(api, 'category', 'auth', query),
+            config, api, 'alumni_id', 'auth_list'
+        );
     }
 
     /**
-     * 1.2.1 邀请好友进入 获取校友录认证字段
+     * 1.2.1 获取校友录认证字段
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async fetch_auth_fields(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_alumni_auth_fields', query, {
-            show: !this.getById(alumni_id, 'auth_fields')._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result, 'auth_fields');
+    fetch_auth_fields(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_alumni_auth_fields', 'alumni_id', 'auth_fields');
     }
 
     /**
@@ -88,15 +71,8 @@ class store extends common {
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async fetch_show_fields(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_alumni_show_fields', query, {
-            show: !this.getById(alumni_id, 'show_fields')._loaded,
-            ...config,
-        });
-
-        this.setStateById(alumni_id, result, 'show_fields');
+    fetch_show_fields(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_alumni_show_fields', 'alumni_id', 'show_fields');
     }
 
     /*==================== action ====================*/
@@ -106,15 +82,13 @@ class store extends common {
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   加入的用户id
      * @param {Int} *notice_id 通知id
-     * @param {Int} *status    同意状态1同意 -1拒绝
+     * @param {Int} *status    同意状态 resolve|reject
      */
     @action
-    async submit_auth(query, config) {
-        const { alumni_id } = query;
+    submit_auth(query, status = 'resolve', config) {
+        const api = 'do_submit_alumni_auth';
 
-        await Ajax.P('do_submit_alumni_auth', query, config);
-
-        this.fetch_auth_list({ alumni_id });
+        return Ajax.P(api, Ajax.genQuery(api, 'status', status, query), config);
     }
 
     /**
@@ -124,12 +98,8 @@ class store extends common {
      * @param {Int} ...is_need_mobile 如：上个接口的参数
      */
     @action
-    async update_auth_fields(query, config) {
-        const { alumni_id } = query;
-
-        await Ajax.P('update_alumni_auth_fields', query, config);
-
-        this.fetch_auth_fields({ alumni_id });
+    update_auth_fields(query, config) {
+        return Ajax.P('update_alumni_auth_fields', query, config);
     }
 
     /**
@@ -139,12 +109,8 @@ class store extends common {
      * @param {Int} ...is_show_mobile 如：上个接口的参数
      */
     @action
-    async update_show_fields(query, config) {
-        const { alumni_id } = query;
-
-        await Ajax.P('update_alumni_show_fields', query, config);
-
-        this.fetch_show_fields({ alumni_id });
+    update_show_fields(query, config) {
+        return Ajax.P('update_alumni_show_fields', query, config);
     }
 
 	/**
@@ -155,8 +121,8 @@ class store extends common {
      * @param ...
      */
     @action
-    async alumni_auth(query, config) {
-        return await Ajax.P('do_alumni_auth', query, config);
+    alumni_auth(query, config) {
+        return Ajax.P('do_alumni_auth', query, config);
     }    
 };
 

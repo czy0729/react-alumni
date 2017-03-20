@@ -1,28 +1,31 @@
 /**
- * Popout状态管理
- * @version 170216 1.0
+ * Popout弹出层
+ * @Date: 2017-02-28 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 04:38:23
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
 
 useStrict(true);
 
 class store extends common {
-    constructor() {
-        super();
-
-        this.config = {
-            namespace: '$popout',
-            cache: false,
-        };
-    }
+    config = {
+        namespace: '$popout',
+        cache: false,
+    };
 
     @observable state = this.initState({
         mask: {},
     });
 
+    constructor() {
+        super();
+    }
+
+    /*==================== action ====================*/
     /**
      * 全局popout隐藏
      * @version 170216 1.0

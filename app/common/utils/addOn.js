@@ -1,12 +1,35 @@
 /**
  * 本项目才能使用的工具方法
- * @version 170216 1.0
+ * @Date: 2017-02-16 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-20 03:09:04
  */
 'use strict';
 
 import Const from '../constants';
 
 export default {
+    /**
+     * 根据项目页面data规则，检查数据源是否加载中，完毕返回false
+     * @version 170317 1.0
+     * @param  {Object}  *data
+     * @return {Boolean}
+     */
+    isSpinning(data) {
+        const keys = Object.keys(data);
+
+        if (keys.length === 0) return false;
+
+        if (keys.length === 1) return !data[keys[0]]._loaded;
+
+        let bool = true;
+        keys.forEach((item) => {
+            bool &= data[item]._loaded;
+        });
+
+        return !bool;
+    },
+
     /**
      * 确认后端返回的图片地址是否路径地址，是路径地址在头加上Const.web
      * @version 161026 1.0

@@ -1,13 +1,16 @@
 /**
  * 我的名片
- * @version 170313 1.0
+ * @Date: 2017-03-13 02:56:24
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 19:17:41
  */
 'use strict';
 
 import React from 'react';
 import { form, observer } from 'decorators';
 import { $user } from 'stores';
-import { Title, ButtonWrap, AppButton, AppForm } from 'components';
+import { Button } from 'antd-mobile';
+import { Spin, Title, ButtonWrap, AppButton, AppForm } from 'components';
 
 const prefixCls = 'pages-user__info';
 
@@ -30,14 +33,20 @@ export default class UserInfo extends React.Component {
         Utils.onSuccess();
     }
 
+    get data() {
+        return {
+            user: $user.getState(),
+        };
+    }
+
     renderForms() {
         const { form } = this.props;
-        const data = $user.getState();
+        const { user } = this.data;
 
-        delete data.list;
-        delete data.detial;
+        delete user.list;
+        delete user.detial;
 
-        return Utils.generateFieldsConfig(data).map((item, index) => {
+        return Utils.generateFieldsConfig(user).map((item, index) => {
             const items = [];
 
             item.forEach((i, idx) => {
@@ -51,18 +60,18 @@ export default class UserInfo extends React.Component {
                         key={name}
                         title={title}
                         name={name}
-                        initialValue={data[name]}
+                        initialValue={user[name]}
                         option={Const.rules.genRules(rules, name == 'real_name' || name == 'mobile')}
                         {...config}
                     />
                 );
             });
 
-            return items.length != 0 && (
+            return items.length !== 0 && (
                 <AppForm 
                     key={Const.fileds_group[index]}
-                    renderHeader={() => <div>{Const.fileds_group[index]}</div>}
                     form={form}
+                    renderHeader={() => <div>{Const.fileds_group[index]}</div>}
                 >
                     {items}
                 </AppForm>
@@ -75,22 +84,26 @@ export default class UserInfo extends React.Component {
 
         return (
             <ButtonWrap>
-                <AppButton 
+                <Button 
                     type="primary" 
                     onClick={(e) => onSubmit(e, form, this.handleSubmit)}
                 >
                     保存
-                </AppButton>
+                </Button>
             </ButtonWrap>
         );
     }
 
     render() {
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 {this.renderForms()}
+
                 {this.renderBtn()}
-            </div>
+            </Spin>
         );
     } 
 };

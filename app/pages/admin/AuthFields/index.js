@@ -1,7 +1,9 @@
 /**
  * 认证需填写字段
- * @version 170219 1.0
- * @version 170307 1.1 判断来源add_alumni
+ * 17-03-07 判断来源add_alumni
+ * @Date: 2017-02-19 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-18 23:14:45
  */
 'use strict';
 
@@ -9,7 +11,7 @@ import React from 'react';
 import { form, observer } from 'decorators';
 import { $auth } from 'stores';
 import { List, Button } from 'antd-mobile';
-import { Title, ButtonWrap, AppForm } from 'components';
+import { Spin, Title, ButtonWrap, AppForm } from 'components';
 import './index.less';
 
 const prefixCls = 'pages-admin__auth-fields';
@@ -24,19 +26,25 @@ export default class AdminAuthFields extends React.Component {
     }
 
     componentDidMount() {
-        $auth.fetch_auth_fields({ alumni_id: this.alumni_id });
+        $auth.fetch_auth_fields({ 
+            alumni_id: this.alumni_id,
+        });
     }
 
     async handleSubmit(values) {
+        const { alumni_id } = this;
+
         await $auth.update_auth_fields({
-            alumni_id: this.alumni_id,
+            alumni_id,
             ...values,
         });
 
         switch (this.query.from) {
             case 'add_alumni':
                 Utils.router.replace({
-                    pathname: Const.router.admin_auth_show({ alumni_id: this.alumni_id }),
+                    pathname: Const.router.admin_auth_show({ 
+                        alumni_id,
+                    }),
                     query: this.query,
                 });
                 break;
@@ -55,13 +63,20 @@ export default class AdminAuthFields extends React.Component {
         return this.props.location.query;
     }
 
+    get data() {
+        return {
+            auth_fields: $auth.getStateById(this.alumni_id, 'auth_fields'),
+        };
+    }
+
     renderForms() {
         const { form } = this.props;
-        const data = $auth.getById(this.alumni_id, 'auth_fields');
+        const { auth_fields } = this.data;
 
-        return Utils.generateFieldsConfig(data).map((item, index) => (
+        return Utils.generateFieldsConfig(auth_fields).map((item, index) => (
             <AppForm 
                 key={index}
+                form={form}
                 renderHeader={() => (
                     <div className={`${prefixCls}__form-header`}>
                         <span>{Const.fileds_group[index]}</span>
@@ -74,7 +89,6 @@ export default class AdminAuthFields extends React.Component {
                         }
                     </div>
                 )}
-                form={form}
             >
                 {
                     item.map((i, idx) => (
@@ -144,13 +158,16 @@ export default class AdminAuthFields extends React.Component {
 
     render() {
         return (
-            <div className={prefixCls}>
+            <Spin
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <Title>请设置加入该校友录的校友需要填写的个人信息。</Title>
 
                 {this.renderForms()}
 
                 {this.renderBtn()}
-            </div>
+            </Spin>
         );
     } 
 };

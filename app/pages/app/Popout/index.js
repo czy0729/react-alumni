@@ -1,6 +1,8 @@
 /**
  * Popout容器，放置弹出层之类的全局性UI
- * @version 170216 1.0
+ * @Date: 2017-02-16 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 06:58:17
  */
 'use strict';
 
@@ -14,7 +16,7 @@ import './index.less';
 const prefixCls = 'pages-app__popout';
 
 @observer
-export default class Popout extends React.Component {
+export default class AppPopout extends React.Component {
     constructor() {
         super();
     }
@@ -23,12 +25,13 @@ export default class Popout extends React.Component {
         const { mask } = $popout.state;
         const { show, content, config = {} } = mask;
         const { className } = config;
+
         delete config.className;
 
         return show && (
             <div 
                 className={classNames('am-modal-mask', `${prefixCls}__mask`, className)}
-                onClick={e => $popout.hideMask()}
+                onClick={(e) => $popout.hideMask()}
                 {...config}
             >
                 {content}

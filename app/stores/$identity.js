@@ -1,43 +1,42 @@
 /**
  * 身份
- * @version 170212 1.0
+ * @Date: 2017-02-12 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 04:40:35
  */
 'use strict';
 
-import { useStrict, observable, extendObservable, action, computed } from 'mobx';
+import { useStrict, observable, action } from 'mobx';
 import common from './common';
 
 useStrict(true);
 
 class store extends common {
+    config = {
+        namespace: '$identity',
+        cache: true,
+    };
+
+    @observable state = this.initState({
+        base: {},
+    });
+
     constructor() {
         super();
-
-        this.config = {
-            namespace: '$identity',
-            cache: true,
-        };
     }
 
-    @observable state = this.initState();
-
+    /*==================== view ====================*/
     /**
      * 2.4.0 身份列表
      * @version 170212 1.0
      * @param {Int} *alumni_id 校友录id
      */
     @action
-    async fetch(query, config) {
-        const { alumni_id } = query;
-
-        const result = await Ajax.P('get_identity_list', query, {
-            show: !this.getById(alumni_id)._loaded,
-            ...query,
-        });
-
-        this.setStateById(alumni_id, result);
+    fetch(query, config) {
+        return this.fetchThenSetStateById(query, config, 'get_identity_list', 'alumni_id');
     }
 
+    /*==================== action ====================*/
     /**
      * 2.4.1 添加身份
      * @version 170212 1.0
@@ -45,12 +44,8 @@ class store extends common {
      * @param {String} *name      名称
      */
     @action
-    async add(query, config) {
-        const { alumni_id } = query;
-
-        await Ajax.P('add_identity', query, config);
-
-        this.fetch({ alumni_id });
+    add(query, config) {
+        return Ajax.P('add_identity', query, config);
     }
 
     /**
@@ -61,12 +56,8 @@ class store extends common {
      * @param {String} *name             名称
      */
     @action
-    async update(query, config) {
-        const { alumni_id } = query;
-
-        await Ajax.P('update_identity', query, config);
-
-        this.fetch({ alumni_id });
+    update(query, config) {
+        return Ajax.P('update_identity', query, config);
     }
 
     /**
@@ -76,12 +67,8 @@ class store extends common {
      * @param {Int} *identity_type_id 身份管理类型id
      */
     @action
-    async delete(query, config) {
-        const { alumni_id } = query;
-
-        await Ajax.P('delete_identity', query, config);
-
-        this.fetch({ alumni_id });
+    delete(query, config) {
+        return Ajax.P('delete_identity', query, config);
     }
 
     /**
@@ -92,8 +79,8 @@ class store extends common {
      * @param {Int} *identity_type_ids 身份id
      */
     @action
-    async set(query, config) {
-        return await Ajax.P('update_user_identity', query, config);
+    set(query, config) {
+        return Ajax.P('update_user_identity', query, config);
     }
 };
 

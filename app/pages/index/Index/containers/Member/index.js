@@ -1,24 +1,18 @@
 /**
- * 校友录管理中心
- * @version 170210 1.0
+ * TabPane 用户列表
+ * @Date: 2017-02-10 21:57:25
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-19 19:49:03
  */
 'use strict';
 
 import React from 'react';
-import { observer } from 'decorators';
-import { $user } from 'stores';
 import { Icon, SearchBar, List } from 'antd-mobile';
-import { Page, Img, AppListView } from 'components';
-import './index.less';
+import { Img, AppListView } from 'components';
 
 const prefixCls = 'pages-index__index__member';
 
-@observer
-export default class IndexMember extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.any,
-    };
-
+export default class IndexIndexMember extends React.Component {
     constructor() {
         super();
 
@@ -26,10 +20,6 @@ export default class IndexMember extends React.Component {
             search: '',
         };
         Utils.binds(this, ['handleChange', 'doSearch']);
-    }
-
-    componentDidMount() {
-        $user.fetch_list({ alumni_id: this.alumni_id });
     }
 
     handleChange(value) {
@@ -62,18 +52,13 @@ export default class IndexMember extends React.Component {
         return false;
     }
 
-    get alumni_id() {
-        return this.props.alumni_id;
-    }
-
     render() {
-        const { router } = this.context;
-        const { data = [] } = $user.getById(this.alumni_id, 'list');
-        
+        const { alumni_id, user_list = { data: [] } } = this.props;
+
         const ds = [];
         const section = [];
-        
-        data.forEach((item) => {
+
+        user_list.data.forEach((item) => {
             section.push({
                 title: item.name,
                 filter: (i) => i._name == item.name,
@@ -92,16 +77,14 @@ export default class IndexMember extends React.Component {
 
         return (
             <div>
-                {/*搜索栏*/}
                 <SearchBar
                     placeholder="搜索"
-                    focused
                     onChange={this.handleChange}
                 />
 
-                {/*用户列表*/}
                 <AppListView
                     data={ds}
+                	loaded={user_list.loaded}
                     section={section}
                     renderSectionHeader={(sectionData) => <div>{sectionData}</div>}
                     renderRow={(rowData, sectionID, rowID) => (
@@ -113,9 +96,9 @@ export default class IndexMember extends React.Component {
                                     <span className="ml-sm text-14">{rowData.area}</span>
                                 </div>
                             }
-                            onClick = {() => router.push(
+                            onClick = {() => Utils.router.push(
                                 Const.router.user_detail({
-                                    alumni_id: this.alumni_id,
+                                    alumni_id,
                                     user_id: rowData.user_id,
                                 })
                             )}

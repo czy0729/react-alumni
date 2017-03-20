@@ -1,3 +1,11 @@
+/**
+ * 常量.路由
+ * @Date: 2017-02-28 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-17 22:28:14
+ */
+'use strict';
+
 export default {
     //Common
     add_alumni        : ()                         => `/add_alumni/`,                                   //创建校友录
@@ -7,7 +15,7 @@ export default {
     index             : ({ alumni_id })            => `/index/${alumni_id}/index/`,                     //校友录
     center            : ({ alumni_id })            => `/index/${alumni_id}/center/`,                    //校友录中心
     notice_list       : ({ alumni_id })            => `/index/${alumni_id}/notice_list/`,               //通知
-    notice            : ({ alumni_id, notice_id }) => `/index/${alumni_id}/notice_list/${notice_id}/`,  //通知正文
+    notice            : ({ alumni_id, notice_id }) => `/index/${alumni_id}/notice/${notice_id}/`,       //通知正文
     user_detail       : ({ alumni_id, user_id })   => `/index/${alumni_id}/user_detail/${user_id}/`,    //用户详情
     share             : ({ alumni_id })            => `/index/${alumni_id}/share/`,                     //#todo
     album             : ({ alumni_id })            => `/index/${alumni_id}/album/`,                     //#todo

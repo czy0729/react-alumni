@@ -1,5 +1,6 @@
 export default {
     AppButton          : require('./AppButton'),
+    AppResult          : require('./AppResult'),
     AppForm            : require('./AppForm'),
     AppListView        : require('./AppListView'),
     AppPopover         : require('./AppPopover'),
