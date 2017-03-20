@@ -2,7 +2,7 @@
  * 发布/修改通知
  * @Date: 2017-02-13 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:54:50
+ * @Last Modified time: 2017-03-21 06:40:02
  */
 'use strict';
 
@@ -48,21 +48,37 @@ export default class AdminNotice extends React.Component {
     }
 
     async doAdd(values) {
-        await $notice.add({
-            alumni_id: this.alumni_id,
+        const { alumni_id } = this;
+
+        const notice_id = await $notice.add({
+            alumni_id,
             ...values,
         });
 
         Utils.onSuccess();
+        Utils.router.replace(
+            Const.router.notice({
+                alumni_id,
+                notice_id,
+            })
+        );
     }
 
     async doUpdate(values) {
+        const { notice_id } = this;
+
         await $notice.update({
-            notice_id: this.notice_id,
+            notice_id,
             ...values,
         });
 
         Utils.onSuccess();
+        Utils.router.replace(
+            Const.router.notice({
+                alumni_id: this.alumni_id,
+                notice_id,
+            })
+        );
     }
 
     get alumni_id() {
@@ -89,12 +105,9 @@ export default class AdminNotice extends React.Component {
         return (
             <Spin 
                 className={prefixCls}
-                spinning={notice_id && Utils.isSpinning(this.data)}
+                spinning={notice_id ? Utils.isSpinning(this.data) : false}
             >
-                <AppForm
-                    form={form}
-                    onSubmit={e => onSubmit(e, form, notice_id ? this.doUpdate : this.doAdd)}
-                >
+                <AppForm form={form}>
                     <AppForm.Input
                         name="title"
                         placeholder="请输入标题"
@@ -113,10 +126,9 @@ export default class AdminNotice extends React.Component {
                 </AppForm>
 
                 <ButtonWrap>
-                    <Button 
+                    <Button
                         type="primary"
-                        form="form"
-                        htmlType="submit"
+                        onClick={(e) => onSubmit(e, form, notice_id ? this.doUpdate : this.doAdd)}
                     >
                         {notice_id ? '修改通知' : '确认发布'}
                     </Button>

@@ -4,9 +4,9 @@ import React from 'react';
 import { Button } from 'antd-mobile';
 
 const Btn = (props) => {
-	const { type, doExchangeCard, doAllowExchangeCard } = props;
-	
-	let config;
+    const { type, doExchangeCard, doAllowExchangeCard } = props;
+    
+    let config;
     switch (parseInt(type)) {
         //自己
         case Const.user_detail_type.self:

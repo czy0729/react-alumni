@@ -2,7 +2,7 @@
  * 创建校友录
  * @Date: 2017-03-05 04:37:20
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 07:03:08
+ * @Last Modified time: 2017-03-21 06:13:24
  */
 'use strict';
 
@@ -42,10 +42,7 @@ export default class IndexAddAlumni extends React.Component {
                     <h1 className="text-primary">新建校友录</h1>
                 </div>
 
-                <AppForm 
-                    form={form}
-                    onSubmit={(e) => onSubmit(e, form, this.doAdd)}
-                >
+                <AppForm form={form}>
                     <AppForm.Input
                         name="name"
                         placeholder="校友录名称"
@@ -66,8 +63,7 @@ export default class IndexAddAlumni extends React.Component {
                 <ButtonWrap>
                     <Button 
                         type="primary"
-                        form="form"
-                        htmlType="submit"
+                        onClick={(e) => onSubmit(e, form, this.doAdd)}
                     >
                         下一步 (1/4)
                     </Button>

@@ -12,28 +12,28 @@ import './index.less';
 const prefixCls = 'components__app-result';
 
 const AppResult = (props) => {
-	const { 
-		icon = 'check-circle', 
-		color = Const.ui.color_primary, 
-		title, 
-		message, 
-		className, 
-		...other,
-	} = props;
+    const { 
+        icon = require('common/svg/check.svg'), 
+        color = Const.ui.color_primary, 
+        title, 
+        message, 
+        className, 
+        ...other,
+    } = props;
 
     return (
         <Result
-        	className={classNames(prefixCls, className)}
-	        img={
-	            <Icon 
-	                className={`${prefixCls}__icon`}
-	                type={icon}
-	                style={{ color }}
-	            />
-	        }
-	        title={<p className={`${prefixCls}__title`}>{title}</p>}
-	        message={<p className={`${prefixCls}__message`}>{message}</p>}
-	    />
+            className={classNames(prefixCls, className)}
+            img={
+                <Icon 
+                    className={`${prefixCls}__icon`}
+                    type={icon}
+                    style={{ color }}
+                />
+            }
+            title={<p className={`${prefixCls}__title`}>{title}</p>}
+            message={<p className={`${prefixCls}__message`}>{message}</p>}
+        />
     );
 }
 

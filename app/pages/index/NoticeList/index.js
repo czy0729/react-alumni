@@ -2,7 +2,7 @@
  * 通知列表
  * @Date: 2017-02-17 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 07:42:38
+ * @Last Modified time: 2017-03-21 06:28:58
  */
 'use strict';
 
@@ -21,7 +21,10 @@ export default class IndexNoticeList extends React.Component {
     }
 
     componentDidMount() {
-        $notice.fetch_list({ alumni_id: this.alumni_id });
+        const { alumni_id } = this;
+
+        $alumni.fetch({ alumni_id });
+        $notice.fetch_list({ alumni_id });
     }
 
     get alumni_id() {
@@ -46,26 +49,6 @@ export default class IndexNoticeList extends React.Component {
                 className={prefixCls}
                 spinning={Utils.isSpinning(this.data)}
             >
-                {/*①我是管理员*/}
-                <Permission
-                    rules={[{
-                        condition : [Const.user_type.super, Const.user_type.admin],
-                        value     : alumni.user_type,
-                    }]}
-                >
-                    <ButtonWrap>
-                        <Button 
-                            onClick={() => Utils.router.push(
-                                Const.router.admin_notice({ 
-                                    alumni_id,
-                                })
-                            )}
-                        >
-                            发布通知
-                        </Button>
-                    </ButtonWrap>
-                </Permission>
-
                 <AppListView
                     data={list.data}
                     loaded={list._loaded}
@@ -87,6 +70,27 @@ export default class IndexNoticeList extends React.Component {
                         </List.Item>
                     )}
                 />
+
+                {/*①我是管理员*/}
+                <Permission
+                    rules={[{
+                        condition : [Const.user_type.super, Const.user_type.admin],
+                        value     : alumni.user_type,
+                    }]}
+                >
+                    <ButtonWrap>
+                        <Button 
+                            onClick={() => Utils.router.push(
+                                Const.router.admin_notice({ 
+                                    alumni_id,
+                                    notice_id: '',
+                                })
+                            )}
+                        >
+                            发布通知
+                        </Button>
+                    </ButtonWrap>
+                </Permission>
             </Spin>
         );
     } 

@@ -2,7 +2,7 @@
  * 身份管理
  * @Date: 2017-02-12 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:44:44
+ * @Last Modified time: 2017-03-21 05:47:17
  */
 'use strict';
 
@@ -19,10 +19,14 @@ export default class AdminIdentity extends React.Component {
     constructor() {
         super();
 
-        Utils.binds(this, ['doAdd', 'doUpdate', 'doDelete']);
+        Utils.binds(this, ['init', 'doAdd', 'doUpdate', 'doDelete']);
     }
 
     componentDidMount() {
+        this.init();
+    }
+
+    init() {
         $identity.fetch({ alumni_id: this.alumni_id });
     }
 
@@ -33,6 +37,7 @@ export default class AdminIdentity extends React.Component {
         });
 
         Utils.onSuccess();
+        this.init();
     }
 
     async doUpdate(name, identity_type_id) {
@@ -43,6 +48,7 @@ export default class AdminIdentity extends React.Component {
         });
 
         Utils.onSuccess();
+        this.init();
     }
 
     async doDelete(identity_type_id) {
@@ -52,6 +58,7 @@ export default class AdminIdentity extends React.Component {
         });
 
         Utils.onSuccess();
+        this.init();
     }
 
     get alumni_id() {

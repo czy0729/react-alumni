@@ -6,7 +6,6 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import { Icon } from 'antd-mobile';
 import './index.less';
 
 const prefixCls = 'components__title';
@@ -17,8 +16,7 @@ const Title = ({ className, children, ...other }) => {
             className={classNames(prefixCls, className)}
             {...other}
         >
-            <Icon type="exclamation-circle-o" />
-            <span> {children}</span>
+            <span>{children}</span>
         </div>
     );
 }

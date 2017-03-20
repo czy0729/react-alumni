@@ -2,7 +2,7 @@
  * 我的名片
  * @Date: 2017-03-13 02:56:24
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 19:17:41
+ * @Last Modified time: 2017-03-21 06:52:41
  */
 'use strict';
 
@@ -20,10 +20,14 @@ export default class UserInfo extends React.Component {
     constructor() {
         super();
 
-        Utils.binds(this, ['handleSubmit']);
+        Utils.binds(this, ['init', 'handleSubmit']);
     }
 
     componentDidMount() {
+        this.init();
+    }
+
+    init() {
         $user.fetch();
     }
 
@@ -31,6 +35,7 @@ export default class UserInfo extends React.Component {
         await $user.update_info(value);
 
         Utils.onSuccess();
+        this.init();
     }
 
     get data() {

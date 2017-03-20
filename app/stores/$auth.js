@@ -2,7 +2,7 @@
  * 认证
  * @Date: 2017-02-19 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:23:23
+ * @Last Modified time: 2017-03-21 07:19:02
  */
 'use strict';
 
@@ -113,7 +113,7 @@ class store extends common {
         return Ajax.P('update_alumni_show_fields', query, config);
     }
 
-	/**
+    /**
      * 1.1 填写创建者个人信息并完成校友录创建
      * @version 170312 1.0
      * @param {String}  *alumni_id 校友录id

@@ -2,7 +2,7 @@
  * 通知正文
  * @Date: 2017-02-15 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 07:38:07
+ * @Last Modified time: 2017-03-21 06:39:47
  */
 'use strict';
 
@@ -25,6 +25,7 @@ export default class IndexNotice extends React.Component {
     }
 
     componentDidMount() {
+        $alumni.fetch({ alumni_id: this.alumni_id });
         $notice.fetch_detail({ notice_id: this.notice_id });
     }
 
@@ -49,6 +50,11 @@ export default class IndexNotice extends React.Component {
         await $notice.delete({ notice_id: this.notice_id });
 
         Utils.onSuccess();
+        Utils.router.replace(
+            Const.router.notice_list({
+                alumni_id: this.alumni_id,
+            })
+        );
     }
 
     get alumni_id() {
@@ -70,7 +76,10 @@ export default class IndexNotice extends React.Component {
         const { alumni, detail } = this.data;
 
         return (
-            <div className={prefixCls}>
+            <Spin 
+                className={prefixCls}
+                spinning={Utils.isSpinning(this.data)}
+            >
                 <div className={`${prefixCls}__head`}>
                     {/*右上角按钮*/}
                     {/*①我是管理员*/}
@@ -82,8 +91,8 @@ export default class IndexNotice extends React.Component {
                     >
                         <AppPopover
                             overlay={[
-                                <Item iconName="edit">修改通知</Item>,
-                                <Item iconName="delete">删除通知</Item>,
+                                <Item icon={<Icon size="xs" type={require('common/svg/edit.svg')} />}>修改通知</Item>,
+                                <Item icon={<Icon size="xs" type={require('common/svg/delete.svg')} />}>删除通知</Item>,
                             ]}
                             onSelect={this.handleSelect}
                         >
@@ -94,16 +103,16 @@ export default class IndexNotice extends React.Component {
                     {/*正文详情*/}
                     <p className={`${prefixCls}__head_name`}>{detail.title}</p>
                     <p className={`${prefixCls}__head_desc`}>
-                        <Icon type="calendar" />
+                        <Icon size="xxs" type={require('common/svg/time.svg')} />
                         <span className="ml-sm">{Utils.date(detail.ctime)}</span>
-                        <Icon className="ml-xl" type="user" />
+                        <Icon size="xxs" className="ml-xl" type={require('common/svg/edit.svg')} />
                         <span className="ml-sm">{detail.nickname}</span>
                     </p>
                 </div>
 
                 {/*正文*/}
                 <Content className={`${prefixCls}__content`} value={detail.content} />
-            </div>
+            </Spin>
         );
     } 
 };

@@ -2,7 +2,7 @@
  * TabPane 用户列表
  * @Date: 2017-02-10 21:57:25
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 19:49:03
+ * @Last Modified time: 2017-03-21 07:19:02
  */
 'use strict';
 
@@ -84,15 +84,15 @@ export default class IndexIndexMember extends React.Component {
 
                 <AppListView
                     data={ds}
-                	loaded={user_list.loaded}
+                    loaded={user_list.loaded}
                     section={section}
                     renderSectionHeader={(sectionData) => <div>{sectionData}</div>}
                     renderRow={(rowData, sectionID, rowID) => (
                         <List.Item 
                             key={`${sectionID}-${rowID}`}
                             extra={
-                                <div>
-                                    <Icon type="environment-o" className="text-14 text-primary" />
+                                <div className="pull-right flex-align-center">
+                                    <Icon type={require('common/svg/location.svg')} className="text-14 text-primary" />
                                     <span className="ml-sm text-14">{rowData.area}</span>
                                 </div>
                             }
@@ -109,7 +109,7 @@ export default class IndexIndexMember extends React.Component {
                                     <p>
                                         <span>{rowData.nickname}</span>
                                         {rowData.back_name && <span className="ml-sm">({rowData.back_name})</span>}
-                                        {rowData.is_manager == Const.is_manager.yes && <Icon type="user" className="ml-sm text-primary" />}
+                                        {rowData.is_manager == Const.is_manager.yes && <span className="ml-md text-default text-mini">管理员</span>}
                                     </p>
                                     <p className="mt-sm text-14 text-default">
                                         <span>{rowData.attend_middle_school_date}届</span>

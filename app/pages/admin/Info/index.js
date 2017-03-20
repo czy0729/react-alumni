@@ -2,7 +2,7 @@
  * 校友录基本信息
  * @Date: 2017-01-27 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:47:20
+ * @Last Modified time: 2017-03-21 05:43:30
  */
 'use strict';
 
@@ -20,10 +20,14 @@ export default class AdminInfo extends React.Component {
     constructor() {
         super();
 
-        Utils.binds(this, ['doUpdate']);
+        Utils.binds(this, ['init', 'doUpdate']);
     }
 
     componentDidMount() {
+        this.init();
+    }
+
+    init() {
         $alumni.fetch({ alumni_id: this.alumni_id });
     }
 
@@ -34,6 +38,7 @@ export default class AdminInfo extends React.Component {
         });
 
         Utils.onSuccess();
+        this.init();
     }
 
     get alumni_id() {
@@ -55,43 +60,34 @@ export default class AdminInfo extends React.Component {
                 className={prefixCls}
                 spinning={Utils.isSpinning(this.data)}
             >
-                <AppForm 
-                    form={form}
-                    onSubmit={e => onSubmit(e, form, this.doUpdate)}
-                >
+                <AppForm form={form}>
                     <AppForm.Upload
                         name="logo"
                         title="图标"
-                        initialValue={data.logo}
+                        initialValue={alumni.logo}
                     />
                     <AppForm.Input
                         name="name"
                         title="名称"
-                        initialValue={data.name}
+                        initialValue={alumni.name}
                         option={Const.rules.required}
                     />
                     <AppForm.Input
                         name="school_name"
                         title="学校"
-                        initialValue={data.school_name}
+                        initialValue={alumni.school_name}
                         option={Const.rules.required}
                     />
                     <AppForm.Textarea
                         name="description"
                         title="描述"
-                        initialValue={data.description}
+                        initialValue={alumni.description}
                         emoji
                     />
                 </AppForm>
 
                 <ButtonWrap>
-                    <Button 
-                        type="primary"
-                        form="form"
-                        htmlType="submit"
-                    >
-                        保存
-                    </Button>
+                    <Button type="primary" onClick={(e) => onSubmit(e, form, this.doUpdate)}>保存</Button>
                 </ButtonWrap>
             </Spin>
         );

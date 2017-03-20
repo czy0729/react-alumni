@@ -2,7 +2,7 @@
  * 路由表
  * @Date: 2017-01-20 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 08:18:08
+ * @Last Modified time: 2017-03-21 07:04:46
  */
 'use strict';
 
@@ -14,6 +14,8 @@ import 'whatwg-fetch';
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route         path="/"                    component={require('pages/app/Index')}>
+            <IndexRoute                            component={require('pages/user/Alumni')}      title="我的校友录"     />
+
             {/*基本页面*/}
             <Route     path="add_alumni"           component={require('pages/index/AddAlumni')}  title="新建校友录"     />
             <Route     path="result"               component={require('pages/app/Result')}       title="处理结果"       />
@@ -46,6 +48,8 @@ ReactDOM.render((
                 <Route path="info"                 component={require('pages/user/Info')}        title="我的名片"       />
                 <Route path="alumni"               component={require('pages/user/Alumni')}      title="我的校友录"     />
             </Route>
+
+            <Route     path="*"                    component={require('pages/app/404')}          title="404"            />
         </Route>
     </Router>
 ), document.getElementById('app'));

@@ -2,7 +2,7 @@
  * Ajax
  * @Date: 2017-02-01 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 19:43:04
+ * @Last Modified time: 2017-03-21 06:41:29
  */
 'use strict';
 
@@ -12,13 +12,13 @@ import Utils from './utils';
 const apis = {
     /*================== 0 ==================*/
     /**
-     * [$user] 0.0 用户基本信息
+     * [$user][s] 0.0 用户基本信息
      * @version 170201 1.0
      */
     get_user_info             : '/user/getUserInfo',
 
     /**
-     * 0.0.7图片上传
+     * [s] 0.0.7图片上传
      * @version 170206 1.0
      * @param {String} *data 图片base64
      */
@@ -26,7 +26,7 @@ const apis = {
 
     /*================== 1 ==================*/
     /**
-     * [$alumni] 1.0 添加校友录
+     * [$alumni][static] 1.0 添加校友录
      * @version 170305 1.0
      * @param {String} *name        校友录名称
      * @param {String} *school_name 学校名称
@@ -36,7 +36,7 @@ const apis = {
     add_alumni: '/alumni/createAlumni',
 
     /**
-     * [$auth] 1.1 填写创建者个人信息并完成校友录创建
+     * [$auth][static] 1.1 填写创建者个人信息并完成校友录创建
      * @version 170305 1.0
      * @param {String}  *alumni_id 校友录id
      * @param {String}  real_name  真实姓名
@@ -53,7 +53,7 @@ const apis = {
     do_check_alumni_auth_status: '/alumni/validateAlumniUser',
 
     /**
-     * [$auth] 1.2.1 获取校友录认证字段
+     * [$auth][s] 1.2.1 获取校友录认证字段
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
@@ -69,20 +69,20 @@ const apis = {
 
     /*================== 2 校友录 ==================*/
     /**
-     * [$alumni] 2.1.0 我的校友录列表
+     * [$alumni][s] 2.1.0 我的校友录列表
      * @version 170224 1.0
      */
     get_alumni_list: '/alumni/index',
 
     /**
-     * [$alumni] 2.1.1 获取校友录基本信息
+     * [$alumni][s] 2.1.1 获取校友录基本信息
      * @version 170203 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_alumni_info           : '/alumni/getAlumniById',
 
     /**
-     * [$alumni] 2.1.2 修改校友录基本信息
+     * [$alumni][s] 2.1.2 修改校友录基本信息
      * @version 170207 1.0
      * @param {Int}    *alumni_id  校友录id
      * @param {String} logo        校友录头像
@@ -93,14 +93,14 @@ const apis = {
     update_alumni_info        : '/alumni/updateAlumni',
 
     /**
-     * [$user] 2.1.3 校友录用户列表
+     * [$user][s] 2.1.3 校友录用户列表
      * @version 170220 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_alumni_user_list      : '/alumni/getAlumniUserLists',
 
     /**
-     * [$user] 2.1.4 校友录用户详情
+     * [$user][s] 2.1.4 校友录用户详情
      * @version 170222 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
@@ -108,7 +108,7 @@ const apis = {
     get_alumni_user_detail    : '/alumni/getAlumniUserDetail',
 
     /**
-     * [$user] 2.1.5 校友录发出交换名片请求
+     * [$user][s] 2.1.5 校友录发出交换名片请求
      * @version 170224 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
@@ -116,7 +116,7 @@ const apis = {
     do_exchange_card          : '/alumni/exchangeCard',
 
     /**
-     * [$identity] 2.1.6 设置用户所在校友录身份
+     * [$identity][s] 2.1.6 设置用户所在校友录身份
      * @version 170305 1.0
      * @param {Int} *alumni_id         校友录id
      * @param {Int} *user_id           用户id
@@ -125,7 +125,7 @@ const apis = {
     update_user_identity: '/alumni/setIdentity',
 
     /**
-     * [$admin] 2.1.7 设置或取消管理员授权
+     * [$admin][s] 2.1.7 设置或取消管理员授权
      * @version 170211 1.0
      * @param {Int} *alumni_id  校友录id
      * @param {Int} *user_id    用户id
@@ -140,7 +140,7 @@ const apis = {
     },
 
     /**
-     * [$user] 2.1.8 删除校友录用户
+     * [$user][s] 2.1.8 删除校友录用户
      * @version 170224 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
@@ -155,7 +155,7 @@ const apis = {
     do_quit_alumni            : '/alumni/logoutAlumni',
 
     /**
-     * [$user] 2.1.10 设置或取消加入黑名单
+     * [$user][s] 2.1.10 设置或取消加入黑名单
      * @version 170224 1.0
      * @param {Int} *user_id 某个用户id
      * @param {Int} *status
@@ -184,7 +184,7 @@ const apis = {
     },
 
     /**
-     * [$auth] 2.2.1 用户收到的通知列表
+     * [$auth][s] 2.2.1 用户收到的通知列表
      * @version 170220 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *category  后端约定的
@@ -199,7 +199,7 @@ const apis = {
     },
 
     /**
-     * [$auth] 2.2.2 同意或拒绝用户进入校友录
+     * [$auth][s] 2.2.2 同意或拒绝用户进入校友录
      * @version 170221 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   加入的用户id
@@ -224,21 +224,21 @@ const apis = {
     update_back_name          : '/cards/updateNickName',
 
     /**
-     * [$admin] 2.3.0 管理员列表
+     * [$admin][s] 2.3.0 管理员列表
      * @version 170208 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_admin_list            : '/alumni/getManagerList',
 
     /**
-     * [$identity] 2.4.0 身份列表
+     * [$identity][s] 2.4.0 身份列表
      * @version 170212 1.0
      * @param {Int} *alumni_id 校友录id
      */
     get_identity_list         : '/identity/index',
 
     /**
-     * [$identity] 2.4.1 添加身份
+     * [$identity][s] 2.4.1 添加身份
      * @version 170212 1.0
      * @param {Int}    *alumni_id 校友录id
      * @param {String} *name      名称
@@ -246,7 +246,7 @@ const apis = {
     add_identity              : '/identity/createIdentity',
 
     /**
-     * [$identity] 2.4.2 修改身份
+     * [$identity][s] 2.4.2 修改身份
      * @version 170212 1.0
      * @param {Int}    *alumni_id        校友录id
      * @param {Int}    *identity_type_id 身份管理类型id
@@ -255,7 +255,7 @@ const apis = {
     update_identity           : '/identity/updateIdentity',
 
     /**
-     * [$identity] 2.4.3 删除身份
+     * [$identity][s] 2.4.3 删除身份
      * @version 170212 1.0
      * @param {Int} *alumni_id        校友录id
      * @param {Int} *identity_type_id 身份管理类型id
@@ -263,7 +263,7 @@ const apis = {
     delete_identity           : '/identity/deleteIdentity',
 
     /**
-     * [$notice] 2.5.0 发布通知
+     * [$notice][s] 2.5.0 发布通知
      * @version 170213 1.0
      * @param {Int}    *alumni_id 校友录id
      * @param {String} *title     标题
@@ -272,7 +272,7 @@ const apis = {
     add_notice                : '/notice/createNotice',
 
     /**
-     * [$notice] 2.5.1 通知列表
+     * [$notice][s] 2.5.1 通知列表
      * @version 170213 1.0
      * @param {Int} *alumni_id 校友录id
      * @param {Int} page
@@ -280,14 +280,14 @@ const apis = {
     get_notice_list           : '/notice/index',
 
     /**
-     * [$notice] 2.5.2 通知详细
+     * [$notice][s] 2.5.2 通知详细
      * @version 170213 1.0
      * @param {Int} *notice_id 文章id
      */
     get_notice                : '/notice/getNoticeDetail',
 
     /**
-     * [$notice] 2.5.3 修改通知
+     * [$notice][s] 2.5.3 修改通知
      * @version 170213 1.0
      * @param {Int}    *notice_id 文章id
      * @param {String} *title     标题
@@ -296,14 +296,14 @@ const apis = {
     update_notice             : '/notice/updateNotice',
 
     /**
-     * [$notice] 2.5.4 删除通知
+     * [$notice][s] 2.5.4 删除通知
      * @version 170213 1.0
      * @param {Int} *notice_id 文章id
      */
     delete_notice             : '/notice/deleteNotice',
 
     /**
-     * [$auth] 2.7.0 获取已经认证和未认证数量
+     * [$auth][s] 2.7.0 获取已经认证和未认证数量
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
@@ -320,7 +320,7 @@ const apis = {
      */
 
     /**
-     * [$auth] 2.7.3 修改认证需要填写的信息
+     * [$auth][s] 2.7.3 修改认证需要填写的信息
      * @version 170219 1.0
      * @param {Int} *alumni_id        校友录id
      * @param {Int} ...is_need_mobile 如：上个接口的参数
@@ -328,14 +328,14 @@ const apis = {
     update_alumni_auth_fields : '/alumni/updateAuthenti',
 
     /**
-     * [$auth] 2.7.4 获取认证后可见信息
+     * [$auth][s] 2.7.4 获取认证后可见信息
      * @version 170220 1.0
      * @param {Int} *alumni_id        校友录id
      */
     get_alumni_show_fields    : '/alumni/getAuthentiShow',
 
     /**
-     * [$auth] 2.7.5 修改认证认证后可见信息
+     * [$auth][s] 2.7.5 修改认证认证后可见信息
      * @version 170220 1.0
      * @param {Int} *alumni_id        校友录id
      * @param {Int} ...is_show_mobile 如：上个接口的参数
@@ -345,7 +345,7 @@ const apis = {
 
     /*================== 3 个人中心 ==================*/
     /**
-     * [$user] 3.0.0 修改我的名片
+     * [$user][s] 3.0.0 修改我的名片
      * @version 170313 1.0
      * 见1.1
      */

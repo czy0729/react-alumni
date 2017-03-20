@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var pxtorem = require('postcss-pxtorem');
 
-var env = 2;
+var env = 0;
 
 var config = {
     context: path.join(__dirname),
@@ -90,7 +90,7 @@ switch (env){
     case 0:
     case 'build':
         config.output.path = path.resolve(__dirname, '../build/');
-        config.output.publicPath = '/static/build/';
+        config.output.publicPath = './';
         config.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }));
         break;
 

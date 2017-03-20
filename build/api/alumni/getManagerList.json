@@ -1,0 +1,18 @@
+{
+    "code": 0,
+    "data": [{
+        "alumni_user_id": "154",
+        "alumni_id": "107",
+        "is_creater": "1",
+        "user_id": "1",
+        "real_name": "\u9648\u632f\u5b87",
+        "headimgurl": "static\/uploads\/20170313\/14893585978085.jpg"
+    }, {
+        "alumni_user_id": "469",
+        "alumni_id": "107",
+        "is_creater": "0",
+        "user_id": "20",
+        "real_name": "\u9ece\u65af\u8fea",
+        "headimgurl": "http:\/\/wx.qlogo.cn\/mmopen\/nl2GNIpCnno5E7N5fD0ss7chCh5tiaibSwQtjDpSTFcP6xxJr7fFUdz8dRTesjV9AAoHvNU21OCdibTqqZias3hxDV4rtlAMJJv4\/0"
+    }]
+}

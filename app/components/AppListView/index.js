@@ -6,7 +6,7 @@
  * 
  * @Date: 2017-02-02 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-17 18:12:55
+ * @Last Modified time: 2017-03-21 05:24:07
  */
 'use strict';
 
@@ -23,7 +23,7 @@ const defaultSection = [{
     filter: (item) => 1,
 }];
 const defaultEmpty = {
-    icon: 'inbox',
+    icon: require('common/svg/inbox.svg'),
     title: '空空如也',
     message: '您可能需要一些操作后才能看见数据',
 };
