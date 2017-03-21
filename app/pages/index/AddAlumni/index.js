@@ -2,7 +2,7 @@
  * 创建校友录
  * @Date: 2017-03-05 04:37:20
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 06:13:24
+ * @Last Modified time: 2017-03-21 08:56:57
  */
 'use strict';
 
@@ -56,6 +56,7 @@ export default class IndexAddAlumni extends React.Component {
                     <AppForm.Textarea
                         name="description"
                         placeholder="校友录描述，例如学校校训（选填）"
+                        initialValue=""
                         emoji
                     />
                 </AppForm>
