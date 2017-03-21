@@ -2,7 +2,7 @@
  * 校友录管理中心
  * @Date: 2017-02-10 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 07:13:45
+ * @Last Modified time: 2017-03-22 06:48:31
  */
 'use strict';
 
@@ -10,7 +10,7 @@ import React from 'react';
 import { observer } from 'decorators';
 import { $alumni, $user } from 'stores';
 import { Tabs, Icon } from 'antd-mobile';
-import { Spin } from 'components';
+import { Spin, AppResult } from 'components';
 import Member from './containers/Member';
 import './index.less';
 
@@ -66,10 +66,10 @@ export default class IndexIndex extends React.Component {
                     <p className={`${prefixCls}__head_name`}>{alumni.name}</p>
                     <p className={`${prefixCls}__head_desc`}>{alumni.school_name}</p>
                     <p className={`${prefixCls}__head_sub`}>
-                        {Utils.emojify(alumni.description, {
+                        “ {Utils.emojify(alumni.description, {
                             width: '.3rem',
                             height: '.3rem',
-                        })}
+                        })} ”
                     </p>
                 </div>
 
@@ -78,13 +78,21 @@ export default class IndexIndex extends React.Component {
                     swipeable={false}
                 >
                     <TabPane tab="通讯录" key="1">
-                        <Member
-                            alumni_id={alumni_id}
-                            user_list={user_list}
-                        />
+                        <div style={{ minHeight: '80vw' }}>
+                            <Member
+                                alumni_id={alumni_id}
+                                user_list={user_list}
+                            />
+                        </div>
                     </TabPane>
                     <TabPane tab="通知栏" key="2">
-                        通知栏
+                        <div style={{ minHeight: '80vw' }}>
+                            <AppResult
+                                icon={require('common/svg/inbox.svg')}
+                                title="空空如也"
+                                message="暂时没有特别的消息"
+                            />
+                        </div>
                     </TabPane>
                 </Tabs>
             </Spin>

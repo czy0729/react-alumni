@@ -1,0 +1,36 @@
+@import '~styles/var';
+
+.pages-index__notice-list {
+    .am-list-body {
+        background: @color-bg;
+    }
+    &__item {
+        padding: @wind;
+        margin-bottom: @distance;
+        background: #fff;
+        overflow: hidden;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &_thumbnail {
+            display: block;
+            width: 100%;
+            height: 50vw;
+            margin-bottom: @wind;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s ease-in;
+        }
+        &:hover &_thumbnail {
+            opacity: .7;
+        }
+        &_detail {
+            font-size: @font-size-subhead;
+        }
+        &_title {
+            font-size: @font-size-display-sm;
+            margin-top: @space;
+        }
+    }
+}

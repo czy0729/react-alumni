@@ -4,7 +4,7 @@
  * 17-03-11 分离出onErr
  * @Date: 2017-01-31 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 08:19:09
+ * @Last Modified time: 2017-03-22 06:38:10
  */
 'use strict';
 
@@ -24,20 +24,23 @@ const formDecorator = (ComposedComponent) => {
             /**
              * Moment格式转为时间字符串，数组转为字符串逗号分隔
              * @version 170312 1.0
+             * @version 170322 1.1 fixed bug
              */
             formatValues(values) {
                 for (let key in values) {
-                    switch (values[key].constructor.name) {
-                        case 'Array':
-                            values[key] = values[key].join(',');
-                            break;
+                    if (typeof values[key] === 'object') {
+                        switch (values[key].constructor.name) {
+                            case 'Array':
+                                values[key] = values[key].join(',');
+                                break;
 
-                        case 'Moment':
-                            //这里可能会出问题
-                            values[key] = values[key]._i;
-                            break;
+                            case 'Moment':
+                                //这里可能会出问题
+                                values[key] = values[key]._i;
+                                break;
 
-                        default: break;
+                            default: break;
+                        }
                     }
                 }
 

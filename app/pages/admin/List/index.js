@@ -2,7 +2,7 @@
  * 管理员列表
  * @Date: 2017-02-28 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:49:19
+ * @Last Modified time: 2017-03-22 07:00:50
  */
 'use strict';
 
@@ -79,12 +79,6 @@ export default class AdminList extends React.Component {
                                 },
                             }]}
                             disabled={rowData.is_creater == Const.is_creater.yes}
-                            onClick={() => Utils.router.push(
-                                Const.router.user_detail({ 
-                                    alumni_id: this.alumni_id,
-                                    user_id: rowData.user_id,
-                                })
-                            )}
                         >
                             <div className="flex-align-center">
                                 <Img src={rowData.headimgurl} />

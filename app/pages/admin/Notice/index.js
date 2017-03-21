@@ -2,7 +2,7 @@
  * 发布/修改通知
  * @Date: 2017-02-13 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 06:40:02
+ * @Last Modified time: 2017-03-22 06:31:45
  */
 'use strict';
 
@@ -53,6 +53,7 @@ export default class AdminNotice extends React.Component {
         const notice_id = await $notice.add({
             alumni_id,
             ...values,
+            title: Utils.genHackImgString(values.title, values.thumbnail),
         });
 
         Utils.onSuccess();
@@ -70,6 +71,7 @@ export default class AdminNotice extends React.Component {
         await $notice.update({
             notice_id,
             ...values,
+            title: Utils.genHackImgString(values.title, values.thumbnail),
         });
 
         Utils.onSuccess();
@@ -108,10 +110,17 @@ export default class AdminNotice extends React.Component {
                 spinning={notice_id ? Utils.isSpinning(this.data) : false}
             >
                 <AppForm form={form}>
+                    <AppForm.Upload
+                        name="thumbnail"
+                        title="题图"
+                        initialValue={Utils.getHackImgData(detail.title)[1]}
+                    />
+                </AppForm>
+                <AppForm form={form}>
                     <AppForm.Input
                         name="title"
                         placeholder="请输入标题"
-                        initialValue={detail.title}
+                        initialValue={Utils.getHackImgData(detail.title)[0]}
                         option={Const.rules.required}
                     />
                     <AppForm.Textarea

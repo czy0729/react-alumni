@@ -2,13 +2,28 @@
  * 本项目才能使用的工具方法
  * @Date: 2017-02-16 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-20 03:09:04
+ * @Last Modified time: 2017-03-22 07:09:39
  */
 'use strict';
 
 import Const from '../constants';
 
 export default {
+    /**
+     * 由于后端不能改了，除非我自己实现一遍，只能使用这种手段去添加一些我需要的字段了
+     * @version 170322 1.0
+     */
+    genHackImgString(str, imgUrl) {
+        if (!imgUrl) return str;
+
+        return `${str}&img&${imgUrl}`;
+    },
+    getHackImgData(str) {
+        if (!str) return [];
+
+        return str.split('&img&');
+    },
+
     /**
      * 根据项目页面data规则，检查数据源是否加载中，完毕返回false
      * @version 170317 1.0

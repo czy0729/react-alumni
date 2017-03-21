@@ -2,7 +2,7 @@
  * 校友录管理中心
  * @Date: 2017-02-10 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-20 08:39:40
+ * @Last Modified time: 2017-03-22 05:30:08
  */
 'use strict';
 
@@ -47,10 +47,8 @@ export default class IndexCenter extends React.Component {
                 <div className={`${prefixCls}__head`}>
                     <p className={`${prefixCls}__head_name`}>{alumni.school_name}</p>
                     <p className={`${prefixCls}__head_desc`}>
-                        <span>总成员</span>
-                        <Badge text={alumni.total_num} />
-                        <span className="ml-xl">管理员</span>
-                        <Badge text={alumni.manager_num} />
+                        <span>总成员 {alumni.total_num}</span>
+                        <span className="ml-xl">管理员 {alumni.manager_num}</span>
                     </p>
                 </div>
                 

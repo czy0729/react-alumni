@@ -5,7 +5,7 @@ const caseAll = (user_type) => 1;
 export default {
     menuDS: [{
         label  : '基本信息',
-        icon   : require('common/svg/info.svg'),
+        icon   : require('common/svg/edit.svg'),
         href   : Const.router.admin_info,
         filter : caseAdmins,
     }, {

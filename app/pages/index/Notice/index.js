@@ -2,7 +2,7 @@
  * 通知正文
  * @Date: 2017-02-15 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 06:39:47
+ * @Last Modified time: 2017-03-22 06:23:48
  */
 'use strict';
 
@@ -101,12 +101,12 @@ export default class IndexNotice extends React.Component {
                     </Permission>
 
                     {/*正文详情*/}
-                    <p className={`${prefixCls}__head_name`}>{detail.title}</p>
+                    <p className={`${prefixCls}__head_name`}>{Utils.getHackImgData(detail.title)[0]}</p>
                     <p className={`${prefixCls}__head_desc`}>
-                        <Icon size="xxs" type={require('common/svg/time.svg')} />
-                        <span className="ml-sm">{Utils.date(detail.ctime)}</span>
-                        <Icon size="xxs" className="ml-xl" type={require('common/svg/edit.svg')} />
+                        <Icon size="xxs" type={require('common/svg/edit.svg')} />
                         <span className="ml-sm">{detail.nickname}</span>
+                        <Icon className="ml-xl" size="xxs" type={require('common/svg/time.svg')} />
+                        <span className="ml-sm">{Utils.date(detail.ctime)}</span>
                     </p>
                 </div>
 
