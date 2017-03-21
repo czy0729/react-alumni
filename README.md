@@ -10,6 +10,6 @@ next：
 3.界面挺难看的，尝试把例如文章列表的做得更好看点:-D。
 
 ### DEMO
-地址 (https://czy0729.github.io/react-alumni/build/)
+[地址](https://czy0729.github.io/react-alumni/build/)
 建议F12观看，因为一直在电脑开发，没怎么使用手机测试，也许手机上很多bug。
 安卓其实挺卡的，后面也许要针对平台把某些动画都关掉。
