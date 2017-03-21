@@ -1,12 +1,15 @@
 # react-alumni
 ## 个人学习项目 移动端 校友录
 
-### 某些比较重要的页面
-<img src="http://wx2.sinaimg.cn/mw690/715ed77dgy1fdkuthi9wmj20ab0if0to.jpg"  />
-<img src="http://wx1.sinaimg.cn/mw690/715ed77dgy1fdkuthxekej20a90ig0tp.jpg"  />
-<img src="http://wx4.sinaimg.cn/mw690/715ed77dgy1fdkutikj60j20aa0ig74m.jpg"  />
-<img src="http://wx2.sinaimg.cn/mw690/715ed77dgy1fdkutj9ts9j20ac0iht92.jpg"  />
-<img src="http://wx3.sinaimg.cn/mw690/715ed77dgy1fdkutjy007j20ac0ig3yt.jpg"  />
-<img src="http://wx3.sinaimg.cn/mw690/715ed77dgy1fdkutkj9fhj20ac0ij0t8.jpg"  />
+### 17-03-21
+1. 添加了Demo，但是只模拟了管理员身份。虽然应用是动态的，但是数据都是静态的，只有查询，增删改能操作但操作后数据不会改变。
 
-### demo制作中
+next：
+1.Demo可以切换角色，以便观察不同角色之间页面的差别。
+2.补全其余不太重要的功能。
+3.界面挺难看的，尝试把例如文章列表的做得更好看点:-D。
+
+### DEMO
+地址 (https://czy0729.github.io/react-alumni/build/)
+建议F12观看，因为一直在电脑开发，没怎么使用手机测试，也许手机上很多bug。
+安卓其实挺卡的，后面也许要针对平台把某些动画都关掉。
