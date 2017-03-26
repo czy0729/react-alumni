@@ -2,7 +2,7 @@
  * Popout弹出层
  * @Date: 2017-02-28 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 04:38:23
+ * @Last Modified time: 2017-03-27 06:24:13
  */
 'use strict';
 
@@ -11,6 +11,8 @@ import common from './common';
 
 useStrict(true);
 
+const prevent = (e) => e.preventDefault();
+
 class store extends common {
     config = {
         namespace: '$popout',
@@ -18,6 +20,7 @@ class store extends common {
     };
 
     @observable state = this.initState({
+        layout: {},
         mask: {},
     });
 
@@ -33,7 +36,44 @@ class store extends common {
      */
     @action
     hide() {
+        this.hideLayout();
         this.hideMask();
+    }
+
+    /**
+     * 显示一个顶层
+     * @version 170326 1.0
+     * @param {Element} content
+     */
+    @action
+    showLayout(content, ms = 0) {
+        document.body.style.overflowY = 'hidden';
+        //document.addEventListener('touchmove', prevent, false);
+
+        this.setState({
+            show: true,
+            content,
+            ms,
+        }, 'layout');
+    }
+
+    /**
+     * 隐藏遮罩背景层
+     * @version 170326 1.0
+     */
+    @action
+    hideLayout() {
+        const { ms } = this.state.layout;
+
+        setTimeout(() => {
+            document.body.style.overflowY = 'initial';
+            document.removeEventListener('touchmove', prevent, false);
+
+            this.setState({
+                show: false,
+                ms: 0,
+            }, 'layout');
+        }, ms);
     }
 
     /**
@@ -42,11 +82,13 @@ class store extends common {
      * @param {Element} content
      */
     @action
-    showMask(content, config) {
+    showMask(content, ms = 0) {
+        document.body.style.overflowY = 'hidden';
+
         this.setState({
             show: true,
             content,
-            config,
+            ms,
         }, 'mask');
     }
 
@@ -56,9 +98,17 @@ class store extends common {
      */
     @action
     hideMask() {
-        this.setState({
-            show: false,
-        }, 'mask');
+        const { ms } = this.state.mask;
+
+        setTimeout(() => {
+            document.body.style.overflowY = 'initial';
+            document.removeEventListener('touchmove', prevent, false);
+
+            this.setState({
+                show: false,
+                ms: 0,
+            }, 'mask');
+        }, ms);
     }
 };
 

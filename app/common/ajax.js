@@ -2,29 +2,30 @@
  * Ajax
  * @Date: 2017-02-01 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-22 07:10:03
+ * @Last Modified time: 2017-03-27 05:18:18
  */
 'use strict';
 
 import { Toast, Modal } from 'antd-mobile';
+import reqwest from 'reqwest';
 import Utils from './utils';
 
 const apis = {
-    /*================== 0 ==================*/
+    /* = ================= 0 ==================*/
     /**
      * [$user][s] 0.0 用户基本信息
      * @version 170201 1.0
      */
-    get_user_info             : '/user/getUserInfo',
+    get_user_info               : '/user/getUserInfo',
 
     /**
      * [s] 0.0.7图片上传
      * @version 170206 1.0
      * @param {String} *data 图片base64
      */
-    do_upload_file               : '/common/upload/appUpload',
+    do_upload_file              : '/common/upload/appUpload',
 
-    /*================== 1 ==================*/
+    /* = ================= 1 ==================*/
     /**
      * [$alumni][static] 1.0 添加校友录
      * @version 170305 1.0
@@ -33,7 +34,7 @@ const apis = {
      * @param {String} *description 描述
      * @param {Base64} logo         校友录头像
      */
-    add_alumni: '/alumni/createAlumni',
+    add_alumni                  : '/alumni/createAlumni',
 
     /**
      * [$auth][static] 1.1 填写创建者个人信息并完成校友录创建
@@ -42,7 +43,7 @@ const apis = {
      * @param {String}  real_name  真实姓名
      * @param ...
      */
-    do_alumni_auth: '/user/addUserInfo',
+    do_alumni_auth              : '/user/addUserInfo',
 
     /**
      * 1.2.0 用户经过分享连接进入到校友录 - 检查是否验证过校友录
@@ -50,14 +51,14 @@ const apis = {
      * @param  {String} *alumni_id 校友录id
      * @return {Int}               -2第一次进来，-1被拒绝，0待认证，1已同意
      */
-    do_check_alumni_auth_status: '/alumni/validateAlumniUser',
+    do_check_alumni_auth_status : '/alumni/validateAlumniUser',
 
     /**
      * [$auth][s] 1.2.1 获取校友录认证字段
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    get_alumni_auth_fields    : '/user/getAlumniAuthentiField',
+    get_alumni_auth_fields      : '/user/getAlumniAuthentiField',
 
     /**
      * 1.2.2 执行校友认证
@@ -65,21 +66,21 @@ const apis = {
      * @param {String} *alumni_id    校友录id
      * @param {String} leave_message 留言
      */
-    do_alumni_user_auth: '/user/alumnierAuthenti',
+    do_alumni_user_auth         : '/user/alumnierAuthenti',
 
-    /*================== 2 校友录 ==================*/
+    /* = ================= 2 校友录 ==================*/
     /**
      * [$alumni][s] 2.1.0 我的校友录列表
      * @version 170224 1.0
      */
-    get_alumni_list: '/alumni/index',
+    get_alumni_list             : '/alumni/index',
 
     /**
      * [$alumni][s] 2.1.1 获取校友录基本信息
      * @version 170203 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    get_alumni_info           : '/alumni/getAlumniById',
+    get_alumni_info             : '/alumni/getAlumniById',
 
     /**
      * [$alumni][s] 2.1.2 修改校友录基本信息
@@ -90,14 +91,14 @@ const apis = {
      * @param {String} school_name 学校名称
      * @param {String} description 描述
      */
-    update_alumni_info        : '/alumni/updateAlumni',
+    update_alumni_info          : '/alumni/updateAlumni',
 
     /**
      * [$user][s] 2.1.3 校友录用户列表
      * @version 170220 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    get_alumni_user_list      : '/alumni/getAlumniUserLists',
+    get_alumni_user_list        : '/alumni/getAlumniUserLists',
 
     /**
      * [$user][s] 2.1.4 校友录用户详情
@@ -105,7 +106,7 @@ const apis = {
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
      */
-    get_alumni_user_detail    : '/alumni/getAlumniUserDetail',
+    get_alumni_user_detail      : '/alumni/getAlumniUserDetail',
 
     /**
      * [$user][s] 2.1.5 校友录发出交换名片请求
@@ -113,7 +114,7 @@ const apis = {
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
      */
-    do_exchange_card          : '/alumni/exchangeCard',
+    do_exchange_card            : '/alumni/exchangeCard',
 
     /**
      * [$identity][s] 2.1.6 设置用户所在校友录身份
@@ -122,7 +123,7 @@ const apis = {
      * @param {Int} *user_id           用户id
      * @param {Int} *identity_type_ids 身份id
      */
-    update_user_identity: '/alumni/setIdentity',
+    update_user_identity        : '/alumni/setIdentity',
 
     /**
      * [$admin][s] 2.1.7 设置或取消管理员授权
@@ -131,11 +132,11 @@ const apis = {
      * @param {Int} *user_id    用户id
      * @param {Int} *is_manager
      */
-    update_admin_list         : {
+    update_admin_list: {
         api: '/alumni/setAlumniUser',
         is_manager: {
             yes: 1, //设置为管理员
-            no: 0,  //取消管理员
+            no: 0, //取消管理员
         },
     },
 
@@ -145,14 +146,14 @@ const apis = {
      * @param {Int} *alumni_id 校友录id
      * @param {Int} *user_id   用户id
      */
-    delete_alumni_user        : '/alumni/deleteAlumniUser',
+    delete_alumni_user          : '/alumni/deleteAlumniUser',
 
     /**
      * [$user] 2.1.9 用户退出校友录
      * @version 170224 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    do_quit_alumni            : '/alumni/logoutAlumni',
+    do_quit_alumni              : '/alumni/logoutAlumni',
 
     /**
      * [$user][s] 2.1.10 设置或取消加入黑名单
@@ -161,10 +162,10 @@ const apis = {
      * @param {Int} *status
      */
     do_set_black: {
-        api: '/user/setBlack',   
+        api: '/user/setBlack',
         status: {
             yes: -1, //设为黑名单
-            no: 0,   //取消黑名单
+            no: 0, //取消黑名单
         },
     },
 
@@ -175,7 +176,7 @@ const apis = {
      * @param {Int} *status
      */
     do_allow_exchange_card: {
-        api: '/alumni/allowExchangeCard',   
+        api: '/alumni/allowExchangeCard',
         status: {
             resolve: 1, //同意
             reject: -1, //拒绝
@@ -190,11 +191,11 @@ const apis = {
      * @param {Int} *category  后端约定的
      * @param {Int} page       分页
      */
-    get_message_list          : {
+    get_message_list: {
         api: '/notice/getNoticeList',
         category: {
             message: 1, //获取用户收到的通知列表
-            auth: 2,    //获取待认证用户列表
+            auth: 2, //获取待认证用户列表
         },
     },
 
@@ -206,7 +207,7 @@ const apis = {
      * @param {Int} *notice_id 通知id
      * @param {Int} *status    同意状态
      */
-    do_submit_alumni_auth        : {
+    do_submit_alumni_auth: {
         api: '/alumni/allowOrDenyAlumni',
         status: {
             resolve: 1,
@@ -221,21 +222,21 @@ const apis = {
      * @param {Int}    *user_id   加入的用户id
      * @param {String} *back_name 用户备注名
      */
-    update_back_name          : '/cards/updateNickName',
+    update_back_name            : '/cards/updateNickName',
 
     /**
      * [$admin][s] 2.3.0 管理员列表
      * @version 170208 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    get_admin_list            : '/alumni/getManagerList',
+    get_admin_list              : '/alumni/getManagerList',
 
     /**
      * [$identity][s] 2.4.0 身份列表
      * @version 170212 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    get_identity_list         : '/identity/index',
+    get_identity_list           : '/identity/index',
 
     /**
      * [$identity][s] 2.4.1 添加身份
@@ -243,7 +244,7 @@ const apis = {
      * @param {Int}    *alumni_id 校友录id
      * @param {String} *name      名称
      */
-    add_identity              : '/identity/createIdentity',
+    add_identity                : '/identity/createIdentity',
 
     /**
      * [$identity][s] 2.4.2 修改身份
@@ -252,7 +253,7 @@ const apis = {
      * @param {Int}    *identity_type_id 身份管理类型id
      * @param {String} *name             名称
      */
-    update_identity           : '/identity/updateIdentity',
+    update_identity             : '/identity/updateIdentity',
 
     /**
      * [$identity][s] 2.4.3 删除身份
@@ -260,7 +261,7 @@ const apis = {
      * @param {Int} *alumni_id        校友录id
      * @param {Int} *identity_type_id 身份管理类型id
      */
-    delete_identity           : '/identity/deleteIdentity',
+    delete_identity             : '/identity/deleteIdentity',
 
     /**
      * [$notice][s] 2.5.0 发布通知
@@ -269,7 +270,7 @@ const apis = {
      * @param {String} *title     标题
      * @param {String} *content   内容
      */
-    add_notice                : '/notice/createNotice',
+    add_notice                  : '/notice/createNotice',
 
     /**
      * [$notice][s] 2.5.1 通知列表
@@ -277,14 +278,14 @@ const apis = {
      * @param {Int} *alumni_id 校友录id
      * @param {Int} page
      */
-    get_notice_list           : '/notice/index',
+    get_notice_list             : '/notice/index',
 
     /**
      * [$notice][s] 2.5.2 通知详细
      * @version 170213 1.0
      * @param {Int} *notice_id 文章id
      */
-    get_notice                : '/notice/getNoticeDetail',
+    get_notice                  : '/notice/getNoticeDetail',
 
     /**
      * [$notice][s] 2.5.3 修改通知
@@ -293,21 +294,61 @@ const apis = {
      * @param {String} *title     标题
      * @param {String} *content   内容
      */
-    update_notice             : '/notice/updateNotice',
+    update_notice               : '/notice/updateNotice',
 
     /**
      * [$notice][s] 2.5.4 删除通知
      * @version 170213 1.0
      * @param {Int} *notice_id 文章id
      */
-    delete_notice             : '/notice/deleteNotice',
+    delete_notice               : '/notice/deleteNotice',
+
+    /**
+     * [$album] 2.6.0 相册图片
+     * @version 170325 1.0
+     * @param {Int} *alumni_id 校友录id
+     * @param {Int} page       页数
+     */
+    get_photo_list              : '/photo/index',
+
+    /**
+     * [$album] 2.6.1 添加图片
+     * @version 170325 1.0
+     * @param {Int}    *alumni_id 校友录id
+     * @param {String} data       图片地址
+     */
+    add_photo                   : '/photo/createPhoto',
+
+    /**
+     * [$album] 2.6.2 删除图片
+     * @version 170325 1.0
+     * @param {Int}    *alumni_id 校友录id
+     * @param {String} *photo_ids 图片id，逗号分隔
+     */
+    delete_photo                : '/photo/deletePhoto',
+
+    /**
+     * [$album] 2.6.3 获取单张图片详细
+     * @version 170325 1.0
+     * @param {Int} *alumni_id 校友录id
+     * @param {Int} *photo_id  图片id
+     */
+    get_photo_detail            : '/photo/getPhoto',
+
+    /**
+     * [$album] 2.6.4 图片点赞
+     * @version 170325 1.0
+     * @param {Int} *alumni_id 校友录id
+     * @param {Int} *photo_id  图片id
+     */
+    do_liked_photo              : '/photo/photoClick',
 
     /**
      * [$auth][s] 2.7.0 获取已经认证和未认证数量
      * @version 170219 1.0
      * @param {Int} *alumni_id 校友录id
      */
-    get_auth_count            : '/alumni/getAuthentiCount',
+    get_auth_count              : '/alumni/getAuthentiCount',
 
     /**
      * 2.7.1 获取待认证用户列表
@@ -325,14 +366,14 @@ const apis = {
      * @param {Int} *alumni_id        校友录id
      * @param {Int} ...is_need_mobile 如：上个接口的参数
      */
-    update_alumni_auth_fields : '/alumni/updateAuthenti',
+    update_alumni_auth_fields   : '/alumni/updateAuthenti',
 
     /**
      * [$auth][s] 2.7.4 获取认证后可见信息
      * @version 170220 1.0
      * @param {Int} *alumni_id        校友录id
      */
-    get_alumni_show_fields    : '/alumni/getAuthentiShow',
+    get_alumni_show_fields      : '/alumni/getAuthentiShow',
 
     /**
      * [$auth][s] 2.7.5 修改认证认证后可见信息
@@ -340,35 +381,37 @@ const apis = {
      * @param {Int} *alumni_id        校友录id
      * @param {Int} ...is_show_mobile 如：上个接口的参数
      */
-    update_alumni_show_fields : '/alumni/updateAuthentiShow',
+    update_alumni_show_fields   : '/alumni/updateAuthentiShow',
 
 
-    /*================== 3 个人中心 ==================*/
+    /* = ================= 3 个人中心 ==================*/
     /**
      * [$user][s] 3.0.0 修改我的名片
      * @version 170313 1.0
      * 见1.1
      */
-    update_user_info: '/user/updateUserInfo',
+    update_user_info            : '/user/updateUserInfo',
 
     /**
      * 3.1.0 名片库
      * @version 170313 1.0
      */
-    get_cards: '/cards/index',
+    get_cards                   : '/cards/index',
 
     /**
      * [$user] 3.2.0 黑名单
      * @version 170313 1.0
      */
-    get_blacklist: '/user/blackUserLists',
+    get_blacklist               : '/user/blackUserLists',
 };
 
+/* 
+//whatwg-fetch
 const _fetch = async (api, query) => {
     let response;
 
     if (Const._offline) {
-        response = await fetch(`./build/api${api}.json`, {
+        response = await fetch(`./api${api}.json`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
@@ -381,7 +424,28 @@ const _fetch = async (api, query) => {
         });
     }
 
-    return await response.json();
+    return response.json();
+};
+*/
+
+//reqwest
+const _fetch = async (api, query) => {
+    let response;
+
+    if (Const._offline) {
+        response = await reqwest({
+            url: `./api${api}.json`,
+        });
+
+    } else {
+        response = await reqwest({
+            url: `${Const.web}${api}`,
+            method: 'post',
+            data: Utils.getQueryStr({ access_token, ...query }),
+        });
+    }
+    
+    return response;
 };
 
 /**

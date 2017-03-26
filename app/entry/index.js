@@ -2,14 +2,14 @@
  * 路由表
  * @Date: 2017-01-20 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 07:04:46
+ * @Last Modified time: 2017-03-27 05:05:58
  */
 'use strict';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
-import 'whatwg-fetch';
+//import 'whatwg-fetch';
 
 ReactDOM.render((
     <Router history={hashHistory}>
@@ -28,6 +28,7 @@ ReactDOM.render((
                 <Route path="notice/:notice_id"    component={require('pages/index/Notice')}     title="通知正文"       />
                 <Route path="user_detail/:user_id" component={require('pages/index/UserDetail')} title="用户详情"       />
                 <Route path="auth"                 component={require('pages/index/Auth')}       title="校友认证"       />
+                <Route path="album"                component={require('pages/index/Album')}      title="相册"           />
             </Route>
 
             {/*管理员相关页面*/}

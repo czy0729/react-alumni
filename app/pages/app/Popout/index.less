@@ -1,8 +1,17 @@
+@import '~styles/var';
 @import '~styles/mixin';
 
 .pages-app__popout {
+    &__layout,
     &__mask {
         .flex-center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: @z-index-popout;
         overflow-y: scroll;
     }
 }

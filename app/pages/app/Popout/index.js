@@ -2,7 +2,7 @@
  * Popout容器，放置弹出层之类的全局性UI
  * @Date: 2017-02-16 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:58:17
+ * @Last Modified time: 2017-03-27 06:04:15
  */
 'use strict';
 
@@ -21,18 +21,28 @@ export default class AppPopout extends React.Component {
         super();
     }
 
+    renderLayout() {
+        const { layout } = $popout.state;
+        const { show, content } = layout;
+
+        return show && (
+            <div 
+                className={`${prefixCls}__layout`}
+                onClick={(e) => $popout.hideLayout()}
+            >
+                {content}
+            </div>
+        );
+    }
+
     renderMask() {
         const { mask } = $popout.state;
-        const { show, content, config = {} } = mask;
-        const { className } = config;
-
-        delete config.className;
+        const { show, content } = mask;
 
         return show && (
             <div 
                 className={classNames('am-modal-mask', `${prefixCls}__mask`, className)}
                 onClick={(e) => $popout.hideMask()}
-                {...config}
             >
                 {content}
             </div>
@@ -42,6 +52,7 @@ export default class AppPopout extends React.Component {
     render() {
         return (
             <div className={prefixCls}>
+                {this.renderLayout()}
                 {this.renderMask()}
             </div>
         );

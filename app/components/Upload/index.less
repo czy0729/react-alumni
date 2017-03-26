@@ -1,8 +1,11 @@
 .weui-uploader {
-    .weui-uploader__files {
+    &__bd {
+        overflow: hidden;
+    }
+    &__files {
         list-style: none;
     }
-    .weui-uploader__file {
+    &__file {
         float: left;
         margin-top: 8px;
         margin-right: 16px;
@@ -12,7 +15,7 @@
         background-size: cover;
         border-radius: 8px;
     }
-    .weui-uploader__input-box {
+    &__input-box {
         float: left;
         position: relative;
         margin-top: 8px;
@@ -22,7 +25,7 @@
         border: 1px solid #d9d9d9;
         border-radius: 8px;
     }
-    .weui-uploader__input {
+    &__input {
         position: absolute;
         z-index: 1;
         top: 0;
@@ -32,8 +35,8 @@
         opacity: 0;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
-    .weui-uploader__input-box:after,
-    .weui-uploader__input-box:before {
+    &__input-box:after,
+    &__input-box:before {
         content: " ";
         position: absolute;
         top: 50%;
@@ -42,11 +45,11 @@
         transform: translate(-50%,-50%);
         background-color: #d9d9d9;
     }
-    .weui-uploader__input-box:before {
+    &__input-box:before {
         width: 4px;
         height: 60px;
     }
-    .weui-uploader__input-box:after {
+    &__input-box:after {
         width: 60px;
         height: 4px;
     }

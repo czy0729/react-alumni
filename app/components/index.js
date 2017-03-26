@@ -1,3 +1,10 @@
+/**
+ * Components
+ * @Date: 2017-02-28 15:58:37
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-25 23:51:51
+ */
+
 export default {
     AppButton          : require('./AppButton'),
     AppResult          : require('./AppResult'),
@@ -14,4 +21,5 @@ export default {
     Permission         : require('./Permission'),
     Spin               : require('./Spin'),
     Title              : require('./Title'),
+    Upload             : require('./Upload'),
 };

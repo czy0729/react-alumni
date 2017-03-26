@@ -2,7 +2,7 @@
  * 项目顶层容器
  * @Date: 2017-01-20 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 06:57:51
+ * @Last Modified time: 2017-03-25 20:47:40
  */
 'use strict';
 
@@ -30,7 +30,7 @@ export default class AppIndex extends React.Component {
             window.Ajax = Ajax;
 
             //开启缓存stores
-            //window.addEventListener('beforeunload', e => stores.setCache(), false);
+            window.addEventListener('beforeunload', e => stores.setCache(), false);
         }
     }
 

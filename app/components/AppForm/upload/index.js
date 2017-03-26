@@ -7,7 +7,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { List, InputItem } from 'antd-mobile';
-import Uploader from './uploader';
+import Upload from '../../Upload';
 import _utils from '../_utils';
 import './index.less';
 
@@ -55,7 +55,7 @@ export default class AppFormUpload extends React.Component {
                         {_utils.getLabelDecorator(option)(title)}
                     </div>
                     <label className="flex-1" htmlFor={`${prefixCls}-${name}`}>
-                        <Uploader 
+                        <Upload 
                             id={`${prefixCls}-${name}`}
                             files={files}
                             onChange={this.onChange}

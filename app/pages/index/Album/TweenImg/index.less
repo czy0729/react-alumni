@@ -1,0 +1,21 @@
+@import '~styles/var';
+@import '~styles/mixin';
+
+.pages-index__album__tween-img {
+    &__mask {
+        position: fixed;
+        z-index: @z-index-popout;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        .Z;
+    }
+    &__orgin {
+        position: fixed;
+        z-index: @z-index-popout + 1;
+        background-repeat: no-repeat;
+        background-position: center;
+        .Z;
+    }
+}

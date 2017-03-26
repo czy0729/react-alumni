@@ -1,12 +1,17 @@
 /**
  * uploader 修改自react-weui uploader
- * @version 170206 1.0
+ * 使用了Exif处理手机照片拍摄水平问题
+ * @Date: 2017-02-06 23:45:58
+ * @Last Modified by:   Administrator
+ * @Last Modified time: 2017-03-25 23:52:02
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import Exif from './exif'; //处理图片拍摄时的水平位置
+import Exif from './exif';
 import './index.less';
+
+const prefixCls = 'components__upload';
 
 function rotateImg(img, direction, canvas) {
     //最小与最大旋转方向，图片旋转4次后回到原方向    
@@ -101,10 +106,13 @@ export default class Upload extends React.Component {
         let data;
         let ih = img.naturalHeight;
         let canvas = document.createElement('canvas');
+
         canvas.width = 1;
         canvas.height = ih;
+
         let ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
+
         try {
             // Prevent cross origin error
             data = ctx.getImageData(0, 0, 1, ih).data;
@@ -113,10 +121,12 @@ export default class Upload extends React.Component {
             console.log('Cannot check verticalSquash: CORS?');
             return 1;
         }
+
         // search image edge pixel position in case it is squashed vertically.
         let sy = 0;
         let ey = ih;
         let py = ih;
+
         while (py > sy) {
             let alpha = data[(py - 1) * 4 + 3];
             if (alpha === 0) {
@@ -126,12 +136,15 @@ export default class Upload extends React.Component {
             }
             py = (ey + sy) >> 1;
         }
+
         let ratio = (py / ih);
-        return (ratio===0)?1:ratio;
+
+        return (ratio===0) ? 1 : ratio;
     }
 
     handleFile(file, cb) {
         let reader;
+
         if (typeof FileReader !== 'undefined') {
             reader = new FileReader();
         } else {
@@ -140,11 +153,13 @@ export default class Upload extends React.Component {
 
         reader.onload = e => {
             let img;
+
             if (typeof Image !== 'undefined') {
                 img = new Image();
             } else {
                 if (window.Image) img = new window.Image();
             }
+
             img.onload = () => {
                 let w = Math.min(this.props.maxWidth, img.width);
                 let h = img.height * (w / img.width);
@@ -156,8 +171,10 @@ export default class Upload extends React.Component {
                     //patch subsampling bug
                     //http://jsfiddle.net/gWY2a/24/
                     let drawImage = ctx.drawImage;
+
                     ctx.drawImage = (img, sx, sy, sw, sh, dx, dy, dw, dh) => {
                         let vertSquashRatio = 1;
+
                         // Detect if img param is indeed image
                         if (!!img && img.nodeName == 'IMG') {
                             vertSquashRatio = this.detectVerticalSquash(img);
@@ -210,12 +227,15 @@ export default class Upload extends React.Component {
                         type: file.type,
                         data: base64
                     }, e);
+
                 } else {
                     cb(file, e);
                 }
             };
+
             img.src = e.target.result;
         }
+
         reader.readAsDataURL(file);
     }
 
@@ -244,9 +264,11 @@ export default class Upload extends React.Component {
     renderFiles(){
         return this.props.files.map((file, idx)=>{
             let {url, error, status, onClick, ...others} = file;
+
             let fileStyle = {
                 backgroundImage: `url(${url})`
             };
+
             let cls = classNames({
                 'weui-uploader__file': true,
                 'weui-uploader__file_status': error || status
@@ -273,13 +295,14 @@ export default class Upload extends React.Component {
     render(){
         const { className, maxCount, files, onChange, onFileClick, ...others } = this.props;
         const inputProps = Object.assign({}, others);
+
         delete inputProps.lang;
         delete inputProps.onError;
         delete inputProps.maxWidth;
 
-        const cls = classNames({
+        const cls = classNames(prefixCls, {
             'weui-uploader': true,
-            [className]: className
+            [className]: className,
         });
 
         return (
