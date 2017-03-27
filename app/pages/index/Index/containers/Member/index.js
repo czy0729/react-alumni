@@ -2,7 +2,7 @@
  * TabPane 用户列表
  * @Date: 2017-02-10 21:57:25
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 07:19:02
+ * @Last Modified time: 2017-03-28 02:06:10
  */
 'use strict';
 
@@ -92,7 +92,7 @@ export default class IndexIndexMember extends React.Component {
                             key={`${sectionID}-${rowID}`}
                             extra={
                                 <div className="pull-right flex-align-center">
-                                    <Icon type={require('common/svg/location.svg')} className="text-14 text-primary" />
+                                    <Icon type={require('svg/location.svg')} className="text-14 text-primary" />
                                     <span className="ml-sm text-14">{rowData.area}</span>
                                 </div>
                             }

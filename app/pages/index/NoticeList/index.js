@@ -2,7 +2,7 @@
  * 通知列表
  * @Date: 2017-02-17 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-22 06:13:17
+ * @Last Modified time: 2017-03-28 02:12:47
  */
 'use strict';
 
@@ -88,6 +88,7 @@ export default class IndexNoticeList extends React.Component {
                 >
                     <ButtonWrap>
                         <Button 
+                            type="primary"
                             onClick={() => Utils.router.push(
                                 Const.router.admin_notice({ 
                                     alumni_id,

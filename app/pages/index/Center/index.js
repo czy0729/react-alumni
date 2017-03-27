@@ -2,13 +2,13 @@
  * 校友录管理中心
  * @Date: 2017-02-10 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-22 05:30:08
+ * @Last Modified time: 2017-03-28 02:24:09
  */
 'use strict';
 
 import React from 'react';
 import { observer } from 'decorators';
-import { $alumni } from 'stores';
+import { $alumni, $auth } from 'stores';
 import { Grid, Icon, Badge } from 'antd-mobile';
 import { Spin } from 'components';
 import { menuDS } from './ds';
@@ -23,7 +23,10 @@ export default class IndexCenter extends React.Component {
     }
 
     componentDidMount() {
-        $alumni.fetch({ alumni_id: this.alumni_id });
+        const { alumni_id } = this;
+
+        $alumni.fetch({ alumni_id });
+        $auth.fetch_count({ alumni_id });
     }
 
     get alumni_id() {
@@ -33,7 +36,24 @@ export default class IndexCenter extends React.Component {
     get data() {
         return {
             alumni: $alumni.getStateById(this.alumni_id),
+            auth_count: $auth.getStateById(this.alumni_id, 'count'),
         };
+    }
+
+    //渲染红点之类
+    renderSpecial(label) {
+        const { auth_count } = this.data;
+
+        switch (label) {
+            case '认证管理':
+                if (auth_count.none_authenti_count != 0) {
+                    return <Badge className={`${prefixCls}__dot`} dot />;
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 
     render() {
@@ -60,6 +80,7 @@ export default class IndexCenter extends React.Component {
                             className={`${prefixCls}__item`}
                             href={`#${item.href({ alumni_id: this.alumni_id })}`}
                         >
+                            {this.renderSpecial(item.label)}
                             <Icon type={item.icon} size="lg" />
                             <p>{item.label}</p>
                         </a>

@@ -19,6 +19,7 @@ var config = {
             pages      : path.resolve(__dirname, './pages'),
             stores     : path.resolve(__dirname, './stores'),
             styles     : path.resolve(__dirname, './styles'),
+            svg        : path.resolve(__dirname, './common/svg/01'),
         },
     },
     entry: {
@@ -47,7 +48,6 @@ var config = {
             test: /\.css$/,
             loader: 'style!css!postcss',
         }, {
-            //test: /\.(woff|svg|eot|ttf)\??.*$/,
             test: /\.(woff|eot|ttf)\??.*$/,
             loader: 'url?limit=51200&name=fonts/[name]_[hash:6].[ext]',
         }, {

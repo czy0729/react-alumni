@@ -10,7 +10,7 @@
     "apache": "cd app & webpack -w --progress"
   },
   "dependencies": {
-    "antd-mobile": "^1.0.6",
+    "antd-mobile": "^1.0.7",
     "babel-runtime": "^6.22.0",
     "immutable": "^3.8.1",
     "mobx": "^3.0.2",

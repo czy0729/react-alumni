@@ -2,7 +2,7 @@
  * 个人中心 
  * @Date: 2017-03-12 21:18:53
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 07:16:47
+ * @Last Modified time: 2017-03-28 02:00:58
  */
 'use strict';
 
@@ -46,7 +46,7 @@ export default class UserIndex extends React.Component {
 
                 <List className={`${prefixCls}__menu`}>
                     <List.Item
-                        thumb={<Icon type={require('common/svg/navigate.svg')} />}
+                        thumb={<Icon type={require('svg/me.svg')} />}
                         arrow="horizontal"
                         onClick={() => Utils.router.push(
                             Const.router.user_info()
@@ -55,7 +55,7 @@ export default class UserIndex extends React.Component {
                         我的名片
                     </List.Item>
                     <List.Item
-                        thumb={<Icon type={require('common/svg/bars.svg')} />}
+                        thumb={<Icon type={require('svg/bag.svg')} />}
                         arrow="horizontal"
                         onClick={() => Utils.router.push(
                             Const.router.user_alumni()
@@ -64,7 +64,7 @@ export default class UserIndex extends React.Component {
                         我的校友录
                     </List.Item>
                     <List.Item
-                        thumb={<Icon type={require('common/svg/trip.svg')} />}
+                        thumb={<Icon type={require('svg/wallet.svg')} />}
                         arrow="horizontal"
                         onClick={() => Utils.router.push(
                             Const.router.user_cards()
@@ -73,7 +73,7 @@ export default class UserIndex extends React.Component {
                         名片库
                     </List.Item>
                     <List.Item
-                        thumb={<Icon type={require('common/svg/me-fill.svg')} />}
+                        thumb={<Icon type={require('svg/lock.svg')} />}
                         arrow="horizontal"
                         onClick={() => Utils.router.push(
                             Const.router.user_blacklist()

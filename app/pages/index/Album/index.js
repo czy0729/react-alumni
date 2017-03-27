@@ -2,7 +2,7 @@
  * 相册
  * @Date: 2017-03-24 22:15:32
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-27 06:44:00
+ * @Last Modified time: 2017-03-28 02:36:13
  */
 'use strict';
 
@@ -65,7 +65,8 @@ export default class IndexAlbum extends React.Component {
     }
 
     render() {
-        const data = this.data.album.data || [];
+        const { album } = this.data;
+        const data = album.data || [];
         const section = [];
         const temp = {};
 

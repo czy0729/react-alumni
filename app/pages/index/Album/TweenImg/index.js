@@ -2,7 +2,7 @@
  * 
  * @Date: 2017-03-26 06:47:35
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-27 06:43:59
+ * @Last Modified time: 2017-03-28 00:39:23
  */
 'use strict';
 
@@ -27,6 +27,7 @@ export default class TweenImg extends React.Component {
                 left: 0, 
                 width: '100vw', 
                 height: '100vh',
+                opacity: 1,
                 duration: props.ms, 
                 ease: 'easeOutCubic',
             },
@@ -58,17 +59,21 @@ export default class TweenImg extends React.Component {
                         ...common,
                         backgroundImage: `url(${Utils.getImgUrl(src)})`,
                         backgroundSize: 'contain',
+                        opacity: 0,
                     }}
                     paused={!loaded}
                     animation={animation}
                     onClick={(e) => this.setState({
-                        animation: {
-                            ...animation,
-                            ...common,
-                        },
                         animationMask: {
                             ...animationMask,
                             backgroundColor: 'transparent',
+                        },
+                        animation: {
+                            ...animation,
+                            ...common,
+                            //因为缩略图是正方形，而原图不一定是正方形且背景size使用contain
+                            //导致退出的倒回动画跟缩略图内容不重合，使用透明能减缓这种违和感
+                            opacity: 0,
                         },
                     })}
                 />

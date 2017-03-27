@@ -64,6 +64,7 @@ const Control = (props) => {
                 >
                     <Switch 
                         checked={is_manager}
+                        platform="ios"
                         onChange={!is_creater && doSetAdmin }
                     />
                 </div>
@@ -78,6 +79,7 @@ const Control = (props) => {
                 >
                     <Switch 
                         checked={is_black}
+                        platform="ios"
                         onChange={!is_self && doSetBlack}
                     />
                 </div>

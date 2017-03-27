@@ -2,7 +2,7 @@
  * Tabbar 导航条
  * @Date: 2017-03-06 19:46:25
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 04:41:12
+ * @Last Modified time: 2017-03-28 02:05:37
  */
 'use strict';
 
@@ -47,25 +47,28 @@ export default class AppTabbar extends React.Component {
                     hidden={!$app.state.tabbar.show}
                 >
                     {this.renderTabBarItem({
-                        title    : '新建',
-                        icon     : <Icon size="xxs" type={require('common/svg/plus.svg')} />,
-                        pathname : Const.router.add_alumni(),
+                        title: '新建',
+                        icon: <Icon size="xxs" type={require('svg/file_default.svg')} />,
+                        selectedIcon: <Icon size="xxs" type={require('svg/file.svg')} />,
+                        pathname: Const.router.add_alumni(),
                     })}
                     {this.renderTabBarItem({
-                        title    : '校友录',
-                        icon     : <Icon size="xxs" type={require('common/svg/bars.svg')} />,
-                        pathname : Const.router.user_alumni(),
+                        title: '校友录',
+                        icon: <Icon size="xxs" type={require('svg/bag_default.svg')} />,
+                        selectedIcon: <Icon size="xxs" type={require('svg/bag.svg')} />,
+                        pathname: Const.router.user_alumni(),
                     })}
                     {this.renderTabBarItem({
-                        title    : '个人',
-                        icon     : <Icon size="xxs" type={require('common/svg/me.svg')} />,
-                        pathname : Const.router.user_center(),
+                        title: '个人',
+                        icon: <Icon size="xxs" type={require('svg/smile_default.svg')} />,
+                        selectedIcon: <Icon size="xxs" type={require('svg/smile.svg')} />,
+                        pathname: Const.router.user_center(),
                     })}
                     {this.renderTabBarItem({
-                        title    : '收起',
-                        icon     : <Icon size="xxs" type={require('common/svg/down.svg')} />,
-                        pathname : '_down',
-                        onPress  : () => $app.hideTabbar(),
+                        title: '收起',
+                        icon: <Icon size="xxs" type={require('svg/cross_default.svg')} />,
+                        pathname: '_down',
+                        onPress: () => $app.hideTabbar(),
                     })}
                 </TabBar>
 

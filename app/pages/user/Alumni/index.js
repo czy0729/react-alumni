@@ -2,7 +2,7 @@
  * 我的校友录列表
  * @Date: 2017-03-01 03:48:54
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 19:48:23
+ * @Last Modified time: 2017-03-28 02:07:01
  */
 'use strict';
 
@@ -110,15 +110,15 @@ export default class UserAlumni extends React.Component {
 
         switch (parseInt(status)) {
             case Const.alumni_list_status.new:
-                info = '未完成(1/4)';
+                info = '未完成 (1/4)';
                 break;
 
             case Const.alumni_list_status.auth:
-                info = '未完成(2/4)';
+                info = '未完成 (2/4)';
                 break;
 
             case Const.alumni_list_status.show:
-                info = '未完成(3/4)';
+                info = '未完成 (3/4)';
                 break;
 
             default: 
