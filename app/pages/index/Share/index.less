@@ -1,0 +1,25 @@
+@import '~styles/var';
+@import '~styles/mixin';
+
+.pages-index__share {
+	.flex-center;
+	flex-direction: column;
+	height: 80vh;
+
+	&__qr {
+		display: inline-block;
+		padding: 60PX;
+		background: #fff;
+		border: 1px solid @color-border;
+	}
+	&__detail {
+		.flex-center;
+		display: inline-block;
+		width: 462PX;
+		padding: 40PX;
+		text-align: center;
+		background: #f5f5f5;
+		border: 1px solid @color-border;
+		border-top: 0;
+	}
+}

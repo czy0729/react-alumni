@@ -2,7 +2,7 @@
  * TabPane 用户列表
  * @Date: 2017-02-10 21:57:25
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-28 02:06:10
+ * @Last Modified time: 2017-03-31 08:19:01
  */
 'use strict';
 
@@ -28,7 +28,6 @@ export default class IndexIndexMember extends React.Component {
         });
     }
 
-    //过滤字段
     doSearch(item) {
         const { search } = this.state;
 
@@ -57,7 +56,7 @@ export default class IndexIndexMember extends React.Component {
 
         const ds = [];
         const section = [];
-
+        
         user_list.data.forEach((item) => {
             section.push({
                 title: item.name,

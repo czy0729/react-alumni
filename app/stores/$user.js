@@ -2,7 +2,7 @@
  * 用户
  * @Date: 2017-02-23 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-19 18:57:19
+ * @Last Modified time: 2017-03-31 08:36:40
  */
 'use strict';
 
@@ -21,6 +21,8 @@ class store extends common {
         base: {},
         list: {},
         detail: {},
+        cards: {},
+        blacklist: {},
     });
 
     constructor() {
@@ -59,6 +61,24 @@ class store extends common {
             _pk: `${query.alumni_id}-${query.user_id}`,
             ...query,
         }, config, 'get_alumni_user_detail', '_pk', 'detail');
+    }
+
+    /**
+     * 3.1.0 名片库
+     * @version 170330 1.0
+     */
+    @action
+    fetch_cards(query, config) {
+        return this.fetchThenSetState(query, config, 'get_cards', 'cards');
+    }
+
+    /**
+     * 3.2.0 黑名单
+     * @version 170331 1.0
+     */
+    @action
+    fetch_blacklist(query, config) {
+        return this.fetchThenSetState(query, config, 'get_blacklist', 'blacklist');
     }
 
     /*==================== action ====================*/

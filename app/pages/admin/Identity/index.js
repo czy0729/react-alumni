@@ -2,7 +2,7 @@
  * 身份管理
  * @Date: 2017-02-12 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-21 05:47:17
+ * @Last Modified time: 2017-03-31 04:41:06
  */
 'use strict';
 
@@ -112,7 +112,12 @@ export default class AdminIdentity extends React.Component {
                 />
 
                 <ButtonWrap>
-                    <Button onClick={(e) => Utils.onPrompt('添加身份', this.doAdd)}>添加身份</Button>
+                    <Button 
+                        type="primary"
+                        onClick={(e) => Utils.onPrompt('添加身份', this.doAdd)}
+                    >
+                        添加身份
+                    </Button>
                 </ButtonWrap>
             </Spin>
         );

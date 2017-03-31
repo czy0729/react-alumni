@@ -2,7 +2,7 @@
  * 常量.路由
  * @Date: 2017-02-28 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-17 22:28:14
+ * @Last Modified time: 2017-03-30 15:14:13
  */
 'use strict';
 
@@ -17,8 +17,8 @@ export default {
     notice_list       : ({ alumni_id })            => `/index/${alumni_id}/notice_list/`,               //通知
     notice            : ({ alumni_id, notice_id }) => `/index/${alumni_id}/notice/${notice_id}/`,       //通知正文
     user_detail       : ({ alumni_id, user_id })   => `/index/${alumni_id}/user_detail/${user_id}/`,    //用户详情
-    share             : ({ alumni_id })            => `/index/${alumni_id}/share/`,                     //#todo
-    album             : ({ alumni_id })            => `/index/${alumni_id}/album/`,                     //#todo
+    share             : ({ alumni_id })            => `/index/${alumni_id}/share/`,                     //邀请校友
+    album             : ({ alumni_id })            => `/index/${alumni_id}/album/`,                     //相册
     auth              : ({ alumni_id })            => `/index/${alumni_id}/auth/`,                      //校友认证
 
     //Admin

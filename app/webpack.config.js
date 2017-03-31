@@ -42,6 +42,7 @@ var config = {
         }, {
             test: /\.less$/,
             loader: 'style!css!postcss!less',
+            //CSSModule
             //loader: 'style!css?modules&importLoaders=1&localIdentName=[path]-[local]!postcss!less',
             //[path][name]__[local]_[hash:base64:4]
         }, {
@@ -86,27 +87,43 @@ var config = {
 };
 
 switch (env){
-    //正式环境
+    //线上环境 单包
     case 0:
-    case 'build':
         config.output.path = path.resolve(__dirname, '../build/');
-        config.output.publicPath = './';
-        config.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }));
+        config.output.publicPath = './build/';
+        config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        }));
         break;
 
-    //开发环境1
+    //线上环境 按需加载
     case 1:
-    default:
-        break;
+        config.entry.index = './entry/index.ensure.js'
+        config.vendor = [
+            path.resolve(__dirname, './common/constants'),
+            path.resolve(__dirname, './common/utils'),
+            path.resolve(__dirname, './common/ajax'),
+        ];
+        config.output.path = path.resolve(__dirname, '../build/');
+        config.output.publicPath = './build/';
+        config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        }));
+        config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor'],
+            filename: 'vendor.js'
+        }));
    
     //开发环境 webpack-dev-server
-    case 2:
-    case 'hot':
+    case 10:
         config.entry[1] = 'webpack-dev-server/client?http://localhost:8080/';
         config.entry[2] = 'webpack/hot/only-dev-server';
         config.output.publicPath = 'http://localhost:8080/';
         config.devServer = { inline: true };
         config.plugins.push(new webpack.HotModuleReplacementPlugin());
+        break;
+
+    default:
         break;
 }
 

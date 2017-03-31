@@ -2,7 +2,7 @@
  * 路由表
  * @Date: 2017-01-20 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-27 05:05:58
+ * @Last Modified time: 2017-03-31 08:38:59
  */
 'use strict';
 
@@ -29,6 +29,7 @@ ReactDOM.render((
                 <Route path="user_detail/:user_id" component={require('pages/index/UserDetail')} title="用户详情"       />
                 <Route path="auth"                 component={require('pages/index/Auth')}       title="校友认证"       />
                 <Route path="album"                component={require('pages/index/Album')}      title="相册"           />
+                <Route path="share"                component={require('pages/index/Share')}      title="邀请校友"       />
             </Route>
 
             {/*管理员相关页面*/}
@@ -48,6 +49,8 @@ ReactDOM.render((
                 <Route path="index"                component={require('pages/user/Index')}       title="个人中心"       />
                 <Route path="info"                 component={require('pages/user/Info')}        title="我的名片"       />
                 <Route path="alumni"               component={require('pages/user/Alumni')}      title="我的校友录"     />
+                <Route path="cards"                component={require('pages/user/Cards')}       title="名片库"         />
+                <Route path="blacklist"            component={require('pages/user/Blacklist')}   title="黑名单"         />
             </Route>
 
             <Route     path="*"                    component={require('pages/app/404')}          title="404"            />

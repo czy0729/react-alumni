@@ -5,6 +5,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { SwipeAction, List } from 'antd-mobile';
+import './index.less';
 
 const prefixCls = 'components__app-swipe-action-item';
 

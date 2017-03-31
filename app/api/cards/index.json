@@ -1,0 +1,28 @@
+{
+    "code": 0,
+    "data": [{
+        "alumni_id": "107",
+        "name": "AB\u4e2d\u5b662004\u5c4a",
+        "data": [{
+            "business_card_id": "200",
+            "back_name": "sb",
+            "user_id": "639",
+            "real_name": "黎斯迪",
+            "mobile": "13800138000",
+            "headimgurl": "http://wx.qlogo.cn/mmopen/nl2GNIpCnno5E7N5fD0ss7chCh5tiaibSwQtjDpSTFcP6xxJr7fFUdz8dRTesjV9AAoHvNU21OCdibTqqZias3hxDV4rtlAMJJv4/0",
+            "specialty": ""
+        }]
+    }, {
+        "alumni_id": "108",
+        "name": "AB\u4e2d\u5b662004\u5c4a2",
+        "data": [{
+            "business_card_id": "200",
+            "back_name": "sb",
+            "user_id": "639",
+            "real_name": "黎斯迪",
+            "mobile": "13800138000",
+            "headimgurl": "http://wx.qlogo.cn/mmopen/nl2GNIpCnno5E7N5fD0ss7chCh5tiaibSwQtjDpSTFcP6xxJr7fFUdz8dRTesjV9AAoHvNU21OCdibTqqZias3hxDV4rtlAMJJv4/0",
+            "specialty": ""
+        }]
+    }]
+}

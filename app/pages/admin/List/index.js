@@ -2,7 +2,7 @@
  * 管理员列表
  * @Date: 2017-02-28 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-22 07:00:50
+ * @Last Modified time: 2017-03-31 04:41:42
  */
 'use strict';
 
@@ -90,6 +90,7 @@ export default class AdminList extends React.Component {
 
                 <ButtonWrap>
                     <Button 
+                        type="primary"
                         onClick={() => Utils.router.push(
                             Const.router.index({ 
                                 alumni_id: this.alumni_id

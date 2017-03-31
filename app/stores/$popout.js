@@ -2,7 +2,7 @@
  * Popout弹出层
  * @Date: 2017-02-28 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-27 06:24:13
+ * @Last Modified time: 2017-03-29 02:03:24
  */
 'use strict';
 
@@ -48,7 +48,7 @@ class store extends common {
     @action
     showLayout(content, ms = 0) {
         document.body.style.overflowY = 'hidden';
-        //document.addEventListener('touchmove', prevent, false);
+        document.addEventListener('touchmove', prevent, false);
 
         this.setState({
             show: true,
@@ -84,6 +84,7 @@ class store extends common {
     @action
     showMask(content, ms = 0) {
         document.body.style.overflowY = 'hidden';
+        document.addEventListener('touchmove', prevent, false);
 
         this.setState({
             show: true,

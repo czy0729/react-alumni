@@ -2,7 +2,7 @@
  * Ajax
  * @Date: 2017-02-01 15:58:37
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-27 07:05:33
+ * @Last Modified time: 2017-03-31 08:36:24
  */
 'use strict';
 
@@ -393,13 +393,13 @@ const apis = {
     update_user_info            : '/user/updateUserInfo',
 
     /**
-     * 3.1.0 名片库
+     * [$user][s] 3.1.0 名片库
      * @version 170313 1.0
      */
     get_cards                   : '/cards/index',
 
     /**
-     * [$user] 3.2.0 黑名单
+     * [$user][s] 3.2.0 黑名单
      * @version 170313 1.0
      */
     get_blacklist               : '/user/blackUserLists',

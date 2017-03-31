@@ -2,7 +2,7 @@
  * Tabbar 导航条
  * @Date: 2017-03-06 19:46:25
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-28 02:05:37
+ * @Last Modified time: 2017-03-31 08:12:10
  */
 'use strict';
 
@@ -19,6 +19,8 @@ const prefixCls = 'pages-app__tabbar';
 export default class AppTabbar extends React.Component {
     constructor() {
         super();
+
+        this.timeout = 0;
     }
 
     renderTabBarItem(props) {
@@ -32,7 +34,20 @@ export default class AppTabbar extends React.Component {
                 icon={icon}
                 selectedIcon={selectedIcon || icon}
                 selected={location.pathname === pathname}
-                onPress={() => Utils.router.push(pathname)}
+                onPress={() => {
+                    Utils.router.push(pathname);
+
+                    if (pathname !== '_down') {
+                        if (this.timeout) {
+                            clearTimeout(this.timeout);
+                        }
+
+                        this.timeout = setTimeout(() => {
+                            $app.hideTabbar();
+                            this.timeout = 0;
+                        }, 3000);
+                    }
+                }}
                 {...other}
             />
         );
