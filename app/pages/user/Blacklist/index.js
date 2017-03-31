@@ -2,7 +2,7 @@
  * 黑名单
  * @Date: 2017-03-31 08:37:12
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-31 09:11:42
+ * @Last Modified time: 2017-03-31 09:45:49
  */
 'use strict';
 
@@ -65,7 +65,7 @@ export default class UserBlacklist extends React.Component {
     }
 
     render() {
-        const { user_blacklist = { data: [] } } = this.data;
+        const { user_blacklist } = this.data;
 
         return (
             <Spin 
@@ -79,7 +79,7 @@ export default class UserBlacklist extends React.Component {
 
                 <AppListView
                 	loaded={user_blacklist._loaded}
-                    data={user_blacklist.data.filter((item) => this.doSearch(item))}
+                    data={user_blacklist.data && user_blacklist.data.filter((item) => this.doSearch(item))}
                     renderRow={(rowData, sectionID, rowID) => (
                         <List.Item extra={
                         	<Button 

@@ -2,7 +2,7 @@
  * 名片库
  * @Date: 2017-03-30 15:16:44
  * @Last Modified by:   Administrator
- * @Last Modified time: 2017-03-31 09:14:29
+ * @Last Modified time: 2017-03-31 09:45:41
  */
 'use strict';
 
@@ -56,12 +56,11 @@ export default class UserCards extends React.Component {
     }
 
     render() {
-        const { user_cards = { data: [] } } = this.data;
+        const { user_cards } = this.data;
 
         const data = [];
         const section = [];
-
-        user_cards.data.forEach((item) => {
+        user_cards.data && user_cards.data.forEach((item) => {
             section.push({
                 title: item.name,
                 filter: (i) => i.alumni_id === item.alumni_id,
